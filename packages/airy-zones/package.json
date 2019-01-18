@@ -1,0 +1,71 @@
+{
+    "name": "@airy/zones",
+    "version": "1.0.0",
+    "description": "",
+    "bin": "lib/bin/zones.js",
+    "scripts": {
+        "build": "rm -rf dist && gulp",
+        "watch": "gulp watch"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://gitlab.com/andarias_silvanus/airy-zones.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "private": false,
+    "sideEffects": false,
+    "dependencies": {
+        "@babel/core": "7.1.2",
+        "@babel/plugin-proposal-class-properties": "7.1.0",
+        "@babel/plugin-proposal-decorators": "7.1.2",
+        "@babel/plugin-proposal-object-rest-spread": "7.0.0",
+        "@babel/plugin-syntax-dynamic-import": "7.0.0",
+        "@babel/plugin-transform-runtime": "7.1.0",
+        "@babel/preset-env": "7.1.0",
+        "@babel/preset-react": "7.0.0",
+        "@babel/runtime": "7.1.2",
+        "@babel/runtime-corejs2": "7.1.2",
+        "babel-loader": "8.0.4",
+        "case-sensitive-paths-webpack-plugin": "2.1.2",
+        "es6-promise": "4.2.5",
+        "express": "4.16.4",
+        "hard-source-webpack-plugin": "0.12.0",
+        "helmet": "3.14.0",
+        "isomorphic-fetch": "2.2.1",
+        "loader-utils": "1.1.0",
+        "node-notifier": "5.2.1",
+        "nodemon": "1.18.4",
+        "react-dom": "16.5.2",
+        "react-helmet": "5.2.0",
+        "react-hot-loader": "4.3.12",
+        "react-loadable": "5.5.0",
+        "react-router": "4.4.0-beta.1",
+        "react-router-config": "4.4.0-beta.6",
+        "source-map-support": "0.5.9",
+        "terser-webpack-plugin": "1.1.0",
+        "webpack": "4.19.0",
+        "webpack-cli": "3.1.2",
+        "webpack-dev-middleware": "3.4.0",
+        "webpack-hot-middleware": "2.24.3",
+        "webpack-node-externals": "1.7.2",
+        "webpackbar": "2.6.3"
+    },
+    "peerDependencies": {
+        "react": "^16.5.2",
+        "react-router-dom": "^4.4.0-beta.1"
+    },
+    "devDependencies": {
+        "@babel/preset-typescript": "^7.1.0",
+        "@types/webpack-bundle-analyzer": "^2.13.0",
+        "babel-plugin-module-resolver": "^3.1.1",
+        "gulp": "gulpjs/gulp.git#4.0",
+        "gulp-babel": "^8.0.0",
+        "gulp-clean": "^0.4.0",
+        "gulp-sourcemaps": "^2.6.4",
+        "gulp-uglify": "^3.0.1",
+        "gulp-watch": "^5.0.1",
+        "webpack-bundle-analyzer": "^3.0.3",
+        "webpack-stats-plugin": "^0.2.1"
+    }
+}

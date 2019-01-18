@@ -1,0 +1,23 @@
+{
+  "name": "@airy/typescript-plugin",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf lib && gulp",
+    "watch": "rm -rf lib && gulp watch"
+  },
+  "peerDependencies": {
+    "@airy/zones": "^1.0.0"
+  },
+  "dependencies": {
+    "fork-ts-checker-webpack-plugin": "^0.4.14",
+    "ts-loader": "^5.3.0",
+    "tsconfig-paths-webpack-plugin": "^3.2.0",
+    "typescript": "^3.1.5"
+  },
+  "devDependencies": {
+    "@airy/gulp-plugin": "1.0.0",
+    "gulp": "gulpjs/gulp.git#4.0"
+  }
+}

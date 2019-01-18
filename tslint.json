@@ -1,0 +1,44 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended",
+        "tslint-react",
+        "tslint-config-prettier",
+        "tslint-plugin-prettier"
+    ],
+    "jsRules": {},
+    "rules": {
+        "no-require-imports": false,
+        "no-var-requires": false,
+        "arrow-parens": true,
+        "only-arrow-functions": false,
+        "trailing-comma": true,
+        "space-within-parens": true,
+        "array-type": [true, "array-simple"],
+        "prefer-object-spread": true,
+        "class-name": false,
+        "curly": true,
+        "no-default-export": false,
+        "no-any": false,
+        "no-empty": true,
+        "quotemark": [true, "single", "jsx-double"],
+        "indent": [true, "spaces", 2],
+        "member-access": false,
+        "member-ordering": true,
+        "jsdoc-format": false,
+        "ordered-imports": false,
+        "object-literal-sort-keys": false,
+        "interface-name": false,
+        "max-classes-per-file": false,
+        "variable-name": [true, "ban-keywords", "allow-leading-underscore"],
+
+        "jsx-no-lambda": true,
+        "jsx-no-string-ref": true,
+        "jsx-key": true,
+        "jsx-alignment": true,
+        "jsx-boolean-value": false,
+
+        "prettier": true
+    },
+    "rulesDirectory": []
+}

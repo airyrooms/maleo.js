@@ -1,0 +1,27 @@
+{
+  "name": "@airy/zones-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "zones run",
+    "build:prod": "rm -rf .zones && export NODE_ENV=production && zones build",
+    "start": "export NODE_ENV=production && node .zones/server.js"
+  },
+    "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@airy/css-plugin": "1.0.0",
+    "@airy/typescript-plugin": "1.0.0",
+    "@airy/with-redux-plugin": "^1.0.0",
+    "@airy/zones": "1.0.0",
+    "react": "16.5.2",
+    "react-redux": "^5.1.1",
+    "react-router-dom": "^4.4.0-beta.1",
+    "redux": "^4.0.1"
+  },
+  "devDependencies": {
+    "redux-devtools-extension": "^2.13.7"
+  }
+}
