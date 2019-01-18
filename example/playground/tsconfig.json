@@ -1,0 +1,18 @@
+{
+    "extends": "../../node_modules/@airy/typescript-plugin/tsconfig.base.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "rootDir": ".",
+        "paths": {
+            "src/*": [
+                "src/*"
+            ]
+        }
+    },
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
+        "*/.ts",
+        "*/.tsx"
+    ]
+}

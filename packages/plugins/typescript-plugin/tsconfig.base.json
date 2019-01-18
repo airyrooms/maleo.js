@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "outDir": "@types",
+    "module": "esnext",
+    "target": "esnext",
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "lib": [
+      "es6",
+      "es7",
+      "es2015",
+      "esnext",
+      "dom",
+      "scripthost"
+    ],
+    "allowSyntheticDefaultImports": true,
+    "noUnusedLocals": true,
+    "noEmit": true,
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "strictNullChecks": true,
+    "preserveSymlinks": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowJs": true
+  },
+  "exclude": [
+    "dist",
+    "node_modules",
+    "*.d.ts"
+  ],
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js"
+  ]
+}

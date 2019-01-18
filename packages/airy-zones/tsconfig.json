@@ -1,0 +1,65 @@
+{
+    "compilerOptions": {
+        "rootDir": ".",        
+        "baseUrl": ".",
+        "paths": {
+            "@build/*": [
+                "src/build/*"
+            ],
+            "@interfaces/*": [
+                "src/interfaces/*"
+            ],
+            "@server/*": [
+                "src/server/*"
+            ],
+            "@render/*": [
+                "src/render/*"
+            ],
+            "@utils/*": [
+                "src/utils/*"
+            ],
+            "@src/constants/*": [
+                "src/constants/*"
+            ]
+        },
+
+        "declaration": true,
+        "declarationDir": "@types",
+        "outDir": "@types",
+        "sourceMap": true,
+
+        "module": "commonjs",
+        "target": "esnext",
+        "jsx": "react",
+        
+        "moduleResolution": "node",
+        "noEmit": true,
+        "lib": [
+            "es5",
+            "es2015",
+            "dom",
+            "scripthost"
+        ],
+
+        "allowSyntheticDefaultImports": true,
+        "noUnusedLocals": true,
+        "experimentalDecorators": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "strictNullChecks": true,
+        "preserveSymlinks": true,
+        "esModuleInterop": true
+    },
+
+    "exclude": [
+        "dist",
+        "lib",
+        "node_modules",
+        "*.d.ts"
+    ],
+    "include": [
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.js", "../../global.d.ts", "../../typings.d.ts"
+    ]
+}
