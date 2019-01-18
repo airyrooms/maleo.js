@@ -1,3 +1,4 @@
+// Webpack Config
 import path from 'path';
 import {
   Configuration,
