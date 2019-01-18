@@ -39,7 +39,7 @@
 		"watch": "lerna --stream --parallel --no-bail run watch",
 		"clean": "yarn lerna clean -y && rm -rf @types node_modules && find packages -name lib -exec rm -rf {} +",
 		"ts:lint": "tslint -c tslint.json 'packages/**/**.ts'",
-		"pretty:lint": "prettier --list-different --config-precedence file-override --config .prettierrc 'packages/**/**+(.jsx|.tsx|.js|.ts)'",
+		"pretty:lint": "prettier --loglevel silent --config-precedence file-override --config .prettierrc 'packages/**/**+(.jsx|.tsx|.js|.ts)'",
 		"lint": "yarn pretty:lint && yarn ts:lint",
 		"pretty:fix": "prettier --config-precedence file-override --config .prettierrc --write 'packages/**/**+(.jsx|.tsx|.js|.ts)'"
 	},
