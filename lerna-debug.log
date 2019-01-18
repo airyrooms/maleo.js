@@ -1,0 +1,14 @@
+0 silly argv { _: [ 'clean' ],
+0 silly argv   y: true,
+0 silly argv   yes: true,
+0 silly argv   lernaVersion: '3.4.3',
+0 silly argv   '$0':
+0 silly argv    '/Users/alvinlim/github/all/app-infra/zones/node_modules/.bin/lerna' }
+1 notice cli v3.4.3
+2 verbose rootPath /Users/alvinlim/github/all/app-infra/zones
+3 error Error: Invalid package name "@airy//example": name can only contain URL-friendly characters
+3 error     at invalidPackageName (/Users/alvinlim/github/all/app-infra/zones/node_modules/npm-package-arg/npa.js:82:15)
+3 error     at Result.setName (/Users/alvinlim/github/all/app-infra/zones/node_modules/npm-package-arg/npa.js:118:11)
+3 error     at new Result (/Users/alvinlim/github/all/app-infra/zones/node_modules/npm-package-arg/npa.js:107:23)
+3 error     at Function.resolve (/Users/alvinlim/github/all/app-infra/zones/node_modules/npm-package-arg/npa.js:54:15)
+3 error     at new Package (/Users/alvinlim/github/all/app-infra/zones/node_modules/@lerna/package/index.js:32:26)

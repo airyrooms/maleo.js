@@ -1,0 +1,20 @@
+{
+  "version": "fixed",
+  "packages": [
+    "packages/**"
+  ],
+  "npmClient": "yarn",
+  "npmClientArgs": [
+    "--no-lockfile"
+  ],
+  "useWorkspaces": true,
+  "command": {
+    "publish": {
+      "ignoreChanges": [
+        "*.md",
+        "*.test.*",
+        "example/**"
+      ]
+    }
+  }
+}

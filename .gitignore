@@ -1,0 +1,16 @@
+# dependencies
+node_modules
+
+# build output
+dist
+.zones
+lib
+
+# etc
+package-lock.json
+.log
+
+# generated declaration files
+*.d.ts
+@types
+yarn-error.log

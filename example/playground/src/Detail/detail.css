@@ -1,0 +1,6 @@
+.detail {
+  background-color: blue;
+  display: inline-block;
+  float: left;
+  max-width: 50%;
+}

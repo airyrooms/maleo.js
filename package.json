@@ -1,0 +1,54 @@
+{
+	"name": "airy-zones",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"workspaces": [
+		"packages/**",
+		"example/**"
+	],
+	"typeScriptVersion": "3.1.1",
+	"scripts": {
+		"bootstrap": "lerna bootstrap",
+		"fix-bin": "yarn build && yarn link && yarn && yarn unlink",
+		"build": "lerna --stream --parallel --no-bail run build",
+		"watch": "lerna --stream --parallel --no-bail run watch",
+		"clean": "yarn lerna clean -y && rm -rf @types node_modules && find packages -name lib -exec rm -rf {} +"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://gitlab.com/andarias_silvanus/airy-zones.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"engines": {
+		"node": ">=10.11.0",
+		"npm": ">=6.4.1",
+		"yarn": ">=1.10.1"
+	},
+	"bugs": {
+		"url": "https://gitlab.com/andarias_silvanus/airy-zones/issues"
+	},
+	"homepage": "https://gitlab.com/andarias_silvanus/airy-zones#README",
+	"private": true,
+	"devDependencies": {
+		"@types/express": "^4.16.0",
+		"@types/node": "^10.12.0",
+		"@types/react": "^16.4.18",
+		"@types/react-dom": "^16.0.9",
+		"@types/react-loadable": "^5.4.1",
+		"@types/react-router": "^4.0.31",
+		"@types/react-router-dom": "^4.3.1",
+		"@types/tapable": "^1.0.4",
+		"@types/webpack": "^4.4.14",
+		"lerna": "^3.4.3",
+		"node-notifier": "^5.2.1",
+		"nodemon": "^1.18.4",
+		"prettier": "^1.14.3",
+		"tslint": "^5.11.0",
+		"tslint-config-prettier": "^1.16.0",
+		"tslint-plugin-prettier": "^2.0.1",
+		"tslint-react": "^3.6.0",
+		"typescript": "^3.1.3"
+	}
+}

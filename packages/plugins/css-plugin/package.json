@@ -1,0 +1,22 @@
+{
+  "name": "@airy/css-plugin",
+  "version": "1.0.0",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf lib && gulp",
+    "watch": "rm -rf lib && gulp watch"
+  },
+  "peerDependencies": {
+    "@airy/zones": "^1.0.0"
+  },
+  "dependencies": {
+    "css-loader": "^1.0.1",
+    "hoist-non-react-statics": "^3.1.0",
+    "isomorphic-style-loader": "^4.0.0"
+  },
+  "devDependencies": {
+    "@airy/gulp-plugin": "1.0.0",
+    "gulp": "gulpjs/gulp.git#4.0"
+  }
+}
