@@ -1,7 +1,7 @@
 version: 2
 
 jobs:
-  install:
+  lint:
     working_directory: ~/tmp
     docker:
       - image: circleci/node:10.11.0
@@ -22,24 +22,13 @@ jobs:
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
-
-  lint:
-    working_directory: ~/tmp
-    docker:
-      - image: circleci/node:10.11.0
-    steps:
-      - checkout
       - run:
-          command: yarn lint
           name: Lint
+          command: yarn lint
 
 
 workflows:
   version: 2
   install_and_lint:
     jobs:
-      - install
-      - lint:
-          requires:
-            - install
-
+      - lint
