@@ -6,18 +6,19 @@ jobs:
       - image: circleci/node:10.11.0
     steps:
       - checkout
-      - run:
-          name: Install yarn
-          command: 'npm install --global yarn'
+
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
+
       - run:
           name: Install Dependencies
           command: yarn
+
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
+            
       - run:
           name: Lint
           command: yarn lint
