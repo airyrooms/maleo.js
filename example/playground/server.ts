@@ -1,4 +1,4 @@
-import { Server } from '@airy/zones/lib/server/Server';
+import { Server } from '@airy/maleo/lib/server/Server';
 import path from 'path';
 
 import { MyDocument } from './_document';
@@ -7,9 +7,9 @@ import { Wrap } from './_wrap';
 
 const PORT = process.env.PORT || 8080;
 
-const zonesServer = Server.init({
+const maleoServer = Server.init({
   port: PORT,
-  assetDir: path.resolve('.', '.zones', 'client'),
+  assetDir: path.resolve('.', '.maleo', 'client'),
   distDir: path.resolve('.', 'dist'),
 
   routes,
@@ -18,7 +18,7 @@ const zonesServer = Server.init({
   _wrap: Wrap,
 });
 
-zonesServer.run(() => {
+maleoServer.run(() => {
   // tslint:disable-next-line:no-console
   console.log('Server running on port :' + PORT);
 });

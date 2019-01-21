@@ -94,7 +94,7 @@ export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: Rende
 
     try {
       reactLoadableJson = await requireDynamic(
-        path.resolve('.zones', 'client', REACT_LOADABLE_MANIFEST),
+        path.resolve('.maleo', 'client', REACT_LOADABLE_MANIFEST),
       );
     } catch (error) {}
 

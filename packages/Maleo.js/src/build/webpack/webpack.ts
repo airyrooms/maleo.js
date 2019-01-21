@@ -33,7 +33,7 @@ import {
   BUILD_DIR,
   RUNTIME_CHUNK_FILE,
   SERVER_ASSETS_ROUTE,
-  ZONES_PROJECT_ROOT_NODE_MODULES,
+  MALEO_PROJECT_ROOT_NODE_MODULES,
 } from '@src/constants';
 import {
   Context,
@@ -43,7 +43,7 @@ import {
 } from '@interfaces/build/IWebpackInterfaces';
 import { requireRuntime } from '@utils/require';
 
-// Default Config if user doesn't have zones.config.js
+// Default Config if user doesn't have maleo.config.js
 const defaultUserConfig: CustomConfig = {
   webpack: undefined,
   cache: true,
@@ -109,16 +109,16 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
       extensions: ['.js', '.jsx', '.json'],
       alias,
       modules: [
-        ZONES_PROJECT_ROOT_NODE_MODULES,
+        MALEO_PROJECT_ROOT_NODE_MODULES,
         'node_modules',
         ...nodePathList, // Support for NODE_PATH environment variable
       ],
     },
     resolveLoader: {
       modules: [
-        ZONES_PROJECT_ROOT_NODE_MODULES,
+        MALEO_PROJECT_ROOT_NODE_MODULES,
         'node_modules',
-        path.join(__dirname, '..', 'loaders'), // The loaders Zones provides
+        path.join(__dirname, '..', 'loaders'), // The loaders Maleo provides
         ...nodePathList, // Support for NODE_PATH environment variable
       ],
     },
@@ -294,7 +294,7 @@ export const getDefaultRules = (context: BuildContext): RuleSetRule[] => {
     {
       test: /\.jsx?/,
       exclude: /node_modules/,
-      use: ['zones-babel-loader'],
+      use: ['maleo-babel-loader'],
     },
   ];
 };
@@ -399,8 +399,8 @@ export const getDefaultOutput = (context: BuildContext): Configuration['output']
     path: path.resolve(projectDir, buildDirectory, 'client'),
     publicPath,
 
-    chunkFilename: isDev ? '[name].js' : '[name]-[contenthash].js',
-    filename: isDev ? '[name]' : '[name]-[contenthash]',
+    chunkFilename: isDev ? '[name].js' : '[name]-[hash].js',
+    filename: isDev ? '[name]' : '[name]-[hash]',
     library: '[name]',
 
     // hotUpdateChunkFilename: 'hot/hot-update.js',
@@ -409,7 +409,7 @@ export const getDefaultOutput = (context: BuildContext): Configuration['output']
 };
 
 /**
- * Load User Config with file name USER_CUSTOM_CONFIG (zones.config.js)
+ * Load User Config with file name USER_CUSTOM_CONFIG (maleo.config.js)
  */
 export const loadUserConfig = (dir: string): CustomConfig => {
   const cwd: string = path.resolve(dir);

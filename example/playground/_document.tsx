@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Document, Header, Main, Scripts } from '@airy/zones/lib/render/_document';
+import { Document, Header, Main, Scripts } from '@airy/maleo/lib/render/_document';
 import { ReduxScript } from '@airy/with-redux-plugin';
 
 export class MyDocument extends Document {
@@ -14,7 +14,7 @@ export class MyDocument extends Document {
     return (
       <html>
         <Header>
-          <title>Example Airy Zonesssss</title>
+          <title>Example Airy Maleo</title>
         </Header>
 
         <body>

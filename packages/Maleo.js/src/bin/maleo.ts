@@ -15,7 +15,7 @@ const isDev = env === 'development';
 
 const binaryPath = path.resolve(__dirname);
 const projectPath = path.resolve(process.cwd());
-const buildDirectory = path.join(projectPath, '.zones');
+const buildDirectory = path.join(projectPath, '.maleo');
 
 // bin codes starts here
 // Importing node's own dependencies
@@ -48,7 +48,7 @@ if (type === 'build') {
     buildType,
   });
 } else if (type === 'run') {
-  console.log('[ZONES] Running Application');
+  console.log('[MALEO] Running Application');
 
   const serverPath = path.join(buildDirectory, 'server.js');
 

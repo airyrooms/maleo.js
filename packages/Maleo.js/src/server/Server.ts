@@ -111,7 +111,7 @@ export class Server {
 
     const [clientCompiler] = multiCompiler.compilers;
 
-    const ignored = [/\.git/, /\.zones\//, /node_modules/];
+    const ignored = [/\.git/, /\.maleo\//, /node_modules/];
     const wdmOptions = {
       stats: false,
       serverSideRender: true,

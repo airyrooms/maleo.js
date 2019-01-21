@@ -32,7 +32,7 @@ export class StatsWriterPlugin {
     } catch (err) {
       // @ts-ignore
     } finally {
-      compiler.hooks.emit.tapPromise('zones-stats-writer-plugin', this.emitStats);
+      compiler.hooks.emit.tapPromise('maleo-stats-writer-plugin', this.emitStats);
     }
   };
 

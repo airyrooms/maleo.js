@@ -1,12 +1,12 @@
 {
-  "name": "@airy/zones-playground",
+  "name": "@airy/maleo-playground",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "zones run",
-    "build:prod": "rm -rf .zones && export NODE_ENV=production && zones build",
-    "start": "export NODE_ENV=production && node .zones/server.js"
+    "dev": "maleo run",
+    "build:prod": "rm -rf .maleo && export NODE_ENV=production && maleo build",
+    "start": "export NODE_ENV=production && node .maleo/server.js"
   },
     "keywords": [],
   "author": "",
@@ -15,7 +15,7 @@
     "@airy/css-plugin": "1.0.0",
     "@airy/typescript-plugin": "1.0.0",
     "@airy/with-redux-plugin": "^1.0.0",
-    "@airy/zones": "1.0.0",
+    "@airy/maleo": "1.0.0",
     "react": "16.5.2",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.4.0-beta.1",

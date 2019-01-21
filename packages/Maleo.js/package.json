@@ -1,15 +1,15 @@
 {
-    "name": "@airy/zones",
+    "name": "@airy/maleo",
     "version": "1.0.0",
     "description": "",
-    "bin": "lib/bin/zones.js",
+    "bin": "lib/bin/maleo.js",
     "scripts": {
         "build": "rm -rf dist && gulp",
         "watch": "gulp watch"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://gitlab.com/andarias_silvanus/airy-zones.git"
+        "url": "git+https://github.com/airyrooms/maleo.js"
     },
     "author": "",
     "license": "ISC",

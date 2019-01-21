@@ -1,5 +1,5 @@
 import React from 'react';
-import Dynamic from '@airy/zones/lib/utils/dynamicImport';
+import Dynamic from '@airy/maleo/lib/utils/dynamicImport';
 
 import { RoomsMainApp } from './src/MainApp';
 

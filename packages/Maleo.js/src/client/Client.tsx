@@ -7,7 +7,7 @@ import { loadInitialProps, loadComponentProps } from '@server/loadInitialProps';
 import { App as DefaultApp } from '@render/_app';
 import { _Wrap as DefaultWrap } from '@render/_wrap';
 import { InitialProps } from '@interfaces/render/IRender';
-import { SERVER_INITIAL_DATA, DIV_ZONES_ID } from '@src/constants';
+import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@src/constants';
 import { matchingRoutes } from '@server/routeHandler';
 
 export const init = async (routes, mod, { Wrap = DefaultWrap, App = DefaultApp }) => {
@@ -27,7 +27,7 @@ export const init = async (routes, mod, { Wrap = DefaultWrap, App = DefaultApp }
 
 export const hydrate = (App: () => React.ReactElement<any>): void => {
   Loadable.preloadReady().then(() => {
-    ReactDOM.hydrate(<App />, document.querySelector(`#${DIV_ZONES_ID}`));
+    ReactDOM.hydrate(<App />, document.querySelector(`#${DIV_MALEO_ID}`));
   });
 };
 

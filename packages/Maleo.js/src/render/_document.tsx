@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { HeaderProps, DocumentProps, DocumentContext } from '@interfaces/render/IRender';
-import { SERVER_INITIAL_DATA, DIV_ZONES_ID } from '@src/constants';
+import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@src/constants';
 
 // Extendable document
 export class Document extends React.Component<DocumentProps, {}> {
@@ -84,7 +84,7 @@ export class Main extends React.Component {
   };
 
   render() {
-    return <div id={DIV_ZONES_ID} dangerouslySetInnerHTML={{ __html: this.context.html }} />;
+    return <div id={DIV_MALEO_ID} dangerouslySetInnerHTML={{ __html: this.context.html }} />;
   }
 }
 

@@ -56,8 +56,7 @@ typings/
 .yarn-integrity
 
 # build output
-dist
-.zones
+.maleo
 lib
 
 # etc

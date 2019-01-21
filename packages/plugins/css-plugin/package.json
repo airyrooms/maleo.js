@@ -8,7 +8,7 @@
     "watch": "rm -rf lib && gulp watch"
   },
   "peerDependencies": {
-    "@airy/zones": "^1.0.0"
+    "@airy/maleo": "^1.0.0"
   },
   "dependencies": {
     "css-loader": "^1.0.1",

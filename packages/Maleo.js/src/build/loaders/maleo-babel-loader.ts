@@ -15,8 +15,8 @@ export default babelLoader.custom((babel) => {
         for (const file of [config.babelrc, config.config]) {
           if (file && !configs.has(file)) {
             configs.add(file);
-            console.log('[Zones-Babel-Loader] Using external babel configuration');
-            console.log('[Zones-Babel-Loader] File: ', file);
+            console.log('[Maleo-Babel-Loader] Using external babel configuration');
+            console.log('[Maleo-Babel-Loader] File: ', file);
           }
         }
       } else {

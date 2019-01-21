@@ -1,17 +1,17 @@
 {
-	"name": "airy-zones",
+	"name": "airy-maleojs",
 	"version": "1.0.0",
 	"description": "Un-opinionated Universal Rendering Javascript Framework",
 	"author": "Airy Engineering <direct@airyrooms.com>",
 	"license": "MIT",
 	"private": true,
-	"homepage": "https://gitlab.com/andarias_silvanus/airy-zones#README",
+	"homepage": "https://github.com/airyrooms/maleo.js#README",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/airyrooms/new-framework.git"
+		"url": "git+https://github.com/airyrooms/maleo.js.git"
 	},
 	"bugs": {
-		"url": "https://github.com/airyrooms/new-framework/issues"
+		"url": "https://github.com/airyrooms/maleo.js/issues"
 	},
 	"keywords": [
 		"framework",

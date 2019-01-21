@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { _Wrap } from '@airy/zones/lib/render/_wrap';
-import pageWithStyles from '@airy//css-plugin/lib/pageWithStyles';
+import { _Wrap } from '@airy/maleo/lib/render/_wrap';
+import pageWithStyles from '@airy/css-plugin/lib/pageWithStyles';
 import { withRedux } from '@airy/with-redux-plugin';
 
 import { makeStoreClient } from './store';

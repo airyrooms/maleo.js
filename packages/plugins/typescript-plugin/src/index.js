@@ -31,7 +31,7 @@ module.exports = (customConfig = {}) => {
         test: /\.tsx?/,
         exclude: /node_modules/,
         use: [
-          require.resolve('@airy/zones/lib/build/loaders/zones-babel-loader'),
+          require.resolve('@airy/maleo/lib/build/loaders/maleo-babel-loader'),
           {
             loader: require.resolve('ts-loader'),
             options: {
