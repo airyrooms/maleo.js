@@ -38,7 +38,7 @@
     "build": "lerna --stream --parallel --no-bail run build",
     "watch": "lerna --stream --parallel --no-bail run watch",
     "clean:lib": "find packages -name lib -exec rm -rf {} +",
-    "clean": "yarn lerna clean -y && rm -rf @types node_modules && clean:lib",
+    "clean": "yarn lerna clean -y && rm -rf @types node_modules && yarn clean:lib",
     "ts:lint": "tslint -c tslint.json 'packages/**/**.ts'",
     "lint": "yarn ts:lint",
     "pretty:fix": "prettier --config-precedence file-override --config .prettierrc --write 'packages/**/**+(.jsx|.tsx|.js|.ts)'",
@@ -55,6 +55,9 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
+  "resolutions": {
+    "babel-core": "7.0.0-bridge.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^7.3.2",
     "@commitlint/config-conventional": "^7.3.1",
@@ -67,6 +70,7 @@
     "@types/react-router-dom": "^4.3.1",
     "@types/tapable": "^1.0.4",
     "@types/webpack": "^4.4.14",
+    "babel-jest": "^23.6.0",
     "commitizen": "^3.0.5",
     "cz-conventional-changelog": "^2.1.0",
     "husky": "^1.3.1",

@@ -1,3 +1,5 @@
+'use strict';
+
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
 
@@ -145,7 +147,9 @@ module.exports = {
   // timers: "real",
 
   // A map from regular expressions to paths to transformers
-  // transform: null,
+  transform: {
+    '^.+\\.jsx?$': 'babel-jest',
+  },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [

@@ -23,7 +23,7 @@ export const preset = (context, opts = {}) => {
 
   const plugins = [
     [
-      require('@babel/plugin-proposal-class-properties'),
+      require('@babel/plugin-proposal-class-properties').default,
       opts['class-properties'] || {
         loose: true,
       },
