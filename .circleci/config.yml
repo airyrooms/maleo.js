@@ -39,6 +39,6 @@ workflows:
   install_and_lint:
     jobs:
       - lint:
-        requires:
-          - install
+          requires:
+            - install
 
