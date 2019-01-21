@@ -37,7 +37,8 @@
 		"fix:bin": "yarn build && yarn link && yarn && yarn unlink",
 		"build": "lerna --stream --parallel --no-bail run build",
 		"watch": "lerna --stream --parallel --no-bail run watch",
-		"clean": "yarn lerna clean -y && rm -rf @types node_modules && find packages -name lib -exec rm -rf {} +",
+		"clean:lib": "find packages -name lib -exec rm -rf {} +",
+		"clean": "yarn lerna clean -y && rm -rf @types node_modules && clean:lib",
 		"ts:lint": "tslint -c tslint.json 'packages/**/**.ts'",
 		"lint": "yarn ts:lint",
 		"pretty:fix": "prettier --config-precedence file-override --config .prettierrc --write 'packages/**/**+(.jsx|.tsx|.js|.ts)'"
