@@ -9,19 +9,22 @@ jobs:
 
       - run:
           name: Install Latest Yarn
-          command: npm install --global yarn
+          command: 'sudo npm install --global yarn@latest'
 
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
 
       - run:
           name: Install Dependencies
-          command: yarn
-
+          command: yarn install --frozen-lockfile
+          
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
-            - node_modules
+            - ~/.cache/yarn
 
       - run:
           command: yarn lint
