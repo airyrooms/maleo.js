@@ -33,18 +33,18 @@
 	},
 	"scripts": {
 		"bootstrap": "lerna bootstrap",
-		"commit": "yarn lint && git-cz",
+		"commit": "git-cz",
 		"fix:bin": "yarn build && yarn link && yarn && yarn unlink",
 		"build": "lerna --stream --parallel --no-bail run build",
 		"watch": "lerna --stream --parallel --no-bail run watch",
 		"clean": "yarn lerna clean -y && rm -rf @types node_modules && find packages -name lib -exec rm -rf {} +",
 		"ts:lint": "tslint -c tslint.json 'packages/**/**.ts'",
-		"pretty:lint": "prettier --config-precedence file-override --config .prettierrc 'packages/**/**+(.jsx|.tsx|.js|.ts)'",
-		"lint": "yarn pretty:lint && yarn ts:lint",
+		"lint": "yarn ts:lint",
 		"pretty:fix": "prettier --config-precedence file-override --config .prettierrc --write 'packages/**/**+(.jsx|.tsx|.js|.ts)'"
 	},
 	"husky": {
 		"hooks": {
+			"pre-commit": "yarn lint && pretty-quick --staged",
 			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
 		}
 	},
@@ -72,6 +72,7 @@
 		"node-notifier": "^5.2.1",
 		"nodemon": "^1.18.4",
 		"prettier": "^1.14.3",
+		"pretty-quick": "^1.10.0",
 		"tslint": "^5.11.0",
 		"tslint-config-prettier": "^1.16.0",
 		"tslint-plugin-prettier": "^2.0.1",
