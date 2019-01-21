@@ -7,6 +7,10 @@ jobs:
     steps:
       - checkout
 
+      - run:
+          name: Install Latest Yarn
+          command: npm install --global yarn
+
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
 
