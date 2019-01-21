@@ -18,7 +18,15 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
-            
+
       - run:
-          name: Lint
           command: yarn lint
+          name: Lint
+
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - main
+
