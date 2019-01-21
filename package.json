@@ -33,7 +33,7 @@
 	},
 	"scripts": {
 		"bootstrap": "lerna bootstrap",
-		"commit": "git-cz",
+		"commit": "yarn lint && git-cz",
 		"fix:bin": "yarn build && yarn link && yarn && yarn unlink",
 		"build": "lerna --stream --parallel --no-bail run build",
 		"watch": "lerna --stream --parallel --no-bail run watch",
@@ -45,7 +45,6 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "yarn lint",
 			"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
 		}
 	},
