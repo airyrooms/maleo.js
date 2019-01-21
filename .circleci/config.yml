@@ -1,32 +1,34 @@
 version: 2
 
 jobs:
-  main:
+  install:
     working_directory: ~/tmp
     docker:
       - image: circleci/node:10.11.0
     steps:
       - checkout
-
       - run:
           name: Install Latest Yarn
           command: 'sudo npm install --global yarn@latest'
-
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
-
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
-          
       - save_cache:
           name: Save Yarn Package Cache
           key: yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
 
+  lint:
+    working_directory: ~/tmp
+    docker:
+      - image: circleci/node:10.11.0
+    steps:
+      - checkout
       - run:
           command: yarn lint
           name: Lint
@@ -34,7 +36,8 @@ jobs:
 
 workflows:
   version: 2
-  test:
+  install_and_lint:
     jobs:
-      - main
+      - install
+      - lint
 
