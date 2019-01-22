@@ -4,6 +4,12 @@
 <!-- Help with PRs can be found at (added soon) -->
 <!-- Make sure that your PR is not a duplicate -->
 
+---
+title: 'Title Example'
+labels: bug | enhancement
+assignees: @alvinkl, @AndariasSilvanus
+---
+
 #### Pre-Submission Checklist
 <!-- Go over all points below, and after creating the PR, tick all the checkboxes that apply. -->
 <!-- All points should be verified, otherwise, read the CONTRIBUTING guidelines from above-->

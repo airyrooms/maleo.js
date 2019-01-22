@@ -42,7 +42,7 @@
     "ts:lint": "tslint -c tslint.json 'packages/**/**.ts'",
     "lint": "yarn ts:lint",
     "pretty:fix": "prettier --config-precedence file-override --config .prettierrc --write 'packages/**/**+(.jsx|.tsx|.js|.ts)'",
-    "test": "jest"
+    "test": "yarn build && jest"
   },
   "husky": {
     "hooks": {
