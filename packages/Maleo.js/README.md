@@ -667,4 +667,4 @@ module.exports = {
 
 
 ## Contributing
-[Please follow these steps to contribute](https://github.com/airyrooms/maleo.js/blob/docs/contribution/CONTRIBUTING.md)
+[Please follow these steps to contribute](https://github.com/airyrooms/maleo.js/blob/canary/CONTRIBUTING.md)
