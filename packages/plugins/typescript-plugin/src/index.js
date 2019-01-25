@@ -2,17 +2,31 @@ const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TsConfigPathPlugin = require('tsconfig-paths-webpack-plugin');
 
+const whitelistEntries = /(webpack-hot-middleware|react-hot-loader)/;
+
 const replaceJStoTS = (entries = {}) =>
-  Object.keys(entries).reduce(
-    (p, c) => ({
+  Object.keys(entries).reduce((p, c) => {
+    let entry = entries[c];
+
+    if (typeof entry === 'string') {
+      if (whitelistEntries.test(entry)) {
+        return {
+          ...p,
+          [c]: entry,
+        };
+      }
+
+      return {
+        ...p,
+        [c]: entry.replace(/\.js$/, '.ts'),
+      };
+    }
+
+    return {
       ...p,
-      [c]:
-        typeof entries[c] === 'string'
-          ? entries[c].replace(/\.js$/, '.ts')
-          : entries[c].map((e) => e.replace(/\.js$/, '.ts')),
-    }),
-    {},
-  );
+      [c]: Object.values(replaceJStoTS(entry)),
+    };
+  }, {});
 
 module.exports = (customConfig = {}) => {
   return Object.assign({}, customConfig, {

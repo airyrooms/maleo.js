@@ -34,7 +34,8 @@ import {
   RUNTIME_CHUNK_FILE,
   SERVER_ASSETS_ROUTE,
   MALEO_PROJECT_ROOT_NODE_MODULES,
-} from '@src/constants';
+  PROJECT_ROOT_NODE_MODULES,
+} from '@src/constants/index';
 import {
   Context,
   CustomConfig,
@@ -108,8 +109,10 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
     resolve: {
       extensions: ['.js', '.jsx', '.json'],
       alias,
+      symlinks: true,
       modules: [
         MALEO_PROJECT_ROOT_NODE_MODULES,
+        PROJECT_ROOT_NODE_MODULES,
         'node_modules',
         ...nodePathList, // Support for NODE_PATH environment variable
       ],
@@ -135,13 +138,17 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
     baseConfigs = {
       ...baseConfigs,
 
-      // Extract all server node_modules from bundles except React
+      // Extract all server node_modules from bundles
       externals: [
         nodeExternals({
-          whitelist: [/react/],
+          whitelist: [
+            /react/,
+            /@airy[/\\]maleo/,
+            /@babel[/\\]runtime[/\\]/,
+            /@babel[/\\]runtime-corejs2[/\\]/,
+          ],
         }),
       ],
-
       node: {
         // Keep __dirname relative to file not root project
         __dirname: true,
@@ -182,8 +189,8 @@ export const getDefaultEntry = (context: BuildContext): Configuration['entry'] =
 
   return {
     main: [
-      'webpack-hot-middleware/client?name=client',
-      'react-hot-loader/patch',
+      require.resolve('webpack-hot-middleware/client'),
+      require.resolve('react-hot-loader/patch'),
       path.join(projectDir, CLIENT_ENTRY_NAME),
     ],
   };

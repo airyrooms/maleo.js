@@ -67,6 +67,8 @@
         "gulp-clean": "^0.4.0",
         "gulp-sourcemaps": "^2.6.4",
         "gulp-uglify": "^3.0.1",
-        "gulp-watch": "^5.0.1"
+        "gulp-watch": "^5.0.1",
+        "react": "^16.5.2",
+        "react-router-dom": "^4.4.0-beta.1"
     }
 }

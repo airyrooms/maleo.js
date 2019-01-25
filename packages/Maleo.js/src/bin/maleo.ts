@@ -38,13 +38,13 @@ console.log('==> Environment (isDevelopment): ', env, '(' + isDev + ')');
 console.log('==> Running Command: ', type);
 console.log('==> Command Args: ', args);
 
-if (type === 'build' || !type) {
+if (type === 'build') {
   console.log('==> Running build');
   build({
     env,
     buildType,
   });
-} else if (type === 'run') {
+} else if (type === 'run' || !type) {
   console.log('[MALEO] Running Application');
 
   const serverPath = path.join(buildDirectory, 'server.js');
