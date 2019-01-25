@@ -1,5 +1,5 @@
 {
-  "name": "@airy/with-redux-plugin",
+  "name": "@airy/maleo-redux-plugin",
   "version": "1.0.0",
   "main": "lib/index.js",
   "license": "MIT",
@@ -16,6 +16,6 @@
     "redux": "^4.0.1"
   },
   "devDependencies": {
-    "@airy/gulp-plugin": "^1.0.0"
+    "@airy/maleo-gulp-plugin": "^1.0.0"
   }
 }

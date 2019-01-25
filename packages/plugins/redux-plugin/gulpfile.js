@@ -1,4 +1,4 @@
-const gulpTaskRunner = require('@airy/gulp-plugin');
+const gulpTaskRunner = require('@airy/maleo-gulp-plugin');
 
 const distDir = '.';
 const paths = {

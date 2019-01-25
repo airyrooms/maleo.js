@@ -30,6 +30,7 @@
         "case-sensitive-paths-webpack-plugin": "2.1.2",
         "es6-promise": "4.2.5",
         "express": "4.16.4",
+        "figlet": "^1.2.1",
         "hard-source-webpack-plugin": "0.12.0",
         "helmet": "3.14.0",
         "isomorphic-fetch": "2.2.1",
@@ -45,10 +46,12 @@
         "source-map-support": "0.5.9",
         "terser-webpack-plugin": "1.1.0",
         "webpack": "4.19.0",
+        "webpack-bundle-analyzer": "^3.0.3",
         "webpack-cli": "3.1.2",
         "webpack-dev-middleware": "3.4.0",
         "webpack-hot-middleware": "2.24.3",
         "webpack-node-externals": "1.7.2",
+        "webpack-stats-plugin": "^0.2.1",
         "webpackbar": "2.6.3"
     },
     "peerDependencies": {
@@ -64,8 +67,6 @@
         "gulp-clean": "^0.4.0",
         "gulp-sourcemaps": "^2.6.4",
         "gulp-uglify": "^3.0.1",
-        "gulp-watch": "^5.0.1",
-        "webpack-bundle-analyzer": "^3.0.3",
-        "webpack-stats-plugin": "^0.2.1"
+        "gulp-watch": "^5.0.1"
     }
 }
