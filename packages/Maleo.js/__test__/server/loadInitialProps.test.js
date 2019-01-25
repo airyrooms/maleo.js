@@ -1,7 +1,7 @@
-const React = require('react');
+import React from 'react';
 
-const { matchingRoutes } = require('@airy/maleo/lib/server/routeHandler');
-const { loadInitialProps } = require('@airy/maleo/lib/server/loadInitialProps');
+import { matchingRoutes } from '@airy/maleo/lib/server/routeHandler';
+import { loadInitialProps } from '@airy/maleo/lib/server/loadInitialProps';
 
 describe('[Load Initial Props] Simple', () => {
   let routes = [];
@@ -82,7 +82,5 @@ describe('[Load Initial Props] Nested', () => {
     const pathname = '/nested';
     const mr = matchingRoutes(routes, pathname);
     const { branch, data } = await loadInitialProps(mr, {});
-
-    console.log(branch);
   });
 });

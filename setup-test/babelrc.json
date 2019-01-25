@@ -1,0 +1,4 @@
+{
+  "presets": ["@airy/maleo/babel"],
+  "plugins": ["@babel/plugin-transform-modules-commonjs"]
+}
