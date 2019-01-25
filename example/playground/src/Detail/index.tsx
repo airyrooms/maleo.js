@@ -1,5 +1,5 @@
 import React from 'react';
-import withStyles from '@airy//css-plugin/lib/withStyles';
+import withStyles from '@airy/maleo-css-plugin/lib/withStyles';
 
 import { AppContext } from '../../interface/AppContext';
 

@@ -1,5 +1,5 @@
 {
-  "name": "@airy/css-plugin",
+  "name": "@airy/maleo-css-plugin",
   "version": "1.0.0",
   "main": "lib/index.js",
   "license": "MIT",
@@ -16,7 +16,7 @@
     "isomorphic-style-loader": "^4.0.0"
   },
   "devDependencies": {
-    "@airy/gulp-plugin": "1.0.0",
+    "@airy/maleo-gulp-plugin": "1.0.0",
     "gulp": "gulpjs/gulp.git#4.0"
   }
 }

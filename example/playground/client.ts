@@ -1,4 +1,4 @@
-import { init } from '@airy/maleo/lib/client/Client';
+import { init } from '@airy/maleo/client';
 
 import { routes } from './routes';
 import { Wrap } from './_wrap';

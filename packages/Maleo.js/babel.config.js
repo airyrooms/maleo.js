@@ -1,15 +1,12 @@
-const { resolve } = require('path');
-
 const { paths } = require('./tsconfig.json').compilerOptions;
 
 const aliases = {};
 
 Object.keys(paths).forEach((item) => {
   const key = item.replace('/*', '');
-  const path = paths[item][0].replace(/src\/(.+)\/\*/, '$1/');
-  const value = resolve('lib', path);
+  const path = paths[item][0].replace(/src\/(.+)\/\*/, './lib/$1/');
 
-  aliases[key] = value;
+  aliases[key] = path;
 });
 
 module.exports = (api) => {

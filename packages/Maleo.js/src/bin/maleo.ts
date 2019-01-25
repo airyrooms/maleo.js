@@ -20,28 +20,25 @@ const buildDirectory = path.join(projectPath, '.maleo');
 // bin codes starts here
 // Importing node's own dependencies
 import path from 'path';
+import figlet from 'figlet';
 import { spawn } from 'child_process';
 
 // Importing required bin dependencies
 import { build } from '../build/index';
 
-const figletZones = `
-============================================
-============================================
-== |__  /  / _ \\  | \\ | | | ____| / ___|  ==
-==   / /  | | | | |  \\| | |  _|   \\___ \\  == 
-==  / /_  | |_| | | |\\  | | |___   ___) | ==
-== /____|  \\___/  |_| \\_| |_____| |____/  ==
-============================================
-============================================
-`;
+console.log(
+  figlet.textSync('Maleo.JS', {
+    horizontalLayout: 'default',
+    verticalLayout: 'default',
+  }),
+);
 
-console.log(figletZones);
 console.log('==> Current Working Directory: ', projectPath);
+console.log('==> Environment (isDevelopment): ', env, '(' + isDev + ')');
 console.log('==> Running Command: ', type);
 console.log('==> Command Args: ', args);
 
-if (type === 'build') {
+if (type === 'build' || !type) {
   console.log('==> Running build');
   build({
     env,

@@ -12,9 +12,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@airy/css-plugin": "1.0.0",
-    "@airy/typescript-plugin": "1.0.0",
-    "@airy/with-redux-plugin": "^1.0.0",
+    "@airy/maleo-css-plugin": "1.0.0",
+    "@airy/maleo-typescript-plugin": "1.0.0",
+    "@airy/maleo-redux-plugin": "^1.0.0",
     "@airy/maleo": "1.0.0",
     "react": "16.5.2",
     "react-redux": "^5.1.1",

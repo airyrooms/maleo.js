@@ -1,11 +1,11 @@
-import { Server } from '@airy/maleo/lib/server/Server';
+import { Server } from '@airy/maleo/server';
 import path from 'path';
 
 import { MyDocument } from './_document';
 import { routes } from './routes';
 import { Wrap } from './_wrap';
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 const maleoServer = Server.init({
   port: PORT,
