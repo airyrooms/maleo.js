@@ -1,12 +1,12 @@
-# Welcome to Maleo.JS
+# Welcome to Maleo.js
 
-Maleo.JS is an un-opinionated framework to enable Universal Rendering in JavaScript using React with no hassle.
+Maleo.js is an un-opinionated framework to enable Universal Rendering in JavaScript using React with no hassle.
 
 We are here to solve the time consuming setups Universal Rendering Required.
 
 ---
 
-Readme below is the documentation for the `canary` (prerelease) branch. To view the documentation for the latest stable Maleo.JS version change branch to `master`
+Readme below is the documentation for the `canary` (prerelease) branch. To view the documentation for the latest stable Maleo.js version change branch to `master`
 
 ---
 
@@ -25,6 +25,7 @@ Readme below is the documentation for the `canary` (prerelease) branch. To view 
   - [Customize Webpack](#customize-webpack)
   - [Customize Babel Config](#customize-babel-config)
 - [CDN Support](#cdn-support)
+- [Plugins](#plugins)
 - [FAQ](#faq)
 - [Contributing](#contributing)
 
@@ -37,7 +38,7 @@ Readme below is the documentation for the `canary` (prerelease) branch. To view 
 
 ## Setup
 
-Install Maleo.JS 
+Install Maleo.js 
 
 **NPM**
 ```bash
@@ -52,7 +53,7 @@ Add this script to your `package.json`
 ```json
 {
   "scripts": {
-    "dev": "maleo run",
+    "dev": "maleo",
     "build": "export NODE_ENV=production && maleo build",
     "start": "export NODE_ENV=production && node .maleo/server.js"
   }
@@ -117,7 +118,7 @@ To see how simple this is, check out the sample app!
 
 ## Component Lifecycle 
 
-Maleo.JS added a new component lifecycle hook called `getInitialProps`, this function is called during Server Side Rendering (SSR).
+Maleo.js added a new component lifecycle hook called `getInitialProps`, this function is called during Server Side Rendering (SSR).
 
 This is useful especially for SEO purposes. 
 
@@ -250,7 +251,7 @@ export default [
 ```
 
 ## Dynamic Import Component
-Maleo.JS supports TC39 [dynamic import proposal](https://github.com/tc39/proposal-dynamic-import) for JavaScript.
+Maleo.js supports TC39 [dynamic import proposal](https://github.com/tc39/proposal-dynamic-import) for JavaScript.
 
 You can think dynamic import as another way to split your code into manageable chunks. You can use our `Dynamic` function which utilizes [react loadable](https://github.com/jamiebuilds/react-loadable)
 
@@ -297,7 +298,7 @@ export default [
 
 For optimization purposes, you can also preload a component even before the component got rendered.
 
-For example, if you want to load a when a button get pressed, you can start preloading the component when the user hovers the mouse over the button.
+For example, if you want to load component when a button get pressed, you can start preloading the component when the user hovers the mouse over the button.
 
 The component created by `Dynamic` exposes a [static `preload` method](https://github.com/jamiebuilds/react-loadable#loadablecomponentpreload).
 
@@ -340,14 +341,14 @@ class MyComponent extends React.Component {
 
 Highly inspired by what [Next.js](https://github.com/zeit/next.js) has done on their awesome template customization.
 
-Maleo.JS also enable customization on `Document` as document's markup. So you don't need to include tags like `<html>`, `<head>`, `<body>`, etc. 
+Maleo.js also enable customization on `Document` as document's markup. So you don't need to include tags like `<html>`, `<head>`, `<body>`, etc. 
 
 To override the default behavior, you'll need to create a component that extends the `Document` React class provided by Maleo.
 
 ```jsx
 // _document.jsx
 import React from 'react';
-import { Document, Header, Main, Scripts } from '@airy/maleo/Document';
+import { Document, Header, Main, Scripts } from '@airy/maleo/document';
 
 export default class extends Document {
   render() {
@@ -356,7 +357,7 @@ export default class extends Document {
         <Header>
           <title>Maleo JS</title>
           <meta charset="utf-8" />
-          <meta name="description" content="Maleo.JS is awesome!" />
+          <meta name="description" content="Maleo.js is awesome!" />
 
           <style>
             {` body { background-color: #fff } `}
@@ -378,7 +379,7 @@ export default class extends Document {
 
 ### Custom Wrap
 
-Maleo.JS uses the `Wrap` component to initialize pages. `Wrap` contains React Router's Component. You can add HoC here to wrap the application and control the page initialization. Which allows you to do amazing things like:
+Maleo.js uses the `Wrap` component to initialize pages. `Wrap` contains React Router's Component. You can add HoC here to wrap the application and control the page initialization. Which allows you to do amazing things like:
 - Persisting layour between page changes
 - Keeping state when navigating pages
 - Custom error handling using `componentDidCatch`
@@ -389,9 +390,9 @@ To override the default behavior, you'll need to create a component that extends
 ```jsx
 // _wrap.jsx
 import React from 'react';
-import { Wrap } from '@airy/maleo/Wrap';
+import { Wrap } from '@airy/maleo/wrap';
 
-// Redux plugin for Maleo.JS
+// Redux plugin for Maleo.js
 // Hoc that creates store and add Redux Provider
 import { withRedux } from '@airy/maleo-redux-plugin';
 
@@ -444,7 +445,7 @@ const maleoServer = Server.init({
 For Custom `Wrap` you'll need to register it on `client.js` as well.
 
 ```js
-import { init } from '@airy/maleo/Client';
+import { init } from '@airy/maleo/client';
 
 import routeConfig from './routes';
 import CustomWrap from './_wrap';
@@ -463,7 +464,7 @@ init(routeConfig, module, { Wrap: CustomWrap });
 
 ## Custom Configuration
 
-For more advanced configuration of Maleo.JS, like `webpack` config, registering `plugins`, and adding `path alias`, you can create a `maleo.config.js` in the root of your project directory. (same directory with `package.json`)
+For more advanced configuration of Maleo.js, like `webpack` config, registering `plugins`, and adding `path alias`, you can create a `maleo.config.js` in the root of your project directory. (same directory with `package.json`)
 
 ```js
 // maleo.config.js
@@ -484,7 +485,7 @@ Here are the API's for the configuration:
   <tr>
     <td><code>buildDir</code></td>
     <td><code>String?</code> [<code>.maleo</code>]</td>
-    <td>Directory to put Maleo.JS' build assets</td>
+    <td>Directory to put Maleo.js' build assets</td>
   </tr>
   <tr>
     <td><code>cache</code></td>
@@ -515,7 +516,7 @@ Here are the API's for the configuration:
   <tr>
     <td><code>analyzeBundle</code></td>
     <td><code>Boolean?</code> [<code>false</code>]</td>
-    <td>To enable webpack's bundle analyzer, for analyzing bundle sizes during bundle debugging should Maleo.JS' build process got slow</td>
+    <td>To enable webpack's bundle analyzer, for analyzing bundle sizes during bundle debugging should Maleo.js' build process got slow</td>
   </tr>
   <tr>
     <td><code>webpack</code></td>
@@ -526,7 +527,7 @@ Here are the API's for the configuration:
 
 #### Customize Webpack
 
-You are able to extend Maleo.JS' default webpack configuration by defining a function on `maleo.config.js`
+You are able to extend Maleo.js' default webpack configuration by defining a function on `maleo.config.js`
 
 ```js
 // maleo.config.js
@@ -627,9 +628,9 @@ module.exports = {
 
 #### Customize Babel Config
 
-Maleo.JS also let you have your own babel config. Just simply add `.babelrc` file at the root directory of your app.
+Maleo.js also let you have your own babel config. Just simply add `.babelrc` file at the root directory of your app.
 
-You can include Maleo.JS' babel preset in order to have latest JavaScript preset.
+You can include Maleo.js' babel preset in order to have latest JavaScript preset.
 
 Here's an example of `.babelrc` file:
 ```json
@@ -651,7 +652,7 @@ The `@airy/maleo/babel` preset includes everything you need to get your developm
 
 ## CDN Support
 
-If you are using a CDN, you can set up the `publicPath` setting and configure your CDN's origin to resolve to the domain that Maleo.JS is hosted on.
+If you are using a CDN, you can set up the `publicPath` setting and configure your CDN's origin to resolve to the domain that Maleo.js is hosted on.
 
 ```js
 // maleo.config.js
@@ -665,6 +666,15 @@ module.exports = {
 
 ## FAQ
 
+== TO BE DETERMINED == 
+
+## Plugins
+- [css-plugin](https://github.com/airyrooms/maleo.js/tree/canary/packages/plugins/css-plugin)
+- [typescript-plugin](https://github.com/airyrooms/maleo.js/tree/canary/packages/plugins/typescript-plugin)
+- [redux-plugin](https://github.com/airyrooms/maleo.js/tree/canary/packages/plugins/redux-plugin)
 
 ## Contributing
-[Please follow these steps to contribute](https://github.com/airyrooms/maleo.js/blob/canary/CONTRIBUTING.md)
+[Please follow these steps to contribute to Maleo.js](https://github.com/airyrooms/maleo.js/blob/canary/CONTRIBUTING.md)
+
+[Please follow these steps to contribute to Maleo.js' plugins](https://github.com/airyrooms/maleo.js/tree/canary/packages/plugins)
+

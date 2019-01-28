@@ -1,4 +1,4 @@
-<!-- Maleo.JS Pull Request Template -->
+<!-- Maleo.js Pull Request Template -->
 
 <!-- IMPORTANT Please review https://github.com/airyrooms/maleo.js/blob/master/CONTRIBUTING.md for detailed contributing guidelines -->
 <!-- Help with PRs can be found at (added soon) -->
@@ -8,8 +8,8 @@
 <!-- Go over all points below, and after creating the PR, tick all the checkboxes that apply. -->
 <!-- All points should be verified, otherwise, read the CONTRIBUTING guidelines from above-->
 <!-- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
-- [ ] Your pull request targets the `canary` branch of Maleo.JS.
-- [ ] Branch starts with either `fix/`, `feature/`, `optimization/`, or `translate/` (e.g. `fix/build-issue`)
+- [ ] Your pull request targets the `canary` branch of Maleo.js.
+- [ ] Branch starts with either `fix/`, `feature/`, etc (e.g. `fix/build-issue`. [more info](https://github.com/airyrooms/maleo.js/blob/canary/CONTRIBUTING.md))
 - [ ] You have only one commit (if not, [squash](http://forum.freecodecamp.org/t/how-to-squash-multiple-commits-into-one-with-git/13231) them into one commit).
 - [ ] All new and existing tests pass the command `yarn test`. Use `git commit --amend` to amend any fixes.
 
@@ -20,6 +20,8 @@
 - [ ] Optimization (non-breaking change which provides better optimization)
 - [ ] Breaking change (fix or feature that would change existing functionality)
 - [ ] Add new translation (feature adding new translations)
+- [ ] Update Documentation (added new docs or doc updates)
+- [ ] Other (<!-- Please write more info inside this parentheses --> )
 
 #### Checklist:
 <!-- Go over all points below, and after creating the PR, tick the checkboxes that apply. -->

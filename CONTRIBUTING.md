@@ -2,7 +2,7 @@
 
 Hello 👋!
 
-Maleo.JS is an un-opinionated framework to enable Universal Rendering in JavaScript using React with no hassle.
+Maleo.js is an un-opinionated framework to enable Universal Rendering in JavaScript using React with no hassle.
 
 We are here to solve the time consuming setups Universal Rendering Required.
 
@@ -10,7 +10,7 @@ Feel free to contribute to this project. We are grateful for your contributions 
 
 Happy contributing 🎉!
 
-### Setting Up Maleo.JS in Local Environment
+### Setting Up Maleo.js in Local Environment
 
 **Clone Repo to Local Machine**
 
@@ -21,7 +21,7 @@ $ git clone https://github.com/<username>/maleo.js.git
 $ cd maleo.js
 ```
 
-Add Maleo.JS repo as upstream to keep your fork up to date
+Add Maleo.js repo as upstream to keep your fork up to date
 
 ```bash
 $ git remote add upstream https://github.com/airyrooms/maleo.js
@@ -30,7 +30,7 @@ $ git remote add upstream https://github.com/airyrooms/maleo.js
 Make sure you are currently on branch `canary`, if not you can run this command
 ```bash
 $ git checkout canary
-$ git pull upstream canary # sync with Maleo.JS repo
+$ git pull upstream canary # sync with Maleo.js repo
 ```
 
 **Setup**
@@ -45,7 +45,7 @@ $ npm install --global yarn
 ```
 Should the install fails, use `sudo`
 
-And then, install all the dependencies required by Maleo.JS
+And then, install all the dependencies required by Maleo.js
 
 ```bash
 $ yarn
@@ -97,7 +97,7 @@ Here is the draft:
     </tr>
 </table>
 
-For example if you want to contribute to fix bug in Maleo.JS you need to create new branch with `fix/` as the prefix.
+For example if you want to contribute to fix bug in Maleo.js you need to create new branch with `fix/` as the prefix.
 
 For example:
 ```bash
@@ -108,7 +108,7 @@ $ git checkout -b fix/webpack-bug
 
 **Development**
 
-You are now ready to contribute to Maleo.JS. Yaay 🤓!
+You are now ready to contribute to Maleo.js. Yaay 🤓!
 
 To build the module you can run this command:
 ```bash
@@ -157,26 +157,26 @@ $ git push
 
 YEAH!! 🎉🎉 You are ready to make your changes available for other people
 
-Your code are now available in your repository, but it's time to make a [Pull Request](https://help.github.com/articles/about-pull-requests/) to Maleo.JS
+Your code are now available in your repository, but it's time to make a [Pull Request](https://help.github.com/articles/about-pull-requests/) to Maleo.js
 
 ## FAQ
 <details>
-  <summary>How to test Maleo.JS on local development machine in the <code>example</code> directory?</summary>
+  <summary>How to test Maleo.js on local development machine in the <code>example</code> directory?</summary>
   Maleo.js is utilizing <a href="https://github.com/lerna/lerna">Lerna</a> and <a href="https://yarnpkg.com/lang/en/docs/workspaces/">Yarn Workspace</a> to manage the mono repo structure.
-  So you can use the Maleo.JS inside <code>package</code> folder or <code>example</code> folder. Because Yarn Workspace and Lerna has hoisted all the dependencies into root directory. Therefore every app inside <code>example</code> able to add symlinked Maleo.JS as dependency.
+  So you can use the Maleo.js inside <code>package</code> folder or <code>example</code> folder. Because Yarn Workspace and Lerna has hoisted all the dependencies into root directory. Therefore every app inside <code>example</code> able to add symlinked Maleo.js as dependency.
 </details>
 
 <br/>
 
 <details>
-  <summary>How to test Maleo.JS on your own app during development?</summary>
+  <summary>How to test Maleo.js on your own app during development?</summary>
   You can run this command inside <code>packages/Maleo.js</code> directory
   <pre>
   $ yarn link # if you are using yarn on your app
   $ npm link # if you are using npm on your app</pre>
   And then go to your app directory and add <code>@airy/maleo.js</code> to your own app's <code>package.json</code> and run this command:
   <pre>$ yarn link @airy/maleo.js</pre>
-  And you are good to go! Maleo.JS are now living in your <code>node_modules</code> directory as a symlinked module
+  And you are good to go! Maleo.js are now living in your <code>node_modules</code> directory as a symlinked module
   
   more: 
     <ul>
