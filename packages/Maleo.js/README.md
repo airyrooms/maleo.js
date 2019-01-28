@@ -117,7 +117,7 @@ To see how simple this is, check out the sample app!
 
 ## Component Lifecycle 
 
-Maleo.JS added a new component lifecycle hook called `getInitalProps`, this function is called during Server Side Rendering (SSR).
+Maleo.JS added a new component lifecycle hook called `getInitialProps`, this function is called during Server Side Rendering (SSR).
 
 This is useful especially for SEO purposes. 
 
