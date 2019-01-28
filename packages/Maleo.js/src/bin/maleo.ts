@@ -27,7 +27,7 @@ import { spawn } from 'child_process';
 import { build } from '../build/index';
 
 console.log(
-  figlet.textSync('Maleo.JS', {
+  figlet.textSync('Maleo.js', {
     horizontalLayout: 'default',
     verticalLayout: 'default',
   }),
