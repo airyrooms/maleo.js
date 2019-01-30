@@ -1,3 +1,8 @@
+[![MIT Licence](https://badges.frapsoft.com/os/mit/mit.svg?v=103)](https://github.com/airyrooms/maleo.js/blob/canary/LICENSE)
+[![npm version](https://badge.fury.io/js/@airy/maleo.svg)](https://www.npmjs.com/package/@airy/maleo)
+[![CircleCI](https://circleci.com/gh/airyrooms/maleo.js.svg?style=shield&circle-token=17fee130d97498846400aa85d04997bedb448059)](https://circleci.com/gh/airyrooms/maleo.js)
+
+
 # Welcome to Maleo.js
 
 Maleo.js is an un-opinionated framework to enable Universal Rendering in JavaScript using React with no hassle.
