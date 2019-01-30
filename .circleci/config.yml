@@ -1,5 +1,4 @@
 version: 2
-
 jobs:
   build:
     working_directory: ~/tmp
@@ -26,8 +25,11 @@ jobs:
           name: Lint
           command: yarn lint
       - run:
-          name: Run Build and Test
-          command: yarn build:test
+          name: Run Build
+          command: yarn build
+      - run:
+          name: Run Test Coverage
+          command: yarn test:cov
 workflows:
   version: 2
   unscheduled:
