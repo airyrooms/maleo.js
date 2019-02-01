@@ -1,16 +1,16 @@
 import React from 'react';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import { AppProps, InitialProps } from '@interfaces/render/IRender';
-import { loadInitialProps } from '@server/loadInitialProps';
-import { renderRoutes } from '@utils/routes';
+// import { loadInitialProps } from '@server/loadInitialProps';
+import { renderRoutes } from '@routes/routes';
 
 export interface AppState {
   data?: InitialProps['data'];
   previousLocation: Location<any> | null;
 }
 
-export class _App extends React.PureComponent<AppProps, AppState> {
+class _App extends React.PureComponent<AppProps, AppState> {
   prefetchCache = {};
 
   state = {

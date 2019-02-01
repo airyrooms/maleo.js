@@ -18,6 +18,8 @@ const paths = {
   server: 'src/server/**',
   client: 'src/client/**',
   bin: 'src/bin/*.ts',
+  routes: 'src/routes/**',
+  default: 'src/default/*.ts',
 };
 
 let tasks = Object.keys(paths);

@@ -1,6 +1,6 @@
 import path from 'path';
 import { Compiler } from 'webpack';
-import { AUTODLL_PATH } from '@src/constants';
+import { AUTODLL_PATH } from '@constants/index';
 
 const INDENT = 2;
 const DEFAULT_TRANSFORM = async (data) => JSON.stringify(data, null, INDENT);

@@ -22,6 +22,7 @@ Readme below is the documentation for the `canary` (prerelease) branch. To view 
   - [Custom Document](#custom-document)
   - [Custom Wrap](#custom-wrap)
 - [Custom Configuration](#custom-configuration)
+  - [Customize Server](#customize-server)
   - [Customize Webpack](#customize-webpack)
   - [Customize Babel Config](#customize-babel-config)
 - [CDN Support](#cdn-support)
@@ -73,36 +74,6 @@ export default [
     key: 'root',
   },
 ];
-```
-
-And then create a `server.js` file
-
-Here you can customize Maleo's server.
-```js
-import { Server } from '@airy/maleo/server';
-import path from 'path';
-
-import routeConfig from './routes';
-
-const PORT = process.env.PORT || 8080;
-
-const maleoServer = Server.init({
-  port: PORT,
-  routes: routeConfig,
-});
-
-maleoServer.run(() => {
-  console.log('Server running on port :', PORT);
-});
-```
-
-And lastly create a `client.js` file
-```js
-import { init } from '@airy/maleo/client';
-
-import routes from './routes';
-
-init(routes, module);
 ```
 
 After that you can now run `$ npm run dev` and go to `http://localhost:3000`.
@@ -522,6 +493,47 @@ Here are the API's for the configuration:
     <td><code>webpack</code></td>
     <td><code>Function?</code></td>
     <td>To customize webpack configuration, more details <a href="#customize-webpack">here</a></td>
+  </tr>
+</table>
+
+#### Customize Server
+
+Create a `server.js` file on root directory where your `package.json` lives.
+Here you can customize Maleo's server.
+```js
+import { Server } from '@airy/maleo/server';
+import path from 'path';
+
+import routeConfig from './routes';
+
+const PORT = process.env.PORT || 8080;
+
+const maleoServer = Server.init({
+  port: PORT,
+});
+
+maleoServer.run(() => {
+  console.log('Server running on port :', PORT);
+});
+```
+
+Here are the API's for the configuration:
+
+<table>
+  <tr>
+    <td>Key</td>
+    <td>Type</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>port</code></td>
+    <td><code>Number?</code> [<code>3000</code>]</td>
+    <td>Port to run Maleo server</td>
+  </tr>
+  <tr>
+    <td><code>assetDir</code></td>
+    <td><code>String?</code> [<code>'<root>/.maleo/client'</code>]</td>
+    <td>Directory for all client related assets</td>
   </tr>
 </table>
 

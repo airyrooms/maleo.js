@@ -4,7 +4,13 @@ const aliases = {};
 
 Object.keys(paths).forEach((item) => {
   const key = item.replace('/*', '');
-  const path = paths[item][0].replace(/src\/(.+)\/\*/, './lib/$1/');
+
+  let path = '';
+  if (paths[item][0] === './*') {
+    path = './';
+  } else {
+    path = paths[item][0].replace(/src\/(.+)\/\*/, './lib/$1/');
+  }
 
   aliases[key] = path;
 });

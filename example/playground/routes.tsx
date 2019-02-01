@@ -1,5 +1,6 @@
 import React from 'react';
-import Dynamic from '@airy/maleo/lib/utils/dynamicImport';
+import Dynamic from '@airy/maleo/dynamic';
+import { registerRoutes } from '@airy/maleo/routes';
 
 import { RoomsMainApp } from './src/MainApp';
 
@@ -24,9 +25,8 @@ const RoomsDetail = Dynamic({
 // import { RoomsDetail } from 'src/Detail';
 // import { RoomsSearch } from 'src/Search';
 
-export const routes = [
+const routes = [
   {
-    path: '/',
     component: RoomsMainApp,
     key: 'rootWrapper',
     routes: [
@@ -48,7 +48,6 @@ export const routes = [
             exact: true,
           },
         ],
-        // exact: true,
       },
       {
         path: '/detail',
@@ -64,3 +63,5 @@ export const routes = [
     ],
   },
 ];
+
+export default routes;

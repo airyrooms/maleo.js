@@ -15,8 +15,9 @@ import helmet from 'helmet';
 import { IOptions } from '@interfaces/server/IOptions';
 
 import { render } from './render';
-import { BUILD_DIR, SERVER_ASSETS_ROUTE } from '@src/constants';
+import { BUILD_DIR, SERVER_ASSETS_ROUTE } from '@constants/index';
 import { requireRuntime } from '@utils/require';
+import { AsyncRouteProps } from '@interfaces/render/IRender';
 
 export class Server {
   app: Express;
@@ -29,8 +30,12 @@ export class Server {
   constructor(options: IOptions) {
     const defaultOptions = {
       assetDir: path.resolve('.', BUILD_DIR, 'client'),
-      routes: [],
+      routes: requireRuntime(path.resolve('.', BUILD_DIR, 'routes.js')) as AsyncRouteProps[],
       port: 8080,
+
+      _document: requireRuntime(path.resolve('.', BUILD_DIR, 'document.js')),
+      _wrap: requireRuntime(path.resolve('.', BUILD_DIR, 'wrap.js')),
+      _app: requireRuntime(path.resolve('.', BUILD_DIR, 'app.js')),
 
       ...options,
     } as IOptions;
@@ -98,7 +103,7 @@ export class Server {
     });
 
     // asset serving
-    app.use(SERVER_ASSETS_ROUTE, express.static(this.options.assetDir));
+    app.use(SERVER_ASSETS_ROUTE, express.static(this.options.assetDir as string));
   };
 
   private setupDevServer = (app: Express) => {
@@ -123,7 +128,7 @@ export class Server {
       publicPath: clientCompiler.options.output.publicPath || WEBPACK_PUBLIC_PATH,
       watchOptions: { ignored },
     };
-    app.use(requireRuntime('webpack-dev-middleware')(multiCompiler, wdmOptions));
+    app.use(requireRuntime('webpack-dev-middleware')(clientCompiler, wdmOptions));
 
     const whmOptions = {
       // tslint:disable-next-line:no-console

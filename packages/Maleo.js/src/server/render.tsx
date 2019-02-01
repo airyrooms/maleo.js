@@ -5,7 +5,7 @@ import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack';
 import { Response } from 'express';
 
-import { REACT_LOADABLE_MANIFEST } from '@src/constants';
+import { REACT_LOADABLE_MANIFEST } from '@constants/index';
 import { isPromise } from '@utils/index';
 import { requireDynamic, requireRuntime } from '@utils/require';
 import { loadInitialProps, loadComponentProps } from './loadInitialProps';
@@ -16,10 +16,6 @@ import {
   LoadableBundles,
   DocumentContext,
 } from '@interfaces/render/IRender';
-
-import { Document as DefaultDocument } from '@render/_document';
-import { App as DefaultApp } from '@render/_app';
-import { _Wrap as DefaultWrap } from '@render/_wrap';
 
 export const mapAssets = (stats: any) => {
   const { assetsByChunkName } = stats;
@@ -45,22 +41,12 @@ export const mapAssets = (stats: any) => {
 };
 
 export const getPreloadScripts = async (dir: string, res: Response) => {
-  if (__DEV__) {
-    const stats = res.locals.webpackStats.toJson().children[0];
-    return mapAssets(stats);
-  }
-
   // get bundles from webpack assets.json
   return mapAssets(requireRuntime(path.join(dir, 'stats.json')));
 };
 
-const modPageFn = function<Props>(Page: React.ComponentType<Props>) {
-  return (props: Props) => <Page {...props} />;
-};
 export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: RenderPageParams) => {
-  return async (
-    fn = modPageFn,
-  ): Promise<{
+  return async (): Promise<{
     html: string;
     bundles: LoadableBundles[];
   }> => {
@@ -81,7 +67,7 @@ export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: Rende
     const asyncOrSyncRender = renderer(
       <Loadable.Capture report={reportResults}>
         <Wrap location={req.baseUrl} context={appContext} server {...wrapProps}>
-          {fn(App)({ routes, data, ...appProps })}
+          <App {...{ routes, data, ...appProps }} />
         </Wrap>
       </Loadable.Capture>,
     );
@@ -118,9 +104,9 @@ export const render = async ({
   res,
   dir,
   routes,
-  Document = DefaultDocument,
-  App = DefaultApp,
-  Wrap = DefaultWrap,
+  Document,
+  App,
+  Wrap,
   renderPage = defaultRenderPage,
 }: RenderParam) => {
   const preloadScripts = await getPreloadScripts(dir, res);
@@ -184,5 +170,7 @@ export const render = async ({
 
     return renderToString(<Document {...initialProps} />);
   }
+
+  // TODO: add customizable error page
   return 'error';
 };
