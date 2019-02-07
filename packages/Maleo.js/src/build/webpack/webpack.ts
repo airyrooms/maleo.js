@@ -407,7 +407,7 @@ export const getDefaultOutput = (context: BuildContext): Configuration['output']
     publicPath,
 
     chunkFilename: isDev ? '[name].js' : '[name]-[hash].js',
-    filename: isDev ? '[name]' : '[name]-[hash]',
+    filename: isDev ? '[name].js' : '[name]-[hash].js',
     library: '[name]',
 
     // hotUpdateChunkFilename: 'hot/hot-update.js',
