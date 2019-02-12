@@ -39,8 +39,8 @@ export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: Rende
 
     const asyncOrSyncRender = renderer(
       <Loadable.Capture report={reportResults}>
-        <Wrap location={req.baseUrl} context={appContext} server {...wrapProps}>
-          <App {...{ routes, data, ...appProps }} />
+        <Wrap location={req.originalUrl} context={appContext} server {...wrapProps}>
+          <App {...{ routes, data, location: { pathname: req.originalUrl }, ...appProps }} />
         </Wrap>
       </Loadable.Capture>,
     );

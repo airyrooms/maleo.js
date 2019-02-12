@@ -113,9 +113,6 @@ export class Server {
       stats: false,
       serverSideRender: true,
       hot: true,
-      // writeToDisk: (filepath) => {
-      //   return /\.json$/.test(filepath);
-      // },
       writeToDisk: true,
       // @ts-ignore
       publicPath: clientCompiler.options.output.publicPath || WEBPACK_PUBLIC_PATH,
@@ -129,6 +126,6 @@ export class Server {
       path: '/__webpack_hmr',
       heartbeat: 10 * 10000,
     };
-    app.use(requireRuntime('webpack-hot-middleware')(multiCompiler, whmOptions));
+    app.use(requireRuntime('webpack-hot-middleware')(clientCompiler, whmOptions));
   };
 }

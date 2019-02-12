@@ -1,5 +1,4 @@
 // tslint:disable:no-console
-
 import path from 'path';
 import {
   Configuration,
@@ -26,7 +25,6 @@ import WebpackBar from 'webpackbar';
 import CaseInsensitivePathPlugin from 'case-sensitive-paths-webpack-plugin';
 import FriendlyError from 'friendly-errors-webpack-plugin';
 import RequireCacheHMR from './plugins/require-cache-hmr';
-import CleanPlugin from 'clean-webpack-plugin';
 
 import {
   REACT_LOADABLE_MANIFEST,
@@ -229,10 +227,10 @@ export const getDefaultEntry = (
     : path.resolve(__dirname, '../../../lib/default/_client.js');
 
   return {
+    main: [clientEntry].filter(Boolean) as string[],
     routes,
     wrap: `maleo-register-loader?page=wrap&absolutePagePath=${wrap}!`,
     app: `maleo-register-loader?page=app&absolutePagePath=${app}!`,
-    main: [clientEntry].filter(Boolean) as string[],
   };
 };
 
@@ -371,11 +369,6 @@ export const getDefaultPlugins = (
 ): Configuration['plugins'] => {
   const { isDev, projectDir, publicPath, env, isServer, analyzeBundle, name } = context;
 
-  // To clean up server HMR files
-  const cleanUpFiles = ['*.hot-update.*'].map((p) =>
-    isServer ? path.join(BUILD_DIR, p) : path.join(BUILD_DIR, 'client', p),
-  );
-
   const commonPlugins: Configuration['plugins'] =
     ([
       new CaseInsensitivePathPlugin(), // Fix OSX case insensitive
@@ -396,6 +389,7 @@ export const getDefaultPlugins = (
 
       // Commented due to issue with WDM and WHM
       // details: https://github.com/mzgoddard/hard-source-webpack-plugin/issues/416
+
       // new HardSourcePlugin({
       //   cacheDirectory: path.join(
       //     projectDir,
@@ -434,15 +428,6 @@ export const getDefaultPlugins = (
       new StatsWriterPlugin({
         isDev,
       }),
-
-      isDev &&
-        new CleanPlugin(cleanUpFiles, {
-          root: projectDir,
-          verbose: true,
-          watch: true,
-          exclude: ['server.js'],
-          beforeEmit: true,
-        }),
     ].filter(Boolean) as Configuration['plugins']) || [];
 
   // Setting Up Server Plugins
@@ -510,6 +495,11 @@ export const getDefaultOutput = (
 ): Configuration['output'] => {
   const { isServer, projectDir, buildDirectory, publicPath, isDev } = context;
 
+  const hmr = {
+    hotUpdateChunkFilename: 'hot/hot-update.js',
+    hotUpdateMainFilename: 'hot/hot-update.json',
+  };
+
   if (isServer) {
     return {
       filename: '[name].js',
@@ -518,6 +508,7 @@ export const getDefaultOutput = (
 
       library: '[name]',
       libraryTarget: 'commonjs2',
+      ...hmr,
     };
   }
 
@@ -528,9 +519,7 @@ export const getDefaultOutput = (
     chunkFilename: isDev ? '[name].js' : '[name]-[hash].js',
     filename: isDev ? '[name].js' : '[name]-[hash].js',
     library: '[name]',
-
-    // hotUpdateChunkFilename: 'hot/hot-update.js',
-    // hotUpdateMainFilename: 'hot/hot-update.json',
+    ...hmr,
   };
 };
 
