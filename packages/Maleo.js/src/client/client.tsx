@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Loadable from 'react-loadable';
-import { hot } from 'react-hot-loader';
 
 import { loadInitialProps, loadComponentProps } from '@server/loadInitialProps';
 import { InitialProps } from '@interfaces/render/IRender';
@@ -22,11 +21,11 @@ export const init = async () => {
     const wrapProps = await loadComponentProps(Wrap);
     const appProps = await loadComponentProps(App);
 
-    const RenderApp = hot(module)(() => (
+    const RenderApp = () => (
       <Wrap {...wrapProps}>
         <App data={data} routes={routes} {...appProps} {...wrapProps} />
       </Wrap>
-    ));
+    );
 
     hydrate(RenderApp);
   } catch (err) {

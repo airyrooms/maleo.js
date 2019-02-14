@@ -33,10 +33,6 @@ export class Server {
       routes: requireRuntime(path.resolve('.', BUILD_DIR, 'routes.js')) as AsyncRouteProps[],
       port: 8080,
 
-      _document: requireRuntime(path.resolve('.', BUILD_DIR, 'document.js')),
-      _wrap: requireRuntime(path.resolve('.', BUILD_DIR, 'wrap.js')),
-      _app: requireRuntime(path.resolve('.', BUILD_DIR, 'app.js')),
-
       ...options,
     } as IOptions;
 
@@ -61,10 +57,6 @@ export class Server {
       req,
       res,
       dir: this.options.assetDir,
-      routes: this.options.routes,
-      Document: this.options._document,
-      App: this.options._app,
-      Wrap: this.options._wrap,
     });
 
     res.send(html);
@@ -74,7 +66,7 @@ export class Server {
     res.send('favicon.ico');
   };
 
-  private setupExpress = () => {
+  private setupExpress = async () => {
     this.app = express();
 
     // Setup for development HMR, etc
@@ -121,14 +113,15 @@ export class Server {
       stats: false,
       serverSideRender: true,
       hot: true,
-      writeToDisk: (filepath) => {
-        return /\.json$/.test(filepath);
-      },
+      // writeToDisk: (filepath) => {
+      //   return /\.json$/.test(filepath);
+      // },
+      writeToDisk: true,
       // @ts-ignore
       publicPath: clientCompiler.options.output.publicPath || WEBPACK_PUBLIC_PATH,
       watchOptions: { ignored },
     };
-    app.use(requireRuntime('webpack-dev-middleware')(clientCompiler, wdmOptions));
+    app.use(requireRuntime('webpack-dev-middleware')(multiCompiler, wdmOptions));
 
     const whmOptions = {
       // tslint:disable-next-line:no-console
@@ -136,6 +129,6 @@ export class Server {
       path: '/__webpack_hmr',
       heartbeat: 10 * 10000,
     };
-    app.use(requireRuntime('webpack-hot-middleware')(clientCompiler, whmOptions));
+    app.use(requireRuntime('webpack-hot-middleware')(multiCompiler, whmOptions));
   };
 }
