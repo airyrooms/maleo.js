@@ -1,11 +1,10 @@
 import { DocumentProps, AppProps } from '../render/IRender';
 
 export interface IOptions {
-  port: number;
+  port: number | string;
 
-  assetDir: string;
-  distDir: string;
-  routes: [];
+  assetDir?: string;
+  routes?: [];
 
   _document?: React.ReactElement<DocumentProps>;
   _app?: React.ReactElement<AppProps>;

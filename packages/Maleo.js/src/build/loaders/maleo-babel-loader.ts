@@ -9,6 +9,15 @@ export default babelLoader.custom((babel) => {
   const configs = new Set();
 
   return {
+    customOptions(opts) {
+      const loader = {
+        cacheCompression: false,
+        cacheDirectory: true,
+        ...opts,
+      };
+
+      return { loader };
+    },
     config(config) {
       const options = { ...config.options };
       if (config.hasFilesystemConfig()) {
