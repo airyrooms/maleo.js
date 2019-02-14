@@ -1,3 +1,5 @@
+// https://github.com/zeit/next.js/blob/canary/packages/next/build/webpack/plugins/nextjs-require-cache-hot-reloader.js
+
 function deleteCache(path: string) {
   delete require.cache[path];
 }
@@ -30,3 +32,5 @@ export class RequireCacheHMR {
     });
   }
 }
+
+export default RequireCacheHMR;

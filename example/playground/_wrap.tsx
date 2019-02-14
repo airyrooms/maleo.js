@@ -20,7 +20,7 @@ export default class extends Wrap {
   render() {
     return (
       <div>
-        <h1>This is NAVBARRR</h1>
+        <h1>This is NAVBARRR HMR</h1>
         {super.render()}
       </div>
     );

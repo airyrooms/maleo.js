@@ -102,13 +102,7 @@ export interface RenderParam {
   req: Request;
   res: Response;
   dir: string;
-  routes: AsyncRouteProps[];
-  // Document?: React.ReactElement<DocumentProps>;
-  // App?: React.ReactElement<AppProps>;
-  // Wrap?: React.ReactElement<any>;
-  Document?: typeof React.Component;
-  App?: typeof React.Component;
-  Wrap?: typeof React.Component;
+
   renderPage?: (
     param: RenderPageParams,
   ) => (fn?: ModPageFn) => Promise<{ html: string; bundles: LoadableBundles[] }>;
@@ -131,3 +125,10 @@ export interface RenderPageParams {
 export type ModPageFn = <Props>(
   Page: React.ComponentType<Props>,
 ) => (props: Props) => React.ReactElement<Props>;
+
+export interface ServerAssets {
+  routes: AsyncRouteProps[];
+  document: typeof React.Component;
+  app: typeof React.Component;
+  wrap: typeof React.Component;
+}

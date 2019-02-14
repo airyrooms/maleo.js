@@ -25,6 +25,8 @@ import nodeExternals from './utils/webpackNodeExternals';
 import WebpackBar from 'webpackbar';
 import CaseInsensitivePathPlugin from 'case-sensitive-paths-webpack-plugin';
 import FriendlyError from 'friendly-errors-webpack-plugin';
+import RequireCacheHMR from './plugins/require-cache-hmr';
+import CleanPlugin from 'clean-webpack-plugin';
 
 import {
   REACT_LOADABLE_MANIFEST,
@@ -141,6 +143,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
   if (isServer) {
     // required on server bundle
     const whitelist = [
+      /webpack[/\\]hot[/\\](signal|poll)/,
       /react[/\\]/,
       /@airy[/\\]maleo/,
       /@babel[/\\]runtime[/\\]/,
@@ -198,7 +201,7 @@ export const getDefaultEntry = (
   context: BuildContext,
   customConfig: CustomConfig,
 ): Configuration['entry'] => {
-  const { isServer, projectDir } = context;
+  const { isServer, projectDir, isDev } = context;
 
   const { routes, document, wrap, app } = getStaticEntries(context, customConfig);
 
@@ -209,7 +212,7 @@ export const getDefaultEntry = (
       : path.resolve(__dirname, '../../../lib/default/_server.js');
 
     return {
-      server: serverEntry,
+      server: [isDev && 'webpack/hot/signal', serverEntry].filter(Boolean) as string[],
       routes,
       document,
       wrap,
@@ -223,14 +226,10 @@ export const getDefaultEntry = (
     : path.resolve(__dirname, '../../../lib/default/_client.js');
 
   return {
-    main: [
-      'webpack-hot-middleware/client?reload=true',
-      require.resolve('react-hot-loader/patch'),
-      clientEntry,
-    ],
     routes: `maleo-register-loader?page=routes&absolutePagePath=${routes}!`,
     wrap: `maleo-register-loader?page=wrap&absolutePagePath=${wrap}!`,
     app: `maleo-register-loader?page=app&absolutePagePath=${app}!`,
+    main: [clientEntry].filter(Boolean) as string[],
   };
 };
 
@@ -359,6 +358,11 @@ export const getDefaultPlugins = (
 ): Configuration['plugins'] => {
   const { isDev, projectDir, publicPath, env, isServer, analyzeBundle, name } = context;
 
+  // To clean up server HMR files
+  const cleanUpFiles = ['*.hot-update.*'].map((p) =>
+    isServer ? path.join(BUILD_DIR, p) : path.join(BUILD_DIR, 'client', p),
+  );
+
   const commonPlugins: Configuration['plugins'] =
     ([
       new CaseInsensitivePathPlugin(), // Fix OSX case insensitive
@@ -407,6 +411,25 @@ export const getDefaultPlugins = (
       // }),
 
       // Setting up Development Plugins
+      isDev && new RequireCacheHMR(),
+
+      // HMR
+      isDev && new HotModuleReplacementPlugin(),
+      isDev && new NoEmitOnErrorsPlugin(),
+
+      // Bundled Stats
+      new StatsWriterPlugin({
+        isDev,
+      }),
+
+      isDev &&
+        new CleanPlugin(cleanUpFiles, {
+          root: projectDir,
+          verbose: true,
+          watch: true,
+          exclude: ['server.js'],
+          beforeEmit: true,
+        }),
     ].filter(Boolean) as Configuration['plugins']) || [];
 
   // Setting Up Server Plugins
@@ -420,8 +443,6 @@ export const getDefaultPlugins = (
           raw: true,
           entryOnly: false,
         }),
-
-        // new RequireCacheHMR(),
       ].filter(Boolean) as Configuration['plugins']) || [];
 
     return [...commonPlugins, ...serverPlugins];
@@ -434,14 +455,6 @@ export const getDefaultPlugins = (
       }),
 
       analyzeBundle && new BundleAnalyzerPlugin(),
-
-      // Bundled Stats
-      new StatsWriterPlugin({
-        isDev,
-      }),
-
-      new HotModuleReplacementPlugin(),
-      new NoEmitOnErrorsPlugin(),
     ].filter(Boolean) as Configuration['plugins']) || [];
 
   return [...clientPlugins, ...commonPlugins];

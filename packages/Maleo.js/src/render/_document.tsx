@@ -106,7 +106,7 @@ export class Scripts extends React.Component {
           }}
         />
         {preloadScripts.map((p, i) => (
-          <script key={i} src={`${WEBPACK_PUBLIC_PATH}${p.filename}`} async />
+          <script key={i} src={`${WEBPACK_PUBLIC_PATH}${p.filename}`} defer />
         ))}
       </Fragment>
     );

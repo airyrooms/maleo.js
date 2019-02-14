@@ -2,7 +2,7 @@ const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TsConfigPathPlugin = require('tsconfig-paths-webpack-plugin');
 
-const whitelistEntries = /(webpack-hot-middleware|react-hot-loader|_server|_client)/;
+const whitelistEntries = /(webpack|react-hot-loader|_server|_client)/;
 
 const replaceJStoTS = (entries = {}) =>
   Object.keys(entries).reduce((p, c) => {

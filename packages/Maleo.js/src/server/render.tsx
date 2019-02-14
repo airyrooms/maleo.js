@@ -3,9 +3,8 @@ import path from 'path';
 import { renderToString } from 'react-dom/server';
 import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack';
-import { Response } from 'express';
 
-import { REACT_LOADABLE_MANIFEST } from '@constants/index';
+import { REACT_LOADABLE_MANIFEST, BUILD_DIR } from '@constants/index';
 import { isPromise } from '@utils/index';
 import { requireDynamic, requireRuntime } from '@utils/require';
 import { loadInitialProps, loadComponentProps } from './loadInitialProps';
@@ -15,35 +14,9 @@ import {
   RenderPageParams,
   LoadableBundles,
   DocumentContext,
+  ServerAssets,
 } from '@interfaces/render/IRender';
-
-export const mapAssets = (stats: any) => {
-  const { assetsByChunkName } = stats;
-  let assets = assetsByChunkName;
-
-  if (process.env.NODE_ENV !== 'production') {
-    assets = {
-      ...assets,
-      ...stats.development,
-    };
-  }
-
-  return Object.keys(assets).reduce(
-    (accumulator, current) => [
-      ...accumulator,
-      {
-        name: current,
-        filename: assets[current].constructor === Array ? assets[current][0] : assets[current],
-      },
-    ],
-    [],
-  );
-};
-
-export const getPreloadScripts = async (dir: string, res: Response) => {
-  // get bundles from webpack assets.json
-  return mapAssets(requireRuntime(path.join(dir, 'stats.json')));
-};
+import extractStats from './extract-stats';
 
 export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: RenderPageParams) => {
   return async (): Promise<{
@@ -99,17 +72,20 @@ export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: Rende
   };
 };
 
-export const render = async ({
-  req,
-  res,
-  dir,
-  routes,
-  Document,
-  App,
-  Wrap,
-  renderPage = defaultRenderPage,
-}: RenderParam) => {
-  const preloadScripts = await getPreloadScripts(dir, res);
+let preloadScripts: any[] = [];
+export const render = async ({ req, res, dir, renderPage = defaultRenderPage }: RenderParam) => {
+  const { document: Document, routes, wrap: Wrap, app: App } = getServerAssets();
+
+  // sort preload with main last
+  if (__DEV__ || (!__DEV__ && !preloadScripts.length)) {
+    preloadScripts = extractStats(dir);
+    const mainIndex = preloadScripts.findIndex((p) => /main/.test(p.filename));
+    preloadScripts = [
+      ...preloadScripts.slice(0, mainIndex),
+      ...preloadScripts.slice(mainIndex + 1),
+      preloadScripts[mainIndex],
+    ];
+  }
 
   // matching routes
   const matchedRoutes = matchingRoutes(routes, req.baseUrl);
@@ -173,4 +149,19 @@ export const render = async ({
 
   // TODO: add customizable error page
   return 'error';
+};
+
+const getServerAssets = (): ServerAssets => {
+  const serverDir = path.join(process.cwd(), BUILD_DIR);
+  const assets = extractStats(serverDir);
+
+  const serverRequiredAssets = assets.filter((a) => /(routes|document|wrap|app)/.test(a.name));
+
+  return serverRequiredAssets.reduce(
+    (p, c) => ({
+      ...p,
+      [c.name]: requireRuntime(path.join(serverDir, c.filename)),
+    }),
+    {},
+  ) as ServerAssets;
 };
