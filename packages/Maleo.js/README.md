@@ -82,7 +82,7 @@ You should now see your app running on your browser.
 
 By now you should see 
 - Automatic transpilation and bundling (with webpack and babel)
-- Hot code reloading
+- ~~Hot code reloading~~ [#17](https://github.com/airyrooms/maleo.js/issues/17)
 - Server rendering
 
 To see how simple this is, check out the sample app!
@@ -103,6 +103,7 @@ export default class extends React.Component {
 
     const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
 
+    // the return value will be passed as props for this component
     return { userAgent };
   }
 
@@ -144,7 +145,9 @@ export default Component;
 ## Routing
 
 Routing are declared as a centralized route config.
-Register all the route config in `routes.js` file.
+Register all the route config in `routes.jsx` file.
+
+If you put the `routes.jsx` files on root directory, Maleo will automatically register your route. Otherwise put path to your routes on [Maleo config](#custom-configuration).
 
 Routes file has to export default the route configuration.
 The route object **expected to have distinct key** to indicate the route.
@@ -317,7 +320,7 @@ Maleo.js also enable customization on `Document` as document's markup. So you do
 To override the default behavior, you'll need to create a component that extends the `Document` React class provided by Maleo.
 
 ```jsx
-// _document.jsx
+// document.jsx
 import React from 'react';
 import { Document, Header, Main, Scripts } from '@airy/maleo/document';
 
@@ -359,7 +362,7 @@ Maleo.js uses the `Wrap` component to initialize pages. `Wrap` contains React Ro
 To override the default behavior, you'll need to create a component that extends the `Wrap` React class provided by Maleo.
 
 ```jsx
-// _wrap.jsx
+// wrap.jsx
 import React from 'react';
 import { Wrap } from '@airy/maleo/wrap';
 
@@ -379,6 +382,7 @@ export default class extends Wrap {
     // you receive store from context
     // you can access or do something with the store here
     console.log('Initialized Redux Store', store);
+    return {}
   }
 
   render() {
@@ -391,51 +395,16 @@ export default class extends Wrap {
 }
 
 ```
+If you put `document.jsx` and `wrap.jsx` on root directory (the same level with `package.json`), then Maleo will automatically register your custom Document and Wrap. Otherwise, you can add the path to your custom Document and Wrap on [Maleo config](#custom-configuration)
 
-
-After that register the all custom `Document` or `Wrap` to your `server.js` file. like so:
-
-```
-...
-
-import CustomDocument from './_document';
-import CustomWrap from './_wrap';
-
-...
-
-const maleoServer = Server.init({
-  ...
-  _document: CustomDocument,
-  _wrap: CustomWrap,
-  ...
-});
-
-...
-```
-
-For Custom `Wrap` you'll need to register it on `client.js` as well.
-
-```js
-import { init } from '@airy/maleo/client';
-
-import routeConfig from './routes';
-import CustomWrap from './_wrap';
-
-init(routeConfig, module, { Wrap: CustomWrap });
-```
 ---
-
-***We are currently working on automatic custom `Document` and `Wrap` registration***
-
-***For now you can register the component like the example above***
-
 ***We are also working on adding default and customizable `Error` component page***
 
 ---
 
 ## Custom Configuration
 
-For more advanced configuration of Maleo.js, like `webpack` config, registering `plugins`, and adding `path alias`, you can create a `maleo.config.js` in the root of your project directory. (same directory with `package.json`)
+For more advanced configuration of Maleo.js, like `webpack` config, registering `plugins`, path to your routes, custom Document and Wrap, and adding `path alias`, you can create a `maleo.config.js` in the root of your project directory. (same directory with `package.json`)
 
 ```js
 // maleo.config.js
@@ -493,6 +462,26 @@ Here are the API's for the configuration:
     <td><code>webpack</code></td>
     <td><code>Function?</code></td>
     <td>To customize webpack configuration, more details <a href="#customize-webpack">here</a></td>
+  </tr>
+  <tr>
+    <td><code>routes</code></td>
+    <td><code>string?</code> [<code>rootDir/routes.jsx</code>]</td>
+    <td>Path to your routes file</td>
+  </tr>
+  <tr>
+    <td><code>customDocument</code></td>
+    <td><code>string?</code> [<code>rootDir/document.jsx</code>]</td>
+    <td>Path to your custom document file</td>
+  </tr>
+  <tr>
+    <td><code>customWrap</code></td>
+    <td><code>string?</code> [<code>rootDir/wrap.jsx</code>]</td>
+    <td>Path to your custom wrap file</td>
+  </tr>
+  <tr>
+    <td><code>customApp</code></td>
+    <td><code>string?</code> [<code>rootDir/app.jsx</code>]</td>
+    <td>Path to your custom app file</td>
   </tr>
 </table>
 
@@ -659,7 +648,6 @@ The `@airy/maleo/babel` preset includes everything you need to get your developm
 - `@babel/plugin-proposal-decorators`
 - `@babel/plugin-proposal-object-rest-spread`
 - `@babel/plugin-transform-runtime`
-- `react-hot-loader/babel`
 - `react-loadable/babel`
 
 ## CDN Support
