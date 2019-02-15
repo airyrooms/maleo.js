@@ -14,7 +14,7 @@ import {
 // Webpack Optimizations Plugin
 import TerserPlugin from 'terser-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-// import HardSourcePlugin from 'hard-source-webpack-plugin';
+import HardSourcePlugin from 'hard-source-webpack-plugin';
 
 // Webpack required plugins
 import { StatsWriterPlugin } from 'webpack-stats-plugin';
@@ -443,6 +443,34 @@ export const getDefaultPlugins = (
           raw: true,
           entryOnly: false,
         }),
+
+        isDev &&
+          new HardSourcePlugin({
+            cacheDirectory: path.join(
+              projectDir,
+              `node_modules/.cache/hard-source/server/[confighash]`,
+            ),
+            cachePrune: {
+              // Caches younger than `maxAge` are not considered for deletion. They must
+              // be at least this (default: 2 days) old in milliseconds.
+              maxAge: 2 * 24 * 60 * 60 * 1000,
+              // All caches together must be larger than `sizeThreshold` before any
+              // caches will be deleted. Together they must be at least this
+              // (default: 50 MB) big in bytes.
+              sizeThreshold: 50 * 1024 * 1024,
+            },
+
+            environmentHash: {
+              root: projectDir,
+              directories: [],
+              files: ['package-lock.json', 'yarn.lock'],
+            },
+
+            info: {
+              mode: env,
+              level: 'log',
+            },
+          }),
       ].filter(Boolean) as Configuration['plugins']) || [];
 
     return [...commonPlugins, ...serverPlugins];
@@ -495,15 +523,15 @@ export const getDefaultOutput = (
 /**
  * Load User Config with file name USER_CUSTOM_CONFIG (maleo.config.js)
  */
-export const loadUserConfig = (dir: string): CustomConfig => {
+export const loadUserConfig = (dir: string, quiet?: boolean): CustomConfig => {
   const cwd: string = path.resolve(dir);
   const userConfigPath: string = path.resolve(cwd, USER_CUSTOM_CONFIG);
   try {
     const userConfig = requireRuntime(userConfigPath);
 
     if (userConfig !== undefined) {
-      // tslint:disable-next-line:quotemark
-      console.log("[Webpack] Using user's config");
+      // tslint:disable-next-line:no-unused-expression quotemark
+      !quiet && console.log("[Webpack] Using user's config");
       return {
         ...defaultUserConfig,
         ...userConfig,
@@ -513,7 +541,8 @@ export const loadUserConfig = (dir: string): CustomConfig => {
     return defaultUserConfig;
   } catch (err) {
     if (err.code !== 'MODULE_NOT_FOUND') {
-      console.log('[Webpack] Using Default Config');
+      // tslint:disable-next-line:no-unused-expression
+      !quiet && console.log('[Webpack] Using Default Config');
     }
     return defaultUserConfig;
   }
