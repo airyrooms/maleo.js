@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "maleo run",
+    "dev": "maleo dev",
     "build:prod": "export NODE_ENV=production && maleo build",
-    "start": "export NODE_ENV=production && node .maleo/server.js"
+    "start": "export NODE_ENV=production && maleo run"
   },
     "keywords": [],
   "author": "",
