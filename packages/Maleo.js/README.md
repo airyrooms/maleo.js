@@ -144,10 +144,10 @@ export default Component;
 
 ## Routing
 
-Routing are declared as a centralized route config.
-Register all the route config in `routes.jsx` file.
+Routing is declared in a centralized route config.
+Register all the route config in `maleo-routes.json` file.
 
-If you put the `routes.jsx` files on root directory, Maleo will automatically register your route. Otherwise put path to your routes on [Maleo config](#custom-configuration).
+If you put the `maleo-routes.json` files on root directory, Maleo will automatically register your route. Otherwise put path to your routes on [Maleo config](#custom-configuration).
 
 Routes file has to export default the route configuration.
 The route object **expected to have distinct key** to indicate the route.
@@ -161,12 +161,12 @@ The route object **expected to have distinct key** to indicate the route.
   <tr>
     <td><code>path</code></td>
     <td><code>String!</code></td>
-    <td>React Router path string</td>
+    <td>Routes path</td>
   </tr>
   <tr>
-    <td><code>component</code></td>
-    <td><code>React.Component!</code></td>
-    <td>React Component to render on this route. You can use <code>this.props.children</code> to make the component as a Wrapper and render the child routes</td>
+    <td><code>page</code></td>
+    <td><code>String!</code></td>
+    <td>Path to React Component for this route path</td>
   </tr>
   <tr>
     <td><code>key</code></td>
@@ -187,41 +187,40 @@ The route object **expected to have distinct key** to indicate the route.
 
 
 For example:
-```js
-// routes.js
-export default [
-  // wrapper route
+```json
+[
   {
-    path: '/',
-    component: SomeWrapperComponent,
-    key: 'root-Wrapper', // distinct key to indicate the route
-    // declare routes inside this wrapper
-    routes: [
-      // nested route
+    "page": "./src/MainApp",
+    "key": "rootWrapper",
+    "routes": [
       {
-        path: '/',
-        key: 'root-Page',
-        component: RootPageComponent,
-        exact: true, // indicate that the path has to be exact
+        "path": "/",
+        "key": "rootPage",
+        "page": "./src/Search",
+        "exact": true
       },
-      // this route receives wrapper from root 
-      // and declare other wrapper inside it for other routes
       {
-        path: '/some-url',
-        key: 'someUrl-Wrapper',
-        component: SomeURLWrapper,
-        routes: [
+        "path": "/search",
+        "key": "root-search",
+        "page": "./src/Search",
+        "routes": [
           {
-            path: '/some-url/hello',
-            key: 'someUrl-HelloPage',
-            component: SomeURLHelloPage,
-            exact: true,
+            "path": "/search/hello",
+            "key": "search-hello",
+            "page": "./src/Detail",
+            "exact": true
           }
-        ],
+        ]
       },
-    ],
-  },
-];
+      {
+        "path": "/detail",
+        "key": "rootDetail",
+        "page": "./src/Detail",
+        "exact": true
+      }
+    ]
+  }
+]
 ```
 
 ## Dynamic Import Component
@@ -235,37 +234,8 @@ For Example
 import Dynamic from '@airy/maleo/dynamic';
 
 export default Dynamic({
-  loader: () => import('./component/DynamicLoad' /* webpackChunkName:"DynamicComponent" */),
+  loader: () => import( /* webpackChunkName:"DynamicComponent" */ './component/DynamicLoad'),
 })
-```
-
-### **Tips**
-
-This dynamic import best used for splitting routes based component.
-
-For Example:
-
-```jsx
-import Dynamic from '@airy/maleo/dynamic';
-
-export default [
-  {
-    path: '/',
-    component: Dynamic({
-      loader: () => import('./component/RootComponent' /* webpackChunkName:"RootComponent" */),
-    }),
-    key: 'root-RootComponent',
-    exact: true,
-  },
-  {
-    path: '/hello-world',
-    component: Dynamic({
-      loader: () => import('./component/HelloWorldComponent' /* webpackChunkName: "HelloWorldComponent" */),
-    }),
-    key: 'hello-world-HelloWorldComponent',
-    exact: true,
-  }
-]
 ```
 
 ### **Preloading**
