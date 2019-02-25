@@ -39,6 +39,9 @@ import {
   MALEO_PROJECT_ROOT_NODE_MODULES,
   PROJECT_ROOT_NODE_MODULES,
   ROUTES_ENTRY_NAME,
+  DOCUMENT_ENTRY_NAME,
+  WRAP_ENTRY_NAME,
+  APP_ENTRY_NAME,
 } from '@constants/index';
 import {
   Context,
@@ -226,7 +229,7 @@ export const getDefaultEntry = (
     : path.resolve(__dirname, '../../../lib/default/_client.js');
 
   return {
-    routes: `maleo-register-loader?page=routes&absolutePagePath=${routes}!`,
+    routes,
     wrap: `maleo-register-loader?page=wrap&absolutePagePath=${wrap}!`,
     app: `maleo-register-loader?page=app&absolutePagePath=${app}!`,
     main: [clientEntry].filter(Boolean) as string[],
@@ -340,11 +343,21 @@ export const getDefaultRules = (
   context: BuildContext,
   customConfig: CustomConfig,
 ): RuleSetRule[] => {
+  const { isServer } = context;
+
   return [
     {
       test: /\.jsx?$/,
       exclude: /node_modules/,
       use: ['maleo-babel-loader'],
+    },
+    // to disable webpack's default json-loader
+    // so we need to define our own rules for maleo-routes.json
+    {
+      type: 'javascript/auto',
+      test: /maleo-routes\.json/,
+      exclude: /node_modules/,
+      use: `maleo-routes-split?server=${JSON.stringify(!!isServer)}`,
     },
   ];
 };
@@ -500,6 +513,7 @@ export const getDefaultOutput = (
   if (isServer) {
     return {
       filename: '[name].js',
+      chunkFilename: '[name].js',
       path: path.resolve(projectDir, buildDirectory),
 
       library: '[name]',
@@ -562,9 +576,9 @@ const getStaticEntries = (context: BuildContext, config: CustomConfig) => {
   const defaultApp = path.resolve(__dirname, '../../../lib/render/_app.js');
 
   const defaultUserRoutes = path.join(projectDir, ROUTES_ENTRY_NAME);
-  const defaultUserDocument = path.join(projectDir, '_document.jsx');
-  const defaultUserWrap = path.join(projectDir, '_wrap.jsx');
-  const defaultUserApp = path.join(projectDir, '_app.jsx');
+  const defaultUserDocument = path.join(projectDir, DOCUMENT_ENTRY_NAME);
+  const defaultUserWrap = path.join(projectDir, WRAP_ENTRY_NAME);
+  const defaultUserApp = path.join(projectDir, APP_ENTRY_NAME);
 
   const cRoutes = customRoutes && path.join(projectDir, customRoutes as string);
   const cDoc = customDocument && path.join(projectDir, customDocument as string);

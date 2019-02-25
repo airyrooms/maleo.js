@@ -1,0 +1,33 @@
+[
+  {
+    "page": "./src/MainApp",
+    "key": "rootWrapper",
+    "routes": [
+      {
+        "path": "/",
+        "key": "rootPage",
+        "page": "./src/Search",
+        "exact": true
+      },
+      {
+        "path": "/search",
+        "key": "root-search",
+        "page": "./src/Search",
+        "routes": [
+          {
+            "path": "/search/hello",
+            "key": "search-hello",
+            "page": "./src/Detail",
+            "exact": true
+          }
+        ]
+      },
+      {
+        "path": "/detail",
+        "key": "rootDetail",
+        "page": "./src/Detail",
+        "exact": true
+      }
+    ]
+  }
+]
