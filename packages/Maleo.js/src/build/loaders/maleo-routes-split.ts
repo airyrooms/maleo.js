@@ -31,7 +31,7 @@ export default function loader(source) {
 
 // Replaces routes string into Dynamic loading string
 // using path and hashed path string as unique webpackChunkName identifier
-function replaceStringPage(routes: string) {
+function replaceStringPage(routes: string, key = 0) {
   const pageRegex = /"page"(.*):(.*)"(.+)"/;
   const page = routes.match(pageRegex);
 
@@ -42,10 +42,10 @@ function replaceStringPage(routes: string) {
 
     const newRoutes = routes.replace(
       match,
-      `"component": Dynamic({ loader: () => import(/* webpackChunkName: "${keyName}" */ '${path}'), modules: ['${path}'] })`,
+      `"component": Dynamic({ loader: () => import(/* webpackChunkName: "${keyName}" */ '${path}'), modules: ['${path}'] }), "key": "${keyName}-${key}"`,
     );
 
-    return replaceStringPage(newRoutes);
+    return replaceStringPage(newRoutes, ++key);
   }
 
   return routes;

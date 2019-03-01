@@ -169,11 +169,6 @@ The route object **expected to have distinct key** to indicate the route.
     <td>Path to React Component for this route path</td>
   </tr>
   <tr>
-    <td><code>key</code></td>
-    <td><code>String!</code></td>
-    <td>Distinct or unique key to identify the route</td>
-  </tr>
-  <tr>
     <td><code>exact</code></td>
     <td><code>Boolean?</code> [<code>false</code>]</td>
     <td>To make url has to match exactly the path in order to render the component. Give <code>false</code> value if the route is a wrapper route component</td>
@@ -191,22 +186,18 @@ For example:
 [
   {
     "page": "./src/MainApp",
-    "key": "rootWrapper",
     "routes": [
       {
         "path": "/",
-        "key": "rootPage",
         "page": "./src/Search",
         "exact": true
       },
       {
         "path": "/search",
-        "key": "root-search",
         "page": "./src/Search",
         "routes": [
           {
             "path": "/search/hello",
-            "key": "search-hello",
             "page": "./src/Detail",
             "exact": true
           }
@@ -214,7 +205,6 @@ For example:
       },
       {
         "path": "/detail",
-        "key": "rootDetail",
         "page": "./src/Detail",
         "exact": true
       }
