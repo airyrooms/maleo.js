@@ -10,8 +10,7 @@ export const extractStats = (dir: string) => {
 export default extractStats;
 
 export const mapAssets = (stats: any) => {
-  const { assetsByChunkName } = stats;
-  let assets = assetsByChunkName;
+  let assets = stats.static;
 
   if (process.env.NODE_ENV !== 'production') {
     assets = {

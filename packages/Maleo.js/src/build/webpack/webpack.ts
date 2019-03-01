@@ -17,7 +17,7 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import HardSourcePlugin from 'hard-source-webpack-plugin';
 
 // Webpack required plugins
-import { StatsWriterPlugin } from 'webpack-stats-plugin';
+import { StatsWriterPlugin } from './plugins/stats-writer';
 import { ReactLoadablePlugin } from './plugins/react-loadable';
 import nodeExternals from './utils/webpackNodeExternals';
 
