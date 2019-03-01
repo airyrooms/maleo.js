@@ -643,8 +643,14 @@ module.exports = {
 - [typescript-plugin](https://github.com/airyrooms/maleo.js/tree/canary/packages/plugins/typescript-plugin)
 - [redux-plugin](https://github.com/airyrooms/maleo.js/tree/canary/packages/plugins/redux-plugin)
 
+
 ## Contributing
 [Please follow these steps to contribute to Maleo.js](https://github.com/airyrooms/maleo.js/blob/canary/CONTRIBUTING.md)
 
 [Please follow these steps to contribute to Maleo.js' plugins](https://github.com/airyrooms/maleo.js/tree/canary/packages/plugins)
 
+
+## Contributors
+
+This project exists thanks to all the people who contribute. [Contribute](CONTRIBUTING.md).
+[![contributors][oc-contributors-img]](https://github.com/airyrooms/maleo.js/graphs/contributors)
