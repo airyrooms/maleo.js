@@ -660,4 +660,4 @@ This project exists thanks to all the people who contribute. [Contribute](CONTRI
 
 MIT
 
-[oc-contributors-img]: https://opencollective.com/react-hot-loader/contributors.svg?width=890&button=false
+[oc-contributors-img]: https://opencollective.com/maleo.js/contributors.svg?width=890&button=false
