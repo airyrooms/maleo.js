@@ -35,7 +35,7 @@ function replaceStringPage(routes: string) {
   if (page) {
     const [match, , , path] = page;
     let keyName = path.split('/').pop();
-    keyName = keyName + '-' + hashString(path);
+    keyName = 'dynamic.' + keyName + '-' + hashString(path);
 
     const newRoutes = routes.replace(
       match,

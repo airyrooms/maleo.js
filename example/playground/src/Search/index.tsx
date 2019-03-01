@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { AppContext } from '../../interface/AppContext';
 import Loadable from 'react-loadable';
 
 const DetailComponent = Loadable({
@@ -11,7 +10,7 @@ const DetailComponent = Loadable({
 export class RoomsSearch extends React.Component<any, any> {
   static displayName = 'RoomsSearch';
 
-  static getInitialProps = async (appContext: AppContext) => {
+  static getInitialProps = async (appContext) => {
     const { store } = appContext;
     if (store) {
       store.dispatch({ type: 'TEST', data: 'searchhh' });
