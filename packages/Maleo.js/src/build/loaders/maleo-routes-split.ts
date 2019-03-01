@@ -15,6 +15,9 @@ export default function loader(source) {
     (window.${REGISTERS.WINDOW_VAR_NAME} = window.${
       REGISTERS.WINDOW_VAR_NAME
     } || []).push(['routes', function() {
+      if (module.hot) {
+        module.hot.accept();
+      }
       return ${routes}
     }])
   `;
