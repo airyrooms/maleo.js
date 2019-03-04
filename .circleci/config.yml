@@ -27,11 +27,9 @@ jobs:
       - run:
           name: Run Build
           command: yarn build
-      - run:
-          name: Run Test Coverage
-          command: yarn test:cov
+      
 workflows:
   version: 2
-  unscheduled:
+  lint-build:
     jobs:
       - build
