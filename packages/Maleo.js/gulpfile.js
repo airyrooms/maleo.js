@@ -33,7 +33,7 @@ tasks.map((p) => {
       .src(paths[p])
       .pipe(sourcemaps.init())
       .pipe(babel())
-      // .pipe(uglify())
+      .pipe(uglify())
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(dest)),
   );

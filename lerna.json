@@ -1,5 +1,6 @@
 {
-  "version": "fixed",
+  "lerna": "3.7.2",
+  "version": "0.0.1",
   "packages": [
     "packages/**"
   ],
@@ -9,11 +10,21 @@
   ],
   "useWorkspaces": true,
   "command": {
+    "version": {
+      "exact": true
+    },
     "publish": {
+      "npmClient": "npm",
+      "allowBranch": [
+        "master",
+        "canary"
+      ],
+      "registry": "https://registry.npmjs.org/",
       "ignoreChanges": [
         "*.md",
         "*.test.*",
-        "example/**"
+        "example/**",
+        "__test__/**"
       ]
     }
   }

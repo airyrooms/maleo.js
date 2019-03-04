@@ -43,7 +43,8 @@
     "pretty:fix": "prettier --config-precedence file-override --config .prettierrc --write 'packages/**/**+(.jsx|.tsx|.js|.ts)'",
     "test": "jest --config ./setup-test/jest.config.js --coverage",
     "test:cov": "jest --config ./setup-test/jest.config.js --coverage --coverageReporters=text-lcov | coveralls",
-    "build:test": "yarn build && yarn test"
+    "build:test": "yarn build && yarn test",
+    "publish:canary": "lerna publish --canary"
   },
   "husky": {
     "hooks": {
