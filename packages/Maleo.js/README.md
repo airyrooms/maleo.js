@@ -1,3 +1,9 @@
+[![Build Status](https://travis-ci.org/airyrooms/maleo.js.svg?branch=master)](https://travis-ci.org/airyrooms/maleo.js)
+[![Coverage Status](https://coveralls.io/repos/github/airyrooms/maleo.js/badge.svg?branch=master)](https://coveralls.io/github/airyrooms/maleo.js?branch=master)
+[![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/airyrooms/maleo.js/blob/canary/LICENSE)
+[![Discord Chat](https://img.shields.io/discord/550498214789513218.svg)](https://discord.gg/9eArCQn)
+
+
 # Welcome to Maleo.js
 
 Maleo.js is an un-opinionated framework to enable Universal Rendering in JavaScript using React with no hassle.
