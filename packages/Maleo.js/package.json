@@ -1,20 +1,31 @@
 {
     "name": "@airy/maleo",
     "version": "1.0.0",
-    "description": "",
-    "bin": "lib/bin/maleo.js",
+    "description": "Un-opinionated Universal Rendering Javascript Framework",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/airyrooms/maleo.js",
+        "bugs": "https://github.com/airyrooms/maleo.js/issues"
+    },
+    "author": "Airy",
+    "license": "MIT",
+    "private": false,
+    "sideEffects": false,
     "scripts": {
         "build": "rm -rf dist && gulp",
         "watch": "gulp watch"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/airyrooms/maleo.js"
-    },
-    "author": "",
-    "license": "ISC",
-    "private": false,
-    "sideEffects": false,
+    "bin": "lib/bin/maleo.js",
+    "files": [
+        "lib",
+        "app.js",
+        "babel.js",
+        "client.js",
+        "document.js",
+        "dynamic.js",
+        "server.js",
+        "wrap.js"
+    ],
     "dependencies": {
         "@babel/core": "7.1.2",
         "@babel/plugin-proposal-class-properties": "7.1.0",
