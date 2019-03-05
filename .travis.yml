@@ -12,23 +12,20 @@ before_install:
 before_script:
   - yarn bootstrap
 
-jobs:
-  include:
-    - stage: Build and Test
-      script:
-        - yarn build
-        - yarn test:cov
+script:
+  - yarn build
+  - yarn test:cov
     
 deploy:
   - provider: script
-    on:
-      branch: canary
     skip_cleanup: true
     script:
       - echo "RELEASING CANARY"
-  - provider: script
     on:
-      branch: master
+      branch: canary
+  - provider: script
     skip_cleanup: true
     script:
       - echo "RELEASING STABLE"
+    on:
+      branch: master
