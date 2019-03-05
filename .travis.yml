@@ -23,11 +23,16 @@ jobs:
       script:
         - yarn build
       deploy:
-        on:
-          all_branches: true
-          condition: $TRAVIS_BRANCH =~ ^canary|master$
-        provider: script
-        skip_cleanup: true
-        script:
-          - echo "RELEASING"
+        - provider: script
+          on:
+            branch: canary
+          skip_cleanup: true
+          script:
+            - echo "RELEASING CANARY"
+        - provider: script
+          on:
+            branch: master
+          skip_cleanup: true
+          script:
+            - echo "RELEASING STABLE"
 
