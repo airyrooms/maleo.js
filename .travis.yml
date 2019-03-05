@@ -7,7 +7,6 @@ branches:
 cache:
   yarn: true
 
-
 before_install:
   - npm install --global yarn@1.10.1
 before_script:
@@ -15,24 +14,21 @@ before_script:
 
 jobs:
   include:
-    - stage: Build and Run Test Coveralls
-      script: 
-        - yarn build
-        - yarn test:cov
-    - stage: Release
+    - stage: Build and Test
       script:
         - yarn build
-      deploy:
-        - provider: script
-          on:
-            branch: canary
-          skip_cleanup: true
-          script:
-            - echo "RELEASING CANARY"
-        - provider: script
-          on:
-            branch: master
-          skip_cleanup: true
-          script:
-            - echo "RELEASING STABLE"
-
+        - yarn test:cov
+    
+deploy:
+  - provider: script
+    on:
+      branch: canary
+    skip_cleanup: true
+    script:
+      - echo "RELEASING CANARY"
+  - provider: script
+    on:
+      branch: master
+    skip_cleanup: true
+    script:
+      - echo "RELEASING STABLE"
