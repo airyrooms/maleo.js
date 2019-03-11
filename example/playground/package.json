@@ -16,7 +16,7 @@
     "@airy/maleo-typescript-plugin": "latest",
     "@airy/maleo-redux-plugin": "latest",
     "@airy/maleo": "latest",
-    "react": "16.5.2",
+    "react": "latest",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.4.0-beta.1",
     "redux": "^4.0.1"
