@@ -1,6 +1,6 @@
 {
   "lerna": "3.7.2",
-  "version": "0.0.1",
+  "version": "independent",
   "packages": [
     "packages/**"
   ],
@@ -9,12 +9,16 @@
     "--no-lockfile"
   ],
   "useWorkspaces": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "command": {
     "version": {
       "exact": true
     },
     "publish": {
       "npmClient": "npm",
+      "message": "chore(package.json): release",
       "allowBranch": [
         "master",
         "canary"
@@ -24,7 +28,7 @@
         "*.md",
         "*.test.*",
         "example/**",
-        "__test__/**"
+        "**/__test__/**"
       ]
     }
   }
