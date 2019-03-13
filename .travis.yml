@@ -29,7 +29,6 @@ deploy:
       - bash publish-canary.sh
     on:
       branch: canary
-      tags: true
   - provider: script
     skip_cleanup: true
     script:
