@@ -27,6 +27,9 @@ jobs:
       - run:
           name: Run Build
           command: yarn build
+      - run:
+          name: Run Unit Test
+          command: yarn test
       
 workflows:
   version: 2
