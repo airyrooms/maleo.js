@@ -6,8 +6,6 @@ branches:
     - canary
 cache:
   yarn: true
-  directories:
-    - "node_modules"
 
 before_install:
   - npm install --global yarn@1.10.1
