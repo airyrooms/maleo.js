@@ -17,6 +17,7 @@ script:
   - yarn test:cov
 
 before_deploy:
+  - echo "access=public" >> $HOME/.npmrc 2> /dev/null
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
     
 deploy:
