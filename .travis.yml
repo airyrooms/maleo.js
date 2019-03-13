@@ -9,8 +9,6 @@ cache:
 
 before_install:
   - npm install --global yarn@1.10.1
-before_script:
-  - yarn bootstrap
 
 script:
   - yarn build
@@ -19,7 +17,7 @@ script:
 before_deploy:
   - echo "access=public" >> $HOME/.npmrc 2> /dev/null
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
-    
+
 deploy:
   - provider: script
     skip_cleanup: true
@@ -33,3 +31,5 @@ deploy:
       - echo "RELEASING STABLE"
     on:
       branch: master
+
+# add post deploy to add git commit message and add tag

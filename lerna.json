@@ -12,13 +12,27 @@
   "publishConfig": {
     "access": "public"
   },
+  "ignoreChanges": [
+    "*.md",
+    "*.test.*",
+    "example/**",
+    "**/__test__/**"
+  ],
   "command": {
     "version": {
-      "exact": true
+      "exact": true,
+      "allowBranch": ["master", "canary"],
+      "forcePublish": true,
+      "githubRelease": true,
+      "conventionalCommits": true,
+      "noChangelog": true,
+      "noCommitHokos": true,
+      "message": "chore(release): publish %s",
+      "preid": "canary",
+      "yes": true
     },
     "publish": {
       "npmClient": "npm",
-      "message": "chore(package.json): release",
       "allowBranch": [
         "master",
         "canary"
