@@ -20,9 +20,7 @@ deploy:
   - provider: script
     skip_cleanup: true
     script:
-      - echo "RELEASING CANARY"
-      - yarn publish:prepublish
-      - yarn publish:canary
+      - bash publish-canary.sh
     on:
       branch: canary
   - provider: script
