@@ -6,6 +6,8 @@ branches:
     - canary
 cache:
   yarn: true
+  directories:
+    - "node_modules"
 
 before_install:
   - npm install --global yarn@1.10.1
@@ -27,6 +29,7 @@ deploy:
       - bash publish-canary.sh
     on:
       branch: canary
+      tags: true
   - provider: script
     skip_cleanup: true
     script:
