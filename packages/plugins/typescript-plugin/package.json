@@ -1,14 +1,15 @@
 {
   "name": "@airy/maleo-typescript-plugin",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
     "build": "rm -rf lib && gulp",
-    "watch": "rm -rf lib && gulp watch"
+    "watch": "rm -rf lib && gulp watch",
+    "prepublish": "yarn build"
   },
   "peerDependencies": {
-    "@airy/maleo": "^1.0.0"
+    "@airy/maleo": "^0.0.1"
   },
   "dependencies": {
     "fork-ts-checker-webpack-plugin": "^0.4.14",
@@ -17,7 +18,7 @@
     "typescript": "^3.1.5"
   },
   "devDependencies": {
-    "@airy/maleo-gulp-plugin": "1.0.0",
+    "@airy/maleo-gulp-plugin": "^0.0.1",
     "gulp": "gulpjs/gulp.git#4.0"
   }
 }

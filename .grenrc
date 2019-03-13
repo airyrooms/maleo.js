@@ -1,0 +1,12 @@
+{
+    "dataSource": "commits",
+    "groupBy": {
+      "Features:": ["feat"],
+      "Enhancements:": ["refactor", "perf", "build"],
+      "Bug Fixes:": ["fix"]
+    },
+    "ignoreIssuesWith": [
+        "wontfix",
+        "duplicate"
+    ]
+}

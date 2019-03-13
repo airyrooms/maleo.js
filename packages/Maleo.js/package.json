@@ -1,6 +1,6 @@
 {
     "name": "@airy/maleo",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "Un-opinionated Universal Rendering Javascript Framework",
     "repository": {
         "type": "git",
@@ -13,7 +13,8 @@
     "sideEffects": false,
     "scripts": {
         "build": "rm -rf dist && gulp",
-        "watch": "gulp watch"
+        "watch": "gulp watch",
+        "prepublish": "yarn build"
     },
     "bin": "lib/bin/maleo.js",
     "files": [
