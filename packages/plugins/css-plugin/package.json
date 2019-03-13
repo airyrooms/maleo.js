@@ -1,6 +1,6 @@
 {
   "name": "@airy/maleo-css-plugin",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
@@ -9,7 +9,7 @@
     "prepublish": "yarn build"
   },
   "peerDependencies": {
-    "@airy/maleo": "^0.0.0"
+    "@airy/maleo": "^0.0.2"
   },
   "dependencies": {
     "css-loader": "^1.0.1",
@@ -17,7 +17,7 @@
     "isomorphic-style-loader": "^4.0.0"
   },
   "devDependencies": {
-    "@airy/maleo-gulp-plugin": "^0.0.0",
+    "@airy/maleo-gulp-plugin": "^0.0.2",
     "gulp": "gulpjs/gulp.git#4.0"
   }
 }
