@@ -18,7 +18,6 @@
     "@airy/maleo": "latest",
     "react": "latest",
     "react-redux": "^5.1.1",
-    "react-router-dom": "^4.4.0-beta.1",
     "redux": "^4.0.1"
   },
   "devDependencies": {

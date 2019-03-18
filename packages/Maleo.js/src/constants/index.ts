@@ -8,7 +8,7 @@ export const SERVER_ENTRY_NAME: string = 'server.js';
 
 export const CLIENT_ENTRY_NAME: string = 'client.js';
 
-export const ROUTES_ENTRY_NAME: string = 'maleo-routes.json';
+export const ROUTES_ENTRY_NAME: string = 'routes.json';
 export const DOCUMENT_ENTRY_NAME: string = '_document.jsx';
 export const WRAP_ENTRY_NAME: string = '_wrap.jsx';
 export const APP_ENTRY_NAME: string = '_app.jsx';
