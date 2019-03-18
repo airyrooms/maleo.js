@@ -49,11 +49,11 @@ Install Maleo.js
 
 **NPM**
 ```bash
-$ npm install --save @airy/maleo react react-router-dom
+$ npm install --save @airy/maleo react
 ```
 **Yarn**
 ```bash
-$ yarn add @airy/maleo react react-router-dom
+$ yarn add @airy/maleo react
 ```
 
 Add this script to your `package.json`
@@ -67,19 +67,30 @@ Add this script to your `package.json`
 }
 ```
 
-Create a routing file called `routes.js`
+Create a page Root component
 ```jsx
+// ./src/Root.jsx
 import React from 'react';
 
-const App = () => (<h1>Hello World</h1>);
+// Export default is required for registering page
+export default class RootComponent extends React.Component {
+  render() {
+    return (
+      <h1>Hello World!</h1>
+    )
+  }
+}
+```
 
-export default [
+And lastly, create a routing file on your project root directory called `routes.json` and register your page component
+```json
+[
   {
-    path: '/',
-    component: App,
-    key: 'root',
+    "path": "/",
+    "page": "./src/Root",
+    "key": "root",
   },
-];
+]
 ```
 
 After that you can now run `$ npm run dev` and go to `http://localhost:3000`.
