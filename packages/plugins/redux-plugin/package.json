@@ -1,6 +1,6 @@
 {
   "name": "@airy/maleo-redux-plugin",
-  "version": "0.0.5",
+  "version": "0.0.6-canary.49+3419fc9",
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
@@ -9,7 +9,7 @@
     "prepublish": "yarn build"
   },
   "peerDependencies": {
-    "@airy/maleo": "^0.0.5",
+    "@airy/maleo": "^0.0.6-canary.49+3419fc9",
     "gulp": "gulpjs/gulp.git#4.0",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
@@ -17,6 +17,6 @@
     "redux": "^4.0.1"
   },
   "devDependencies": {
-    "@airy/maleo-gulp-plugin": "^0.0.5"
+    "@airy/maleo-gulp-plugin": "^0.0.6-canary.49+3419fc9"
   }
 }

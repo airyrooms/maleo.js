@@ -44,7 +44,7 @@
     "test:cov": "jest --config ./setup-test/jest.config.js --coverage --coverageReporters=text-lcov | coveralls",
     "build:test": "yarn build && yarn test",
     "publish:prepublish": "lerna run prepublish",
-    "publish:canary": "lerna publish --no-git-reset --canary --dist-tag next"
+    "publish:canary": "lerna publish --no-git-reset --canary --dist-tag next --conventional-commits"
   },
   "husky": {
     "hooks": {
