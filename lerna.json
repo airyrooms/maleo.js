@@ -19,24 +19,21 @@
     "**/__test__/**"
   ],
   "command": {
-    "version": {
+    "publish": {
       "exact": true,
-      "allowBranch": ["master", "canary"],
       "forcePublish": true,
       "githubRelease": true,
       "conventionalCommits": true,
       "noChangelog": true,
-      "noCommitHokos": true,
+      "noCommitHooks": true,
       "message": "chore(release): publish %s",
       "preid": "canary",
-      "yes": true
-    },
-    "publish": {
       "npmClient": "npm",
       "allowBranch": [
         "master",
         "canary"
       ],
+      "yes": true,
       "registry": "https://registry.npmjs.org/",
       "ignoreChanges": [
         "*.md",
