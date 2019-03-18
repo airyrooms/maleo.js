@@ -25,7 +25,6 @@ git checkout -- .
 # Echo the status to the log so that we can see it is OK
 git status
 
-local head_ref branch_ref
 head_ref=$(git rev-parse HEAD)
 if [[ $? -ne 0 || ! $head_ref ]]; then
     err "failed to get HEAD reference"
