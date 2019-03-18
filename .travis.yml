@@ -19,6 +19,7 @@ script:
 before_deploy:
   - echo "access=public" >> $HOME/.npmrc 2> /dev/null
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
+  - bash travis-checkout-branch.sh
 
 deploy:
   - provider: script
