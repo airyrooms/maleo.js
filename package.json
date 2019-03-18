@@ -45,7 +45,7 @@
     "build:test": "yarn build && yarn test",
     "publish:prepublish": "lerna run prepublish",
     "publish:version-canary": "lerna version prerelease",
-    "publish:canary": "lerna publish --no-git-reset --canary --dist-tag next --preid canary"
+    "publish:canary": "lerna publish --no-git-reset --canary --dist-tag canary --preid canary --force-publish=@airy/maleo"
   },
   "husky": {
     "hooks": {
