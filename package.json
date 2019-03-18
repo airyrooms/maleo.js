@@ -70,7 +70,6 @@
     "@types/react": "^16.4.18",
     "@types/react-dom": "^16.0.9",
     "@types/react-loadable": "^5.4.1",
-    "@types/react-router": "^4.0.31",
     "@types/react-router-dom": "^4.3.1",
     "@types/tapable": "^1.0.4",
     "@types/webpack": "^4.4.14",

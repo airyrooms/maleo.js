@@ -162,9 +162,9 @@ export default Component;
 ## Routing
 
 Routing is declared in a centralized route config.
-Register all the route config in `maleo-routes.json` file.
+Register all the route config in `routes.json` file.
 
-If you put the `maleo-routes.json` files on root directory, Maleo will automatically register your route. Otherwise put path to your routes on [Maleo config](#custom-configuration).
+If you put the `routes.json` files on root directory, Maleo will automatically register your route. Otherwise put path to your routes on [Maleo config](#custom-configuration).
 
 Routes file has to export default the route configuration.
 The route object **expected to have distinct key** to indicate the route.

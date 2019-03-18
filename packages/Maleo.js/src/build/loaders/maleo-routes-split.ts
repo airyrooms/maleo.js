@@ -1,7 +1,7 @@
 import { getOptions } from 'loader-utils';
 import { REGISTERS } from '@constants/index';
 
-// Converts maleo-routes.json file into automatic dynamic import every page and transform it into react-router
+// Converts routes.json file into automatic dynamic import every page and transform it into react-router
 export default function loader(source) {
   this.cacheable();
   const { server } = getOptions(this);

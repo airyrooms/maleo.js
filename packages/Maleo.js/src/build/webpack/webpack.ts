@@ -341,7 +341,7 @@ export const getDefaultRules = (
   context: BuildContext,
   customConfig: CustomConfig,
 ): RuleSetRule[] => {
-  const { isServer } = context;
+  const { isServer, projectDir } = context;
 
   return [
     {
@@ -350,10 +350,10 @@ export const getDefaultRules = (
       use: ['maleo-babel-loader'],
     },
     // to disable webpack's default json-loader
-    // so we need to define our own rules for maleo-routes.json
+    // so we need to define our own rules for routes.json
     {
       type: 'javascript/auto',
-      test: /maleo-routes\.json/,
+      test: path.resolve(projectDir, ROUTES_ENTRY_NAME),
       exclude: /node_modules/,
       use: `maleo-routes-split?server=${JSON.stringify(!!isServer)}`,
     },
@@ -389,7 +389,6 @@ export const getDefaultPlugins = (
 
       // Commented due to issue with WDM and WHM
       // details: https://github.com/mzgoddard/hard-source-webpack-plugin/issues/416
-
       // new HardSourcePlugin({
       //   cacheDirectory: path.join(
       //     projectDir,
