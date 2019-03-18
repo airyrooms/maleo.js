@@ -19,13 +19,13 @@ script:
 before_deploy:
   - echo "access=public" >> $HOME/.npmrc 2> /dev/null
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
-  - bash travis-checkout-branch.sh
+  - bash ./ci/travis-checkout-branch.sh
 
 deploy:
   - provider: script
     skip_cleanup: true
     script:
-      - bash publish-canary.sh
+      - bash ./ci/publish-canary.sh
     on:
       branch: canary
   - provider: script
@@ -34,5 +34,3 @@ deploy:
       - echo "RELEASING STABLE"
     on:
       branch: master
-
-# add post deploy to add git commit message and add tag
