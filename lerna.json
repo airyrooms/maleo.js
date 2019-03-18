@@ -33,6 +33,7 @@
       "yes": true
     },
     "publish": {
+      "forcePublish": false,
       "npmClient": "npm",
       "allowBranch": [
         "master",
