@@ -1,6 +1,6 @@
 {
   "name": "@airy/maleo-redux-plugin",
-  "version": "0.0.6-canary.49+3419fc9",
+  "version": "0.0.6-canary.50",
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
@@ -17,6 +17,6 @@
     "redux": "^4.0.1"
   },
   "devDependencies": {
-    "@airy/maleo-gulp-plugin": "^0.0.6-canary.49+3419fc9"
+    "@airy/maleo-gulp-plugin": "0.0.6-canary.50"
   }
 }
