@@ -1,6 +1,6 @@
 {
   "name": "@airy/maleo-redux-plugin",
-  "version": "0.0.8-canary.2",
+  "version": "0.0.8",
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
