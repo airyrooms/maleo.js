@@ -1,5 +1,6 @@
 {
-  "version": "fixed",
+  "lerna": "3.7.2",
+  "version": "independent",
   "packages": [
     "packages/**"
   ],
@@ -8,12 +9,43 @@
     "--no-lockfile"
   ],
   "useWorkspaces": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "ignoreChanges": [
+    "*.md",
+    "*.test.*",
+    "example/**",
+    "**/__test__/**"
+  ],
   "command": {
+    "version": {
+      "exact": true,
+      "githubRelease": true,
+      "noCommitHooks": true,
+      "message": "chore(release): publish %s [skip ci]",
+      "conventionalCommits": true,
+      "allowBranch": [
+        "master",
+        "canary"
+      ],
+      "yes": true
+    },
     "publish": {
+      "forcePublish": false,
+      "npmClient": "npm",
+      "noChangelog": true,
+      "allowBranch": [
+        "master",
+        "canary"
+      ],
+      "yes": true,
+      "registry": "https://registry.npmjs.org/",
       "ignoreChanges": [
         "*.md",
         "*.test.*",
-        "example/**"
+        "example/**",
+        "**/__test__/**"
       ]
     }
   }

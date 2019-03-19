@@ -1,6 +1,6 @@
 {
-  "name": "@airy/gulp-plugin",
-  "version": "1.0.0",
+  "name": "@airy/maleo-gulp-plugin",
+  "version": "0.0.8-canary.2",
   "main": "index.js",
   "license": "MIT",
   "peerDependencies": {

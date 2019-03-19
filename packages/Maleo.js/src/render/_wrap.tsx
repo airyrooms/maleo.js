@@ -9,14 +9,14 @@ interface WrapProps {
   server?: boolean;
 }
 
-export class _Wrap extends React.Component<WrapProps, {}> {
+export default class _Wrap extends React.Component<WrapProps, {}> {
   constructor(props) {
     super(props);
   }
 
   history = !this.props.server ? createBrowserHistory() : null;
 
-  wrapRoutes = () => {
+  render() {
     if (!this.props.server) {
       return (
         <Router history={this.history as History<any>}>
@@ -30,9 +30,5 @@ export class _Wrap extends React.Component<WrapProps, {}> {
         <Switch>{this.props.children}</Switch>
       </StaticRouter>
     );
-  };
-
-  render() {
-    return this.wrapRoutes();
   }
 }

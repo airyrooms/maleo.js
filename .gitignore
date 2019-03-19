@@ -68,3 +68,10 @@ package-lock.json
 @types
 
 .vscode
+
+# ignore yarn lock on example
+example/*/yarn.lock
+example/*/package-lock.json
+
+# OSX
+.DS_Store

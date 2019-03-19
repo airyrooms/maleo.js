@@ -15,54 +15,61 @@ const isDev = env === 'development';
 
 const binaryPath = path.resolve(__dirname);
 const projectPath = path.resolve(process.cwd());
-const buildDirectory = path.join(projectPath, '.maleo');
 
 // bin codes starts here
 // Importing node's own dependencies
 import path from 'path';
+import figlet from 'figlet';
+import rimraf from 'rimraf';
 import { spawn } from 'child_process';
 
 // Importing required bin dependencies
-import { build } from '../build/index';
+import { build } from '@build/index';
+import { loadUserConfig } from '@build/webpack/webpack';
+import { BUILD_DIR } from '@constants/index';
 
-const figletZones = `
-============================================
-============================================
-== |__  /  / _ \\  | \\ | | | ____| / ___|  ==
-==   / /  | | | | |  \\| | |  _|   \\___ \\  == 
-==  / /_  | |_| | | |\\  | | |___   ___) | ==
-== /____|  \\___/  |_| \\_| |_____| |____/  ==
-============================================
-============================================
-`;
+console.log(
+  figlet.textSync('Maleo.js', {
+    horizontalLayout: 'default',
+    verticalLayout: 'default',
+  }),
+);
 
-console.log(figletZones);
-console.log('==> Current Working Directory: ', projectPath);
-console.log('==> Running Command: ', type);
-console.log('==> Command Args: ', args);
+const userConfig = loadUserConfig(projectPath, true);
+const buildDirectory = userConfig.buildDir || BUILD_DIR;
 
-if (type === 'build') {
-  console.log('==> Running build');
-  build({
-    env,
-    buildType,
-  });
-} else if (type === 'run') {
+// Generating server execution
+const serverPath = path.join(buildDirectory, 'server.js');
+const exec = spawn.bind(null, 'node', [serverPath], {
+  stdio: 'inherit',
+});
+
+if (type === 'run') {
   console.log('[MALEO] Running Application');
+  exec();
+} else {
+  // Clean up the folder
+  rimraf(path.join(projectPath, buildDirectory), {}, () => {
+    console.log('==> Current Working Directory: ', projectPath);
+    console.log('==> Current Build Directory: ', buildDirectory);
+    console.log('==> Environment (isDevelopment): ', env, '(' + isDev + ')');
+    console.log('==> Running Command: ', type);
+    console.log('==> Command Args: ', args);
 
-  const serverPath = path.join(buildDirectory, 'server.js');
+    if (type === 'build') {
+      console.log('==> Running build');
+      build({
+        env,
+        buildType,
+      });
+    } else if (type === 'dev') {
+      console.log('[MALEO] Running Development');
 
-  const exec = spawn.bind(null, 'node', [serverPath], {
-    stdio: 'inherit',
+      build({
+        env,
+        buildType: 'server',
+        callback: exec,
+      });
+    }
   });
-
-  if (isDev) {
-    build({
-      env,
-      buildType: 'server',
-      callback: exec,
-    });
-  } else {
-    exec();
-  }
 }
