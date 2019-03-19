@@ -1,13 +1,10 @@
-import path from 'path';
 import { Compiler } from 'webpack';
-import { AUTODLL_PATH } from '@src/constants';
 
 const INDENT = 2;
 const DEFAULT_TRANSFORM = async (data) => JSON.stringify(data, null, INDENT);
 
 export interface Opts {
   filename: string;
-  fields: string[];
   isDev: boolean;
   transform: (data: any, compiler?: any) => Promise<string>;
 }
@@ -19,7 +16,6 @@ export class StatsWriterPlugin {
   constructor(opts?) {
     this.opts = {
       filename: 'stats.json',
-      fields: ['assetsByChunkName'],
       isDev: false,
       transform: DEFAULT_TRANSFORM,
       ...opts,
@@ -27,39 +23,20 @@ export class StatsWriterPlugin {
   }
 
   apply = (compiler: Compiler) => {
-    try {
-      compiler.plugin('autodll-stats-retrieved', this.getAutoDLLPath);
-    } catch (err) {
-      // @ts-ignore
-    } finally {
-      compiler.hooks.emit.tapPromise('maleo-stats-writer-plugin', this.emitStats);
-    }
+    compiler.hooks.emit.tapPromise('maleo-stats-writer-plugin', this.emitStats);
   };
 
   emitStats = async (compilation, callback): Promise<any> => {
     let stats = compilation.getStats().toJson();
 
     // Filter to fields
-    if (this.opts.fields) {
-      stats = this.opts.fields.reduce(
-        (memo, key) => ({
-          ...memo,
-          [key]: stats[key],
-        }),
-        {},
-      );
-    }
+    // Extract dynamic assets to dynamic key
 
-    if (this.opts.isDev) {
-      stats = {
-        ...stats,
-        development: this.dllFilename
-          ? {
-              dll: [path.join(AUTODLL_PATH, this.dllFilename)],
-            }
-          : {},
-      };
-    }
+    const key = 'assetsByChunkName';
+    stats = {
+      static: this.extractDynamic(stats[key], false),
+      dynamic: this.extractDynamic(stats[key], true),
+    };
 
     // Transform to string
     const [err, statsStr] = await to<string>(
@@ -92,8 +69,23 @@ export class StatsWriterPlugin {
     }
   };
 
-  getAutoDLLPath = (stats) => {
-    this.dllFilename = stats.assetsByChunkName.dll;
+  // Extract dynamic assets
+  extractDynamic = (stats, isDynamic = false) => {
+    return Object.keys(stats)
+      .filter((k) => {
+        const regex = /dynamic\./;
+        if (isDynamic) {
+          return !!regex.test(k);
+        }
+        return !regex.test(k);
+      })
+      .reduce(
+        (p, c) => ({
+          ...p,
+          [c]: stats[c],
+        }),
+        {},
+      );
   };
 }
 

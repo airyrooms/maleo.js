@@ -1,0 +1,37 @@
+language: node_js
+sudo: required
+git:
+  quiet: true
+branches:
+  only:
+    - master
+    - canary
+cache:
+  yarn: true
+
+before_install:
+  - npm install --global yarn@1.10.1
+
+script:
+  - yarn build
+  - yarn test
+
+before_deploy:
+  - yarn test:cov
+  - echo "access=public" >> $HOME/.npmrc 2> /dev/null
+  - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
+  - bash ./ci/travis-checkout-branch.sh
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script:
+      - bash ./ci/publish-canary.sh
+    on:
+      branch: canary
+  - provider: script
+    skip_cleanup: true
+    script:
+      - bash ./ci/publish-stable.sh
+    on:
+      branch: master

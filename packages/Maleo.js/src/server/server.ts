@@ -15,8 +15,9 @@ import helmet from 'helmet';
 import { IOptions } from '@interfaces/server/IOptions';
 
 import { render } from './render';
-import { BUILD_DIR, SERVER_ASSETS_ROUTE } from '@src/constants';
+import { BUILD_DIR, SERVER_ASSETS_ROUTE } from '@constants/index';
 import { requireRuntime } from '@utils/require';
+import { AsyncRouteProps } from '@interfaces/render/IRender';
 
 export class Server {
   app: Express;
@@ -29,7 +30,7 @@ export class Server {
   constructor(options: IOptions) {
     const defaultOptions = {
       assetDir: path.resolve('.', BUILD_DIR, 'client'),
-      routes: [],
+      routes: requireRuntime(path.resolve('.', BUILD_DIR, 'routes.js')) as AsyncRouteProps[],
       port: 8080,
 
       ...options,
@@ -56,10 +57,6 @@ export class Server {
       req,
       res,
       dir: this.options.assetDir,
-      routes: this.options.routes,
-      Document: this.options._document,
-      App: this.options._app,
-      Wrap: this.options._wrap,
     });
 
     res.send(html);
@@ -69,7 +66,7 @@ export class Server {
     res.send('favicon.ico');
   };
 
-  private setupExpress = () => {
+  private setupExpress = async () => {
     this.app = express();
 
     // Setup for development HMR, etc
@@ -98,7 +95,7 @@ export class Server {
     });
 
     // asset serving
-    app.use(SERVER_ASSETS_ROUTE, express.static(this.options.assetDir));
+    app.use(SERVER_ASSETS_ROUTE, express.static(this.options.assetDir as string));
   };
 
   private setupDevServer = (app: Express) => {
@@ -116,9 +113,7 @@ export class Server {
       stats: false,
       serverSideRender: true,
       hot: true,
-      writeToDisk: (filepath) => {
-        return /\.json$/.test(filepath);
-      },
+      writeToDisk: true,
       // @ts-ignore
       publicPath: clientCompiler.options.output.publicPath || WEBPACK_PUBLIC_PATH,
       watchOptions: { ignored },

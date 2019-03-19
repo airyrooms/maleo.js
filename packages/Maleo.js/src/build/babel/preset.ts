@@ -48,7 +48,6 @@ export const preset = (context, opts = {}) => {
         useESModules: false,
       },
     ],
-    require('react-hot-loader/babel'),
     // for production
     // require('@babel/runtime'),
   ].filter(Boolean);
