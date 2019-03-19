@@ -4,20 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "maleo dev",
-    "build": "export NODE_ENV=production && maleo build",
-    "start": "export NODE_ENV=production && maleo run"
+    "dev": "maleo run",
+    "build:prod": "rm -rf .maleo && export NODE_ENV=production && maleo build",
+    "start": "export NODE_ENV=production && node .maleo/server.js"
   },
     "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@airy/maleo-css-plugin": "latest",
-    "@airy/maleo-typescript-plugin": "latest",
-    "@airy/maleo-redux-plugin": "latest",
-    "@airy/maleo": "latest",
-    "react": "latest",
+    "@airy/css-plugin": "1.0.0",
+    "@airy/typescript-plugin": "1.0.0",
+    "@airy/with-redux-plugin": "^1.0.0",
+    "@airy/maleo": "1.0.0",
+    "react": "16.5.2",
     "react-redux": "^5.1.1",
+    "react-router-dom": "^4.4.0-beta.1",
     "redux": "^4.0.1"
   },
   "devDependencies": {

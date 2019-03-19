@@ -50,24 +50,21 @@ module.exports = {
   // globalTeardown: null,
 
   // A set of global variables that need to be available in all test environments
-  globals: {
-    WEBPACK_PUBLIC_PATH: '/_assets_/',
-    __DEV__: false,
-    __ENV__: 'test',
-  },
+  // globals: {},
 
   // An array of directory names to be searched recursively up from the requiring module's location
   moduleDirectories: ['node_modules'],
 
   // An array of file extensions your modules use
-  moduleFileExtensions: ['js', 'json', 'jsx', 'node'],
+  // moduleFileExtensions: [
+  //   "js",
+  //   "json",
+  //   "jsx",
+  //   "node"
+  // ],
 
   // A map from regular expressions to module names that allow to stub out resources with a single module
-  moduleNameMapper: {
-    '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-      '<rootDir>/setup-test/__mocks__/fileMock.js',
-    '\\.(css|less)$': '<rootDir>/setup-test/__mocks__/styleMock.js',
-  },
+  // moduleNameMapper: {},
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -100,10 +97,12 @@ module.exports = {
   // restoreMocks: false,
 
   // The root directory that Jest should scan for tests and modules within
-  rootDir: process.cwd(),
+  rootDir: 'test',
 
   // A list of paths to directories that Jest should use to search for files in
-  roots: ['<rootDir>/packages', '<rootDir>/packages/plugins'],
+  // roots: [
+  //   "<rootDir>"
+  // ],
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",
@@ -112,7 +111,7 @@ module.exports = {
   // setupFiles: [],
 
   // The path to a module that runs some code to configure or set up the testing framework before each test
-  setupTestFrameworkScriptFile: '<rootDir>/setup-test/setupTestFramework.js',
+  // setupTestFrameworkScriptFile: null,
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],
@@ -127,10 +126,10 @@ module.exports = {
   // testLocationInResults: false,
 
   // The glob patterns Jest uses to detect test files
-  testMatch: ['**/__test__/**/*.test.js', '**/__test__/**/*.spec.js'],
+  testMatch: ['**/*.test.js', '**/*.spec.js'],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  // testPathIgnorePatterns: ['/node_modules/'],
+  testPathIgnorePatterns: ['/node_modules/'],
 
   // The regexp pattern Jest uses to detect test files
   // testRegex: "",
@@ -149,7 +148,7 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+\\.jsx?$': '<rootDir>/setup-test/transformer.js',
+    '^.+\\.jsx?$': 'babel-jest',
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation

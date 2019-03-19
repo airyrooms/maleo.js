@@ -1,6 +1,7 @@
 import React from 'react';
-import withStyles from '@airy/maleo-css-plugin/lib/withStyles';
+import withStyles from '@airy//css-plugin/lib/withStyles';
 
+import { AppContext } from '../../interface/AppContext';
 
 const style = require('./detail.css');
 
@@ -8,7 +9,7 @@ const style = require('./detail.css');
 export class RoomsDetail extends React.Component<any, any> {
   static displayName = 'RoomsDetail';
 
-  static getInitialProps = async (appContext) => {
+  static getInitialProps = async (appContext: AppContext) => {
     const { store } = appContext;
 
     return { a: 5, store };

@@ -31,8 +31,6 @@
         "interface-name": false,
         "max-classes-per-file": false,
         "variable-name": [true, "ban-keywords", "allow-leading-underscore"],
-        "no-bitwise": false,
-        "no-string-literal": false,
 
         "jsx-no-lambda": true,
         "jsx-no-string-ref": true,

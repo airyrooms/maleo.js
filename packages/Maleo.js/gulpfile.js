@@ -18,8 +18,6 @@ const paths = {
   server: 'src/server/**',
   client: 'src/client/**',
   bin: 'src/bin/*.ts',
-  routes: 'src/routes/**',
-  default: 'src/default/*.ts',
 };
 
 let tasks = Object.keys(paths);
@@ -33,7 +31,7 @@ tasks.map((p) => {
       .src(paths[p])
       .pipe(sourcemaps.init())
       .pipe(babel())
-      .pipe(uglify())
+      // .pipe(uglify())
       .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(dest)),
   );

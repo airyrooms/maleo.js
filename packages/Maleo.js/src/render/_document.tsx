@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { HeaderProps, DocumentProps, DocumentContext } from '@interfaces/render/IRender';
-import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@constants/index';
+import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@src/constants';
 
 // Extendable document
-export default class Document extends React.Component<DocumentProps, {}> {
+export class Document extends React.Component<DocumentProps, {}> {
   // export class Document extends React.Component<DocumentProps, {}> implements IDocument {
   // export const Document: IDocument = class extends React.Component<DocumentProps, {}> {
   static getInitialProps = async ({
@@ -106,7 +106,7 @@ export class Scripts extends React.Component {
           }}
         />
         {preloadScripts.map((p, i) => (
-          <script key={i} src={`${WEBPACK_PUBLIC_PATH}${p.filename}`} defer />
+          <script key={i} src={`${WEBPACK_PUBLIC_PATH}${p.filename}`} async />
         ))}
       </Fragment>
     );

@@ -1,5 +1,5 @@
 {
-    "extends": "../../node_modules/@airy/maleo-typescript-plugin/tsconfig.base.json",
+    "extends": "../../node_modules/@airy/typescript-plugin/tsconfig.base.json",
     "compilerOptions": {
         "baseUrl": ".",
         "rootDir": ".",
