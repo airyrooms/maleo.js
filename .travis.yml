@@ -14,9 +14,10 @@ before_install:
 
 script:
   - yarn build
-  - yarn test:cov
+  - yarn test
 
 before_deploy:
+  - yarn test:cov
   - echo "access=public" >> $HOME/.npmrc 2> /dev/null
   - echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" >> $HOME/.npmrc 2> /dev/null
   - bash ./ci/travis-checkout-branch.sh
