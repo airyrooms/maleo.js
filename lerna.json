@@ -37,7 +37,6 @@
         "master",
         "canary"
       ],
-      "yes": true,
       "registry": "https://registry.npmjs.org/",
       "ignoreChanges": [
         "*.md",
