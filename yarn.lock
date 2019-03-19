@@ -2,6 +2,23 @@
 # yarn lockfile v1
 
 
+"@airy/maleo-gulp-plugin@latest":
+  version "0.0.1-canary.51"
+  resolved "https://registry.yarnpkg.com/@airy/maleo-gulp-plugin/-/maleo-gulp-plugin-0.0.1-canary.51.tgz#3cf9494ae6b5e1b6ae44425055075ce47efeacd8"
+  integrity sha512-r3UiNWPRLOl1AOShcJmgoC2ixI+dT4ZctDIonPGCrmx8jNZRLkgZqEvgS92cbD4zOX4dp30gesX2M93IvK6zMg==
+  dependencies:
+    "@babel/core" "^7.2.0"
+    "@babel/plugin-proposal-class-properties" "^7.2.1"
+    "@babel/plugin-transform-runtime" "^7.2.0"
+    "@babel/preset-env" "^7.2.0"
+    "@babel/preset-react" "^7.0.0"
+    babel-plugin-module-resolver "^3.1.1"
+    gulp-babel "^8.0.0"
+    gulp-clean "^0.4.0"
+    gulp-sourcemaps "^2.6.4"
+    gulp-uglify "^3.0.1"
+    gulp-watch "^5.0.1"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.0.0-beta.35":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.0.0.tgz#06e2ab19bdb535385559aabb5ba59729482800f8"
@@ -5937,7 +5954,7 @@ hide-powered-by@1.0.0:
   resolved "https://registry.yarnpkg.com/hide-powered-by/-/hide-powered-by-1.0.0.tgz#4a85ad65881f62857fc70af7174a1184dccce32b"
   integrity sha1-SoWtZYgfYoV/xwr3F0oRhNzM4ys=
 
-history@^4.8.0-beta.0, history@^4.9.0:
+history@^4.9.0:
   version "4.9.0"
   resolved "https://registry.yarnpkg.com/history/-/history-4.9.0.tgz#84587c2068039ead8af769e9d6a6860a14fa1bca"
   integrity sha512-H2DkjCjXf0Op9OAr6nJ56fcRkTSNrUiv41vNJ6IswJjif6wlpZK0BTfFbi7qK9dXLSYZxkq5lBsj3vUjlYBYZA==
@@ -9944,30 +9961,30 @@ react-loadable@5.5.0:
   dependencies:
     prop-types "^15.5.0"
 
-react-router-config@4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/react-router-config/-/react-router-config-4.4.0.tgz#4e26b0b010451084cb20181e94a9f4bb198b7613"
-  integrity sha512-so68idK2P9k6w1abnoz6JaSK5VcDmMQ9W0R5JdWaKEYQCSoTOGIIF3aV+CsumSU9YG0ln9GaZjCaGEC4Ddo+kg==
+react-router-config@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-router-config/-/react-router-config-5.0.0.tgz#3d7e298dc64479bf9e1cc77080b8778e9a8d966c"
+  integrity sha512-si94cIg3HRXgwZB4vJGW6xkxOTMwCe1BXyBjkLstqZ+1rpqqAvo280BeQ8ZjIyYgiM/TDOa5Yu+HC4swUwri1w==
   dependencies:
     "@babel/runtime" "^7.1.2"
 
-react-router-dom@4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.4.0.tgz#fad67b46375f7081a76d1c92a83a92d28b5abc35"
-  integrity sha512-r4knbi8lanTGrwoUXFaWALrJZOAl3h9bdFUz4woHgEm7/bYcpBGfnYhPU82xjXrPeJyWF6OmIxpwXjxos30gOQ==
+react-router-dom@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-5.0.0.tgz#542a9b86af269a37f0b87218c4c25ea8dcf0c073"
+  integrity sha512-wSpja5g9kh5dIteZT3tUoggjnsa+TPFHSMrpHXMpFsaHhQkm/JNVGh2jiF9Dkh4+duj4MKCkwO6H08u6inZYgQ==
   dependencies:
     "@babel/runtime" "^7.1.2"
-    history "^4.8.0-beta.0"
+    history "^4.9.0"
     loose-envify "^1.3.1"
     prop-types "^15.6.2"
-    react-router "^4.4.0"
+    react-router "5.0.0"
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
-react-router@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-4.4.0.tgz#e8b8b88329f564d4c48b7ee631b10310188c6888"
-  integrity sha512-qTGsOSF2b02zOsUfcnHjw7muI0Ejx+yA2e4P9qqzB2O+N3Icpca4epViXRgkBIvBjagXBtroxXqH0RJhYDMUbg==
+react-router@5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-5.0.0.tgz#349863f769ffc2fa10ee7331a4296e86bc12879d"
+  integrity sha512-6EQDakGdLG/it2x9EaCt9ZpEEPxnd0OCLBHQ1AcITAAx7nCnyvnzf76jKWG1s2/oJ7SSviUgfWHofdYljFexsA==
   dependencies:
     "@babel/runtime" "^7.1.2"
     create-react-context "^0.2.2"
