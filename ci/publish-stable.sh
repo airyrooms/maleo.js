@@ -1,4 +1,5 @@
 echo "Publishing Stable"
 yarn publish:prepublish
-yarn publish:version-stable
+# For now manually publish stable version for safety
+# yarn publish:version-stable
 yarn publish:stable
