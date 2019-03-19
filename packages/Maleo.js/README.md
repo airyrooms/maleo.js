@@ -49,6 +49,9 @@ Readme below is the documentation for the `canary` (prerelease) branch. To view 
 
 Install Maleo.js 
 
+>*for now change `@airy/maleo` to `@airy/maleo@canary` until we publish the stable version of this package*
+
+
 **NPM**
 ```bash
 $ npm install --save @airy/maleo react
