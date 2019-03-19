@@ -35,3 +35,4 @@ deploy:
       - bash ./ci/publish-stable.sh
     on:
       branch: master
+      tags: true
