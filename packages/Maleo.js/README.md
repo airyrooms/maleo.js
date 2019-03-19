@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/airyrooms/maleo.js.svg?branch=master)](https://travis-ci.org/airyrooms/maleo.js)
 [![Coverage Status](https://coveralls.io/repos/github/airyrooms/maleo.js/badge.svg?branch=master)](https://coveralls.io/github/airyrooms/maleo.js?branch=master)
+[![npm version](https://badge.fury.io/js/%40airy%2Fmaleo.svg)](https://badge.fury.io/js/%40airy%2Fmaleo)
+[![Issues](http://img.shields.io/github/issues/airyrooms/maleo.js.svg)]( https://github.com/airyrooms/maleo.js/issues)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/airyrooms/maleo.js/blob/canary/LICENSE)
 [![Discord Chat](https://img.shields.io/discord/550498214789513218.svg)](https://discord.gg/9eArCQn)
 
@@ -660,11 +662,12 @@ module.exports = {
 ## Contributors
 
 This project exists thanks to all the people who contribute. [Contribute](CONTRIBUTING.md).
-[![contributors][oc-contributors-img]](https://github.com/airyrooms/maleo.js/graphs/contributors)
+
+Many thanks to our **[contributors](https://github.com/airyrooms/maleo.js/graphs/contributors)**!
+
 
 
 ## License
 
 MIT
 
-[oc-contributors-img]: https://opencollective.com/maleo.js/contributors.svg?width=890&button=false
