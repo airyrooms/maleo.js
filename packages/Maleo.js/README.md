@@ -65,7 +65,7 @@ Add this script to your `package.json`
 ```json
 {
   "scripts": {
-    "dev": "maleo",
+    "dev": "maleo dev",
     "build": "export NODE_ENV=production && maleo build",
     "start": "export NODE_ENV=production && node .maleo/server.js"
   }
@@ -92,9 +92,8 @@ And lastly, create a routing file on your project root directory called `routes.
 [
   {
     "path": "/",
-    "page": "./src/Root",
-    "key": "root",
-  },
+    "page": "./src/Root"
+  }
 ]
 ```
 
