@@ -1,6 +1,6 @@
 import { Action, combineReducers } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { makeStore } from '@airy/maleo-redux-plugin';
+import { makeStore } from '@airy/with-redux-plugin';
 
 interface State {
   initVal: string;

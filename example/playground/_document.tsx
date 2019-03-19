@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { default as Document, Header, Main, Scripts } from '@airy/maleo/document';
-import { ReduxScript } from '@airy/maleo-redux-plugin';
+import { Document, Header, Main, Scripts } from '@airy/maleo/lib/render/_document';
+import { ReduxScript } from '@airy/with-redux-plugin';
 
-export default class MyDocument extends Document {
+export class MyDocument extends Document {
   static getInitialProps = async (ctx) => {
     const initialProps = await Document.getInitialProps(ctx);
 

@@ -3,8 +3,9 @@ import path from 'path';
 import { renderToString } from 'react-dom/server';
 import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack';
+import { Response } from 'express';
 
-import { REACT_LOADABLE_MANIFEST, BUILD_DIR } from '@constants/index';
+import { REACT_LOADABLE_MANIFEST } from '@src/constants';
 import { isPromise } from '@utils/index';
 import { requireDynamic, requireRuntime } from '@utils/require';
 import { loadInitialProps, loadComponentProps } from './loadInitialProps';
@@ -14,12 +15,52 @@ import {
   RenderPageParams,
   LoadableBundles,
   DocumentContext,
-  ServerAssets,
 } from '@interfaces/render/IRender';
-import extractStats from './extract-stats';
 
+import { Document as DefaultDocument } from '@render/_document';
+import { App as DefaultApp } from '@render/_app';
+import { _Wrap as DefaultWrap } from '@render/_wrap';
+
+export const mapAssets = (stats: any) => {
+  const { assetsByChunkName } = stats;
+  let assets = assetsByChunkName;
+
+  if (process.env.NODE_ENV !== 'production') {
+    assets = {
+      ...assets,
+      ...stats.development,
+    };
+  }
+
+  return Object.keys(assets).reduce(
+    (accumulator, current) => [
+      ...accumulator,
+      {
+        name: current,
+        filename: assets[current].constructor === Array ? assets[current][0] : assets[current],
+      },
+    ],
+    [],
+  );
+};
+
+export const getPreloadScripts = async (dir: string, res: Response) => {
+  if (__DEV__) {
+    const stats = res.locals.webpackStats.toJson().children[0];
+    return mapAssets(stats);
+  }
+
+  // get bundles from webpack assets.json
+  return mapAssets(requireRuntime(path.join(dir, 'stats.json')));
+};
+
+const modPageFn = function<Props>(Page: React.ComponentType<Props>) {
+  return (props: Props) => <Page {...props} />;
+};
 export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: RenderPageParams) => {
-  return async (): Promise<{
+  return async (
+    fn = modPageFn,
+  ): Promise<{
     html: string;
     bundles: LoadableBundles[];
   }> => {
@@ -39,8 +80,8 @@ export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: Rende
 
     const asyncOrSyncRender = renderer(
       <Loadable.Capture report={reportResults}>
-        <Wrap location={req.originalUrl} context={appContext} server {...wrapProps}>
-          <App {...{ routes, data, location: { pathname: req.originalUrl }, ...appProps }} />
+        <Wrap location={req.baseUrl} context={appContext} server {...wrapProps}>
+          {fn(App)({ routes, data, ...appProps })}
         </Wrap>
       </Loadable.Capture>,
     );
@@ -72,20 +113,17 @@ export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: Rende
   };
 };
 
-let preloadScripts: any[] = [];
-export const render = async ({ req, res, dir, renderPage = defaultRenderPage }: RenderParam) => {
-  const { document: Document, routes, wrap: Wrap, app: App } = getServerAssets();
-
-  // sort preload with main last
-  if (__DEV__ || (!__DEV__ && !preloadScripts.length)) {
-    preloadScripts = extractStats(dir);
-    const mainIndex = preloadScripts.findIndex((p) => /main/.test(p.filename));
-    preloadScripts = [
-      ...preloadScripts.slice(0, mainIndex),
-      ...preloadScripts.slice(mainIndex + 1),
-      preloadScripts[mainIndex],
-    ];
-  }
+export const render = async ({
+  req,
+  res,
+  dir,
+  routes,
+  Document = DefaultDocument,
+  App = DefaultApp,
+  Wrap = DefaultWrap,
+  renderPage = defaultRenderPage,
+}: RenderParam) => {
+  const preloadScripts = await getPreloadScripts(dir, res);
 
   // matching routes
   const matchedRoutes = matchingRoutes(routes, req.baseUrl);
@@ -146,22 +184,5 @@ export const render = async ({ req, res, dir, renderPage = defaultRenderPage }: 
 
     return renderToString(<Document {...initialProps} />);
   }
-
-  // TODO: add customizable error page
   return 'error';
-};
-
-const getServerAssets = (): ServerAssets => {
-  const serverDir = path.join(process.cwd(), BUILD_DIR);
-  const assets = extractStats(serverDir);
-
-  const serverRequiredAssets = assets.filter((a) => /(routes|document|wrap|app)/.test(a.name));
-
-  return serverRequiredAssets.reduce(
-    (p, c) => ({
-      ...p,
-      [c.name]: requireRuntime(path.join(serverDir, c.filename)),
-    }),
-    {},
-  ) as ServerAssets;
 };

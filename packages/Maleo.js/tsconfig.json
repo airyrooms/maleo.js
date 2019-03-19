@@ -3,9 +3,6 @@
         "rootDir": ".",        
         "baseUrl": ".",
         "paths": {
-            "~/*": [
-                "./*"
-            ],
             "@build/*": [
                 "src/build/*"
             ],
@@ -15,19 +12,13 @@
             "@server/*": [
                 "src/server/*"
             ],
-            "@client/*": [
-                "src/client/*"
-            ],
             "@render/*": [
                 "src/render/*"
             ],
             "@utils/*": [
                 "src/utils/*"
             ],
-            "@routes/*": [
-                "src/routes/*"
-            ],
-            "@constants/*": [
+            "@src/constants/*": [
                 "src/constants/*"
             ]
         },

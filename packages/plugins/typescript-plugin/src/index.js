@@ -2,31 +2,17 @@ const path = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TsConfigPathPlugin = require('tsconfig-paths-webpack-plugin');
 
-const whitelistEntries = /(webpack|react-hot-loader|_server|_client)/;
-
 const replaceJStoTS = (entries = {}) =>
-  Object.keys(entries).reduce((p, c) => {
-    let entry = entries[c];
-
-    if (typeof entry === 'string') {
-      if (whitelistEntries.test(entry)) {
-        return {
-          ...p,
-          [c]: entry,
-        };
-      }
-
-      return {
-        ...p,
-        [c]: entry.replace(/\.js/, '.ts') && entry.replace(/\.jsx/, '.tsx'),
-      };
-    }
-
-    return {
+  Object.keys(entries).reduce(
+    (p, c) => ({
       ...p,
-      [c]: Object.values(replaceJStoTS(entry)),
-    };
-  }, {});
+      [c]:
+        typeof entries[c] === 'string'
+          ? entries[c].replace(/\.js$/, '.ts')
+          : entries[c].map((e) => e.replace(/\.js$/, '.ts')),
+    }),
+    {},
+  );
 
 module.exports = (customConfig = {}) => {
   return Object.assign({}, customConfig, {
@@ -42,7 +28,7 @@ module.exports = (customConfig = {}) => {
       ];
 
       config.module.rules.push({
-        test: /\.tsx?$/,
+        test: /\.tsx?/,
         exclude: /node_modules/,
         use: [
           require.resolve('@airy/maleo/lib/build/loaders/maleo-babel-loader'),

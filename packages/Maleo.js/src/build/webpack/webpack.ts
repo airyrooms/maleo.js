@@ -1,4 +1,5 @@
 // tslint:disable:no-console
+
 import path from 'path';
 import {
   Configuration,
@@ -16,15 +17,13 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import HardSourcePlugin from 'hard-source-webpack-plugin';
 
 // Webpack required plugins
-import { StatsWriterPlugin } from './plugins/stats-writer';
+import { StatsWriterPlugin } from 'webpack-stats-plugin';
 import { ReactLoadablePlugin } from './plugins/react-loadable';
-import nodeExternals from './utils/webpackNodeExternals';
+import nodeExternals from 'webpack-node-externals';
 
 // Other Webpack Plugins
 import WebpackBar from 'webpackbar';
 import CaseInsensitivePathPlugin from 'case-sensitive-paths-webpack-plugin';
-import FriendlyError from 'friendly-errors-webpack-plugin';
-import RequireCacheHMR from './plugins/require-cache-hmr';
 
 import {
   REACT_LOADABLE_MANIFEST,
@@ -35,12 +34,7 @@ import {
   RUNTIME_CHUNK_FILE,
   SERVER_ASSETS_ROUTE,
   MALEO_PROJECT_ROOT_NODE_MODULES,
-  PROJECT_ROOT_NODE_MODULES,
-  ROUTES_ENTRY_NAME,
-  DOCUMENT_ENTRY_NAME,
-  WRAP_ENTRY_NAME,
-  APP_ENTRY_NAME,
-} from '@constants/index';
+} from '@src/constants';
 import {
   Context,
   CustomConfig,
@@ -48,7 +42,6 @@ import {
   WebpackCustomConfigCallback,
 } from '@interfaces/build/IWebpackInterfaces';
 import { requireRuntime } from '@utils/require';
-import { fileExist } from '@utils/index';
 
 // Default Config if user doesn't have maleo.config.js
 const defaultUserConfig: CustomConfig = {
@@ -99,7 +92,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
     getDefaultRules,
     getDefaultPlugins,
     getDefaultOutput,
-  ].map((fn) => fn.call(this, buildContext, customConfig));
+  ].map((fn) => fn.call(this, buildContext));
 
   /**
    * Base Config
@@ -107,7 +100,6 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
   let baseConfigs: Configuration = {
     name,
     entry,
-    context: buildContext.projectDir,
     mode,
     devtool: isDev || sourceMaps ? 'cheap-module-source-map' : false,
     cache,
@@ -116,10 +108,8 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
     resolve: {
       extensions: ['.js', '.jsx', '.json'],
       alias,
-      symlinks: true,
       modules: [
         MALEO_PROJECT_ROOT_NODE_MODULES,
-        PROJECT_ROOT_NODE_MODULES,
         'node_modules',
         ...nodePathList, // Support for NODE_PATH environment variable
       ],
@@ -142,33 +132,16 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
   };
 
   if (isServer) {
-    // required on server bundle
-    const whitelist = [
-      /webpack[/\\]hot[/\\](signal|poll)/,
-      /react[/\\]/,
-      /@airy[/\\]maleo/,
-      /@babel[/\\]runtime[/\\]/,
-      /@babel[/\\]runtime-corejs2[/\\]/,
-    ];
-
     baseConfigs = {
       ...baseConfigs,
 
-      // Extract all server node_modules from maleo's project and client's
+      // Extract all server node_modules from bundles except React
       externals: [
         nodeExternals({
-          modulesFromFile: {
-            fileName: require.resolve('~/package.json'),
-          },
-          whitelist,
-        }),
-        nodeExternals({
-          modulesFromFile: {
-            fileName: path.join(buildContext.projectDir, 'package.json'),
-          },
-          whitelist,
+          whitelist: [/react/],
         }),
       ],
+
       node: {
         // Keep __dirname relative to file not root project
         __dirname: true,
@@ -198,49 +171,28 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
 /**
  * Setting Up Default Entry
  */
-export const getDefaultEntry = (
-  context: BuildContext,
-  customConfig: CustomConfig,
-): Configuration['entry'] => {
-  const { isServer, projectDir, isDev } = context;
-
-  const { routes, document, wrap, app } = getStaticEntries(context, customConfig);
+export const getDefaultEntry = (context: BuildContext): Configuration['entry'] => {
+  const { isServer, projectDir } = context;
 
   if (isServer) {
-    const customServerExist = fileExist(projectDir, 'server');
-    const serverEntry = customServerExist
-      ? path.join(projectDir, SERVER_ENTRY_NAME)
-      : path.resolve(__dirname, '../../../lib/default/_server.js');
-
     return {
-      server: [isDev && 'webpack/hot/signal', serverEntry].filter(Boolean) as string[],
-      routes,
-      document,
-      wrap,
-      app,
+      server: path.join(projectDir, SERVER_ENTRY_NAME),
     };
   }
 
-  const customClientExist = fileExist(projectDir, path.join(projectDir, 'client'));
-  const clientEntry = customClientExist
-    ? path.join(projectDir, CLIENT_ENTRY_NAME)
-    : path.resolve(__dirname, '../../../lib/default/_client.js');
-
   return {
-    main: [clientEntry].filter(Boolean) as string[],
-    routes,
-    wrap: `maleo-register-loader?page=wrap&absolutePagePath=${wrap}!`,
-    app: `maleo-register-loader?page=app&absolutePagePath=${app}!`,
+    main: [
+      'webpack-hot-middleware/client?name=client',
+      'react-hot-loader/patch',
+      path.join(projectDir, CLIENT_ENTRY_NAME),
+    ],
   };
 };
 
 /**
  * Setting Up Default Optimizations
  */
-export const getDefaultOptimizations = (
-  context: BuildContext,
-  customConfig: CustomConfig,
-): Configuration['optimization'] => {
+export const getDefaultOptimizations = (context: BuildContext): Configuration['optimization'] => {
   const { isServer, isDev } = context;
 
   const commonOptimizations: Configuration['optimization'] = {
@@ -337,25 +289,12 @@ export const getDefaultOptimizations = (
 /**
  * Setting Up Default Rules
  */
-export const getDefaultRules = (
-  context: BuildContext,
-  customConfig: CustomConfig,
-): RuleSetRule[] => {
-  const { isServer, projectDir } = context;
-
+export const getDefaultRules = (context: BuildContext): RuleSetRule[] => {
   return [
     {
-      test: /\.jsx?$/,
+      test: /\.jsx?/,
       exclude: /node_modules/,
       use: ['maleo-babel-loader'],
-    },
-    // to disable webpack's default json-loader
-    // so we need to define our own rules for routes.json
-    {
-      type: 'javascript/auto',
-      test: path.resolve(projectDir, ROUTES_ENTRY_NAME),
-      exclude: /node_modules/,
-      use: `maleo-routes-split?server=${JSON.stringify(!!isServer)}`,
     },
   ];
 };
@@ -363,10 +302,7 @@ export const getDefaultRules = (
 /**
  * Setting up Default Plugins
  */
-export const getDefaultPlugins = (
-  context: BuildContext,
-  customConfig: CustomConfig,
-): Configuration['plugins'] => {
+export const getDefaultPlugins = (context: BuildContext): Configuration['plugins'] => {
   const { isDev, projectDir, publicPath, env, isServer, analyzeBundle, name } = context;
 
   const commonPlugins: Configuration['plugins'] =
@@ -375,7 +311,6 @@ export const getDefaultPlugins = (
 
       // Common Plugins
       new HashedModuleIdsPlugin(),
-      isDev && new FriendlyError(),
       new WebpackBar({
         name,
       }),
@@ -384,49 +319,29 @@ export const getDefaultPlugins = (
         WEBPACK_PUBLIC_PATH: JSON.stringify(publicPath),
         __DEV__: isDev,
         __ENV__: JSON.stringify(env),
-        __IS_SERVER__: isServer,
       }),
-
-      // Commented due to issue with WDM and WHM
-      // details: https://github.com/mzgoddard/hard-source-webpack-plugin/issues/416
-      // new HardSourcePlugin({
-      //   cacheDirectory: path.join(
-      //     projectDir,
-      //     `node_modules/.cache/hard-source/${isServer ? 'server' : 'client'}/[confighash]`,
-      //   ),
-      //   cachePrune: {
-      //     // Caches younger than `maxAge` are not considered for deletion. They must
-      //     // be at least this (default: 2 days) old in milliseconds.
-      //     maxAge: 2 * 24 * 60 * 60 * 1000,
-      //     // All caches together must be larger than `sizeThreshold` before any
-      //     // caches will be deleted. Together they must be at least this
-      //     // (default: 50 MB) big in bytes.
-      //     sizeThreshold: 50 * 1024 * 1024,
-      //   },
-
-      //   environmentHash: {
-      //     root: projectDir,
-      //     directories: [],
-      //     files: ['package-lock.json', 'yarn.lock'],
-      //   },
-
-      //   info: {
-      //     mode: env,
-      //     level: 'log',
-      //   },
-      // }),
 
       // Setting up Development Plugins
-      isDev && new RequireCacheHMR(),
+      // Commented due to issue with WDM and WHM
+      // details: https://github.com/mzgoddard/hard-source-webpack-plugin/issues/416
+      isDev &&
+        new HardSourcePlugin({
+          cacheDirectory: path.join(
+            projectDir,
+            `node_modules/.cache/hard-source/${isServer ? 'server' : 'client'}/[confighash]`,
+          ),
 
-      // HMR
-      isDev && new HotModuleReplacementPlugin(),
-      isDev && new NoEmitOnErrorsPlugin(),
+          environmentHash: {
+            root: projectDir,
+            directories: [],
+            files: ['package-lock.json', 'yarn.lock'],
+          },
 
-      // Bundled Stats
-      new StatsWriterPlugin({
-        isDev,
-      }),
+          info: {
+            mode: 'none',
+            level: 'log',
+          },
+        }),
     ].filter(Boolean) as Configuration['plugins']) || [];
 
   // Setting Up Server Plugins
@@ -441,33 +356,7 @@ export const getDefaultPlugins = (
           entryOnly: false,
         }),
 
-        isDev &&
-          new HardSourcePlugin({
-            cacheDirectory: path.join(
-              projectDir,
-              `node_modules/.cache/hard-source/server/[confighash]`,
-            ),
-            cachePrune: {
-              // Caches younger than `maxAge` are not considered for deletion. They must
-              // be at least this (default: 2 days) old in milliseconds.
-              maxAge: 2 * 24 * 60 * 60 * 1000,
-              // All caches together must be larger than `sizeThreshold` before any
-              // caches will be deleted. Together they must be at least this
-              // (default: 50 MB) big in bytes.
-              sizeThreshold: 50 * 1024 * 1024,
-            },
-
-            environmentHash: {
-              root: projectDir,
-              directories: [],
-              files: ['package-lock.json', 'yarn.lock'],
-            },
-
-            info: {
-              mode: env,
-              level: 'log',
-            },
-          }),
+        // new RequireCacheHMR(),
       ].filter(Boolean) as Configuration['plugins']) || [];
 
     return [...commonPlugins, ...serverPlugins];
@@ -480,6 +369,14 @@ export const getDefaultPlugins = (
       }),
 
       analyzeBundle && new BundleAnalyzerPlugin(),
+
+      // Bundled Stats
+      new StatsWriterPlugin({
+        isDev,
+      }),
+
+      new HotModuleReplacementPlugin(),
+      new NoEmitOnErrorsPlugin(),
     ].filter(Boolean) as Configuration['plugins']) || [];
 
   return [...clientPlugins, ...commonPlugins];
@@ -488,26 +385,13 @@ export const getDefaultPlugins = (
 /**
  * Setting Up Default Output
  */
-export const getDefaultOutput = (
-  context: BuildContext,
-  customConfig: CustomConfig,
-): Configuration['output'] => {
+export const getDefaultOutput = (context: BuildContext): Configuration['output'] => {
   const { isServer, projectDir, buildDirectory, publicPath, isDev } = context;
-
-  const hmr = {
-    hotUpdateChunkFilename: 'hot/hot-update.js',
-    hotUpdateMainFilename: 'hot/hot-update.json',
-  };
 
   if (isServer) {
     return {
       filename: '[name].js',
-      chunkFilename: '[name].js',
       path: path.resolve(projectDir, buildDirectory),
-
-      library: '[name]',
-      libraryTarget: 'commonjs2',
-      ...hmr,
     };
   }
 
@@ -516,24 +400,26 @@ export const getDefaultOutput = (
     publicPath,
 
     chunkFilename: isDev ? '[name].js' : '[name]-[hash].js',
-    filename: isDev ? '[name].js' : '[name]-[hash].js',
+    filename: isDev ? '[name]' : '[name]-[hash]',
     library: '[name]',
-    ...hmr,
+
+    // hotUpdateChunkFilename: 'hot/hot-update.js',
+    // hotUpdateMainFilename: 'hot/hot-update.json',
   };
 };
 
 /**
  * Load User Config with file name USER_CUSTOM_CONFIG (maleo.config.js)
  */
-export const loadUserConfig = (dir: string, quiet?: boolean): CustomConfig => {
+export const loadUserConfig = (dir: string): CustomConfig => {
   const cwd: string = path.resolve(dir);
   const userConfigPath: string = path.resolve(cwd, USER_CUSTOM_CONFIG);
   try {
     const userConfig = requireRuntime(userConfigPath);
 
     if (userConfig !== undefined) {
-      // tslint:disable-next-line:no-unused-expression quotemark
-      !quiet && console.log("[Webpack] Using user's config");
+      // tslint:disable-next-line:quotemark
+      console.log("[Webpack] Using user's config");
       return {
         ...defaultUserConfig,
         ...userConfig,
@@ -543,49 +429,8 @@ export const loadUserConfig = (dir: string, quiet?: boolean): CustomConfig => {
     return defaultUserConfig;
   } catch (err) {
     if (err.code !== 'MODULE_NOT_FOUND') {
-      // tslint:disable-next-line:no-unused-expression
-      !quiet && console.log('[Webpack] Using Default Config');
+      console.log('[Webpack] Using Default Config');
     }
     return defaultUserConfig;
   }
-};
-
-/**
- * Get Static Entries
- * Read from maleo.config.js, if the config not found Maleo will try to search user's from default directory
- * If file not found then Maleo will use it's default statics
- */
-const getStaticEntries = (context: BuildContext, config: CustomConfig) => {
-  const { projectDir } = context;
-  const { customDocument, customWrap, customApp, routes: customRoutes } = config;
-
-  const defaultDocument = path.resolve(__dirname, '../../../lib/render/_document.js');
-  const defaultWrap = path.resolve(__dirname, '../../../lib/render/_wrap.js');
-  const defaultApp = path.resolve(__dirname, '../../../lib/render/_app.js');
-
-  const defaultUserRoutes = path.join(projectDir, ROUTES_ENTRY_NAME);
-  const defaultUserDocument = path.join(projectDir, DOCUMENT_ENTRY_NAME);
-  const defaultUserWrap = path.join(projectDir, WRAP_ENTRY_NAME);
-  const defaultUserApp = path.join(projectDir, APP_ENTRY_NAME);
-
-  const cRoutes = customRoutes && path.join(projectDir, customRoutes as string);
-  const cDoc = customDocument && path.join(projectDir, customDocument as string);
-  const cWrap = customWrap && path.join(projectDir, customWrap as string);
-  const cApp = customApp && path.join(projectDir, customApp as string);
-
-  const routes = cRoutes || defaultUserRoutes;
-
-  const document =
-    cDoc || fileExist(projectDir, '_document') ? defaultUserDocument : defaultDocument;
-
-  const wrap = cWrap || fileExist(projectDir, '_wrap') ? defaultUserWrap : defaultWrap;
-
-  const app = cApp || fileExist(projectDir, '_app') ? defaultUserApp : defaultApp;
-
-  return {
-    routes,
-    document,
-    wrap,
-    app,
-  };
 };

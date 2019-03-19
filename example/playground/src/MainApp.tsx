@@ -17,6 +17,7 @@ export class RoomsMainApp extends React.Component<any, any> {
   };
 
   render() {
+    console.log('Data', this.props.data);
     return (
       <div>
         rooms main app

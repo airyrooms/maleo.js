@@ -19,11 +19,6 @@ export interface CustomConfig {
     context: Context,
     next: WebpackCustomConfigCallback,
   ) => Configuration;
-
-  customWrap?: string;
-  customApp?: string;
-  customDocument?: string;
-  routes?: string;
 }
 
 export type WebpackCustomConfigCallback = (customConfig: CustomConfig) => Configuration;
