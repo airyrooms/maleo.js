@@ -1,6 +1,6 @@
 {
   "name": "@airy/maleo-css-plugin",
-  "version": "0.0.9",
+  "version": "0.0.10-canary.0",
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
