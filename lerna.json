@@ -16,7 +16,9 @@
     "*.md",
     "*.test.*",
     "example/**",
-    "**/__test__/**"
+    "**/__test__/**",
+    "*.yml",
+    "*.sh"
   ],
   "command": {
     "version": {
@@ -27,6 +29,14 @@
       "allowBranch": [
         "master",
         "canary"
+      ],
+      "ignoreChanges": [
+        "*.md",
+        "*.test.*",
+        "example/**",
+        "**/__test__/**",
+        "*.yml",
+        "*.sh"
       ]
     },
     "publish": {
@@ -42,7 +52,9 @@
         "*.md",
         "*.test.*",
         "example/**",
-        "**/__test__/**"
+        "**/__test__/**",
+        "*.yml",
+        "*.sh"
       ]
     }
   }
