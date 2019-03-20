@@ -32,7 +32,13 @@ deploy:
   - provider: script
     skip_cleanup: true
     script:
-      - bash ./ci/publish-stable.sh
+      - bash ./ci/travis-sync-master-canary.sh
     on:
       branch: master
-      tags: true
+  # - provider: script
+  #   skip_cleanup: true
+  #   script:
+  #     - bash ./ci/publish-stable.sh
+  #   on:
+  #     branch: master
+  #     tags: true
