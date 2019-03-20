@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.9](https://github.com/alvinkl/maleo.js/compare/@airy/maleo-css-plugin@0.0.9-canary.1...@airy/maleo-css-plugin@0.0.9) (2019-03-20)
+
+**Note:** Version bump only for package @airy/maleo-css-plugin
+
+
+
+
+
 ## [0.0.9-canary.1](https://github.com/airyrooms/maleo.js/compare/@airy/maleo-css-plugin@0.0.8-canary.2...@airy/maleo-css-plugin@0.0.9-canary.1) (2019-03-20)
 
 **Note:** Version bump only for package @airy/maleo-css-plugin
