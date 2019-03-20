@@ -159,6 +159,77 @@ YEAH!! 🎉🎉 You are ready to make your changes available for other people
 
 Your code are now available in your repository, but it's time to make a [Pull Request](https://help.github.com/articles/about-pull-requests/) to Maleo.js
 
+## Publishing Stable Guide
+
+---
+**Publishing stable version is only reserved for repo admin: [@alvinkl](https://github.com/alvinkl), [@AndariasSilvanus](https://github.com/AndariasSilvanus). For more info please join our [discord channel](https://discord.gg/9eArCQn)**
+
+---
+
+Make a pull request from Canary to Master and review all the changes stated on the commit messages.
+If everything looks OK you can now merge the PR using **Merge Create a Merge Commit** with Commit Message as such.
+```
+Ready to Publish Stable [skip ci]
+```
+This is required in order to make Master branch keep in sync with Canary branch, because Squash merging will make the history disappear and open up to other push force issue, Rebase also does the same, also we don't want [travis-ci](https://travis-ci.org/airyrooms/maleo.js) to run it's **Sync Master to Canary** Pipeline.
+
+After done so checkout to the master branch by using this command
+```bash
+$ git fetch upstream master:master
+$ git checkout master
+$ git log #to check if the log the same with remote's
+```
+
+Now in order to publish the stable version, start by running this command
+```bash
+$ yarn publish:version-stable
+```
+The command above runs [lerna version](https://github.com/lerna/lerna/tree/master/commands/version) to let lerna show the package that need to bump it's version for the changes it has.
+
+---
+***Please review first the [semantic versioning](https://semver.org/), as this will affect all the user that is using this framework***
+
+---
+
+After everything looks good, you should see lerna doing it's magic bumping the version and make changes on the respective package's `package.json`, do the commit, and do the tagging. 
+
+---
+**DO WITH PRECAUTIONS**
+
+If you happen to find lerna error during tagging, you can delete the tag on **your remote**, [how to delete all git tags on your local and remote](https://gist.github.com/okunishinishi/9424779), do git reset of the commit to have the same latest commit with remote's master, then redo the publishing again.
+
+---
+
+After Lerna has done it's job, you should see a new commit with message `chore(release): publish stable ...` and also the new git tag with the new version such as `@airy/maleo@1.0.0`.
+
+Then you can publish this changes to NPM by running this command
+```bash
+$ bash ./ci/publish-stable.sh
+```
+
+The command above will run 
+- `yarn publish:prepublish` this command is to make sure packages are ready for publishing, usually runs package build specific for publishing.
+- `yarn publish:stable` this command runs lerna publish and publish it to NPM, this command will add git head revision to the bottom of respective package's `package.json`
+
+Now you need to add all the git head revision changes to the latest commit by running this command
+```bash
+$ git add .
+$ git commit --amend --no-edit
+```
+
+After doing all of the above, now you are good to push all this changes to upstream remote by running
+```bash
+$ git push upstream master
+```
+
+---
+**NOTICE**
+
+By pushing those changes to the remote master branch, it will trigger [travis-ci](https://travis-ci.org/airyrooms/maleo.js) pipeline to sync the `master` branch with `canary` branch.
+During this process, the pipeline will also publish a new canary version for it and during this process you **must not** merge any PR to make sure the `canary.0` version is clean.
+
+---
+
 ## FAQ
 <details>
   <summary>How to test Maleo.js on local development machine in the <code>example</code> directory?</summary>
