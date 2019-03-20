@@ -29,6 +29,12 @@ deploy:
       - bash ./ci/publish-canary.sh
     on:
       branch: canary
+  - provider: script
+    skip_cleanup: true
+    script:
+      - bash ./ci/travis-sync-master-canary.sh
+    on:
+      branch: master
   # - provider: script
   #   skip_cleanup: true
   #   script:
