@@ -1,5 +1,5 @@
 {
-  "lerna": "3.7.2",
+  "lerna": "3.13.1",
   "version": "independent",
   "packages": [
     "packages/**"
@@ -25,6 +25,7 @@
       "exact": true,
       "githubRelease": true,
       "noCommitHooks": true,
+      "noChangelog": true,
       "conventionalCommits": true,
       "allowBranch": [
         "master",
