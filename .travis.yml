@@ -41,11 +41,3 @@ deploy:
     on:
       branch: master
       node: "10"
-
-  # - provider: script
-  #   skip_cleanup: true
-  #   script:
-  #     - bash ./ci/publish-stable.sh
-  #   on:
-  #     branch: master
-  #     tags: true

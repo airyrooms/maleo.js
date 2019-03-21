@@ -1,9 +1,7 @@
-version: 2
-jobs:
-  build:
-    working_directory: ~/tmp
-    docker:
-      - image: circleci/node:10.11.0
+version: 2.0
+
+commands:
+  lint_build_test:
     steps:
       - checkout
       - run:
@@ -30,9 +28,24 @@ jobs:
       - run:
           name: Run Unit Test
           command: yarn test
+
+jobs:
+  node-v10:
+    working_directory: ~/tmp
+    docker:
+      - image: circleci/node:10
+    steps: 
+      - lint_build_test
+  node-v11:
+    working_directory: ~/tmp
+    docker:
+      - image: circleci/node:11
+    steps: 
+      - lint_build_test
+    
       
 workflows:
-  version: 2
-  lint-build:
+  node-multi-build:
     jobs:
-      - build
+      - node-v10
+      - node-v11
