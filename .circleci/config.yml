@@ -1,56 +1,37 @@
+workflows:
+  version: 2
+  node-multi-build:
+    jobs:
+      - node-v6
+      - node-v8
+      - node-v10
+
 version: 2
+
 jobs:
-  build_test_v10:
-    working_directory: ~/tmp
+  node-base: &node-base
     docker:
-      - image: circleci/node:10
+      - image: node
     steps:
-      - checkout
       - run:
-          name: Install Latest Yarn
-          command: 'sudo npm install --global yarn@latest'
+          name: Versions
+          command: |
+            yarn versions
+            echo "npm: $(npm --version)"
+      - checkout
       - restore_cache:
-          name: Restore Yarn Package Cache
           keys:
-            - node-10-yarn-packages-{{ checksum "yarn.lock" }}
+            - v{{ .Environment.CIRCLE_CACHE_VERSION }}-yarn-lock-{{ .Branch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}
+            - v{{ .Environment.CIRCLE_CACHE_VERSION }}-yarn-lock-master-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}
+            - v{{ .Environment.CIRCLE_CACHE_VERSION }}-yarn-cache-{{ .Branch }}-{{ .Environment.CIRCLE_JOB }}
+            - v{{ .Environment.CIRCLE_CACHE_VERSION }}-yarn-cache-master-{{ .Environment.CIRCLE_JOB }}
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
       - save_cache:
-          name: Save Yarn Package Cache
-          key: node-10-yarn-packages-{{ checksum "yarn.lock" }}
+          key: v{{ .Environment.CIRCLE_CACHE_VERSION }}-yarn-lock-{{ .Branch }}-{{ .Environment.CIRCLE_JOB }}-{{ checksum "yarn.lock" }}
           paths:
-            - ~/.cache/yarn
-      - run:
-          name: Lint
-          command: yarn lint
-      - run:
-          name: Run Build
-          command: yarn build
-      - run:
-          name: Run Unit Test
-          command: yarn test
-  build_test_v11:
-    working_directory: ~/tmp
-    docker:
-      - image: circleci/node:11
-    steps:
-      - checkout
-      - run:
-          name: Install Latest Yarn
-          command: 'sudo npm install --global yarn@latest'
-      - restore_cache:
-          name: Restore Yarn Package Cache
-          keys:
-            - node-11-yarn-packages-{{ checksum "yarn.lock" }}
-      - run:
-          name: Install Dependencies
-          command: yarn install --frozen-lockfile
-      - save_cache:
-          name: Save Yarn Package Cache
-          key: node-11-yarn-packages-{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
+            - node_modules
       - run:
           name: Lint
           command: yarn lint
@@ -61,9 +42,11 @@ jobs:
           name: Run Unit Test
           command: yarn test
       
-workflows:
-  version: 2
-  multi_nodejs:
-    jobs:
-      - build_test_v10
-      - build_test_v11
+node-v10:
+  <<: *node-base
+  docker:
+    - image: node:10
+node-v11:
+  <<: *node-base
+  docker:
+    - image: node:11
