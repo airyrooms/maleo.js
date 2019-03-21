@@ -672,4 +672,3 @@ Many thanks to our **[contributors](https://github.com/airyrooms/maleo.js/graphs
 ## License
 
 MIT
-
