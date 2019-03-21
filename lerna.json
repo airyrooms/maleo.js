@@ -25,38 +25,20 @@
       "exact": true,
       "githubRelease": true,
       "noCommitHooks": true,
-      "noChangelog": true,
       "conventionalCommits": true,
       "allowBranch": [
         "master",
         "canary"
-      ],
-      "ignoreChanges": [
-        "*.md",
-        "*.test.*",
-        "example/**",
-        "**/__test__/**",
-        "*.yml",
-        "*.sh"
       ]
     },
     "publish": {
       "forcePublish": false,
       "npmClient": "npm",
-      "noChangelog": true,
       "allowBranch": [
         "master",
         "canary"
       ],
-      "registry": "https://registry.npmjs.org/",
-      "ignoreChanges": [
-        "*.md",
-        "*.test.*",
-        "example/**",
-        "**/__test__/**",
-        "*.yml",
-        "*.sh"
-      ]
+      "registry": "https://registry.npmjs.org/"
     }
   }
 }
