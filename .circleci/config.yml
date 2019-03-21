@@ -1,7 +1,9 @@
-version: 2.0
-
-commands:
-  lint_build_test:
+version: 2
+jobs:
+  build_test_v10:
+    working_directory: ~/tmp
+    docker:
+      - image: circleci/node:10
     steps:
       - checkout
       - run:
@@ -10,13 +12,13 @@ commands:
       - restore_cache:
           name: Restore Yarn Package Cache
           keys:
-            - yarn-packages-{{ checksum "yarn.lock" }}
+            - node-10-yarn-packages-{{ checksum "yarn.lock" }}
       - run:
           name: Install Dependencies
           command: yarn install --frozen-lockfile
       - save_cache:
           name: Save Yarn Package Cache
-          key: yarn-packages-{{ checksum "yarn.lock" }}
+          key: node-10-yarn-packages-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
       - run:
@@ -28,24 +30,40 @@ commands:
       - run:
           name: Run Unit Test
           command: yarn test
-
-jobs:
-  node-v10:
-    working_directory: ~/tmp
-    docker:
-      - image: circleci/node:10
-    steps: 
-      - lint_build_test
-  node-v11:
+  build_test_v11:
     working_directory: ~/tmp
     docker:
       - image: circleci/node:11
-    steps: 
-      - lint_build_test
-    
+    steps:
+      - checkout
+      - run:
+          name: Install Latest Yarn
+          command: 'sudo npm install --global yarn@latest'
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - node-11-yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: node-11-yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - run:
+          name: Lint
+          command: yarn lint
+      - run:
+          name: Run Build
+          command: yarn build
+      - run:
+          name: Run Unit Test
+          command: yarn test
       
 workflows:
-  node-multi-build:
+  version: 2
+  multi_nodejs:
     jobs:
-      - node-v10
-      - node-v11
+      - build_test_v10
+      - build_test_v11
