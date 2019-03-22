@@ -8,6 +8,7 @@ export class RoomsMainApp extends React.Component<any, any> {
     // const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
     // const data = await response.json();
     const data = {};
+    console.log('GIP Main App')
 
     if (store) {
       store.dispatch({ type: 'TEST', data: 'testttt' });
