@@ -9,7 +9,7 @@ export const matchingRoutes = async (
 
   const preloadedMatchedRoutes: Branch[] = [];
 
-  matchedRoutes.map(async (branch) => {
+  await matchedRoutes.map(async (branch) => {
     const { component } = branch.route;
 
     // Preload Component route
