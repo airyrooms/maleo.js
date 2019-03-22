@@ -2,6 +2,7 @@ import React from 'react';
 import { RouteProps, RouteComponentProps, match as Match } from 'react-router-dom';
 import { Request, Response } from 'express';
 import { History, Location } from 'history';
+import Loadable from 'react-loadable';
 
 export interface AppProps {
   routes: AsyncRouteProps[];
@@ -91,6 +92,21 @@ export interface InitialProps {
   data: {
     [key: string]: Promise<any>;
   };
+}
+
+export interface CustomLoadableComponent<Props = any> extends Loadable.LoadableComponent {
+  preload: () => { default: AsyncRouteableComponent<Props> };
+}
+export interface PreRouteProps<Props = any> {
+  key?: string;
+  routes?: Array<AsyncRouteProps<Props>>;
+  redirectTo?: string;
+  component: CustomLoadableComponent;
+}
+
+export interface PreBranch {
+  route: PreRouteProps;
+  match: Match;
 }
 
 export interface Branch {
