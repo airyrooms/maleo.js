@@ -42,10 +42,7 @@ export class Server {
   }
 
   run = (handler) => {
-    // return this.app.listen(this.options.port, handler);
-    return Loadable.preloadAll().then(() => {
-      this.app.listen(this.options.port, handler);
-    });
+    return this.app.listen(this.options.port, handler);
   };
 
   applyExpressMiddleware = (middleware: express.RequestHandler) => {
