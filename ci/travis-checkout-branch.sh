@@ -25,20 +25,20 @@ git status
 
 head_ref=$(git rev-parse HEAD)
 if [[ $? -ne 0 || ! $head_ref ]]; then
-    err "failed to get HEAD reference"
+    echo "failed to get HEAD reference"
     exit 1
 fi
 branch_ref=$(git rev-parse "$TRAVIS_BRANCH")
 if [[ $? -ne 0 || ! $branch_ref ]]; then
-    err "failed to get $TRAVIS_BRANCH reference"
+    echo "failed to get $TRAVIS_BRANCH reference"
     exit 1
 fi
 if [[ $head_ref != $branch_ref ]]; then
-    msg "HEAD ref ($head_ref) does not match $TRAVIS_BRANCH ref ($branch_ref)"
-    msg "someone may have pushed new commits before this build cloned the repo"
+    echo "HEAD ref ($head_ref) does not match $TRAVIS_BRANCH ref ($branch_ref)"
+    echo "someone may have pushed new commits before this build cloned the repo"
     exit 1
 fi
 if ! git checkout "$TRAVIS_BRANCH"; then
-    err "failed to checkout $TRAVIS_BRANCH"
+    echo "failed to checkout $TRAVIS_BRANCH"
     exit 1
 fi
