@@ -7,7 +7,7 @@ export class RoomsMainApp extends React.Component<any, any> {
   static getInitialProps = async ({ store, ...context }) => {
     // const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
     // const data = await response.json();
-    const data = {};
+    const data = { initialData: true };
     console.log('GIP Main App')
 
     if (store) {
