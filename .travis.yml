@@ -1,7 +1,12 @@
-language: node_js
 sudo: required
 git:
   quiet: true
+
+language: node_js
+node_js:
+  - "11"
+  - "10"
+  
 branches:
   only:
     - master
@@ -35,10 +40,4 @@ deploy:
       - bash ./ci/travis-sync-master-canary.sh
     on:
       branch: master
-  # - provider: script
-  #   skip_cleanup: true
-  #   script:
-  #     - bash ./ci/publish-stable.sh
-  #   on:
-  #     branch: master
-  #     tags: true
+      node: "10"

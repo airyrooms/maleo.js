@@ -1,1 +1,1 @@
-export const STORE_KEY = '__PRELOADED_STATE__';
+export const STORE_KEY = '__MALEO_REDUX_PRELOADED_STATE__';

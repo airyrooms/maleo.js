@@ -1,6 +1,6 @@
 {
     "name": "@airy/maleo",
-    "version": "0.0.11",
+    "version": "0.0.12-canary.1",
     "description": "Un-opinionated Universal Rendering Javascript Framework",
     "repository": {
         "type": "git",

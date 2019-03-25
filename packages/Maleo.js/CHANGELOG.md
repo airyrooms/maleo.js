@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.12-canary.1](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.12-canary.0...@airy/maleo@0.0.12-canary.1) (2019-03-25)
+
+
+### Features
+
+* **maleo-core:** use noscript for initial data ([#146](https://github.com/airyrooms/maleo.js/issues/146)) ([d84545e](https://github.com/airyrooms/maleo.js/commit/d84545e)), closes [#49](https://github.com/airyrooms/maleo.js/issues/49)
+
+
+
+
+
+## [0.0.12-canary.0](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.10-canary.0...@airy/maleo@0.0.12-canary.0) (2019-03-25)
+
+
+### Bug Fixes
+
+* **getinitialprops:** fix get initial props ([#133](https://github.com/airyrooms/maleo.js/issues/133)) [skip ci] ([98c65c7](https://github.com/airyrooms/maleo.js/commit/98c65c7)), closes [#131](https://github.com/airyrooms/maleo.js/issues/131)
+* **ssr:** fix component getinitialprops ([#127](https://github.com/airyrooms/maleo.js/issues/127)) ([91f7257](https://github.com/airyrooms/maleo.js/commit/91f7257))
+
+
+
+
+
 ## [0.0.11](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.9-canary.1...@airy/maleo@0.0.11) (2019-03-22)
 
 

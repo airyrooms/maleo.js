@@ -6,14 +6,16 @@ export class ReduxScript extends React.Component {
   static contextTypes = {
     ctx: PropTypes.any,
   };
+
   render() {
     const { store } = this.context.ctx;
     const preloadedState = store.getState();
-    const preloadedStateStr = JSON.stringify(preloadedState);
+
     return (
-      <script
+      <noscript
+        id={STORE_KEY}
         dangerouslySetInnerHTML={{
-          __html: `window.${STORE_KEY} = ${preloadedStateStr}`,
+          __html: JSON.stringify(preloadedState),
         }}
       />
     );

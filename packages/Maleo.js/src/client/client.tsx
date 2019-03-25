@@ -41,14 +41,17 @@ export const hydrate = (App: () => React.ReactElement<any>): void => {
 };
 
 export const ensureReady = async (routes, pathname, ctx): Promise<InitialProps> => {
-  const initialServerData = window[SERVER_INITIAL_DATA];
+  const initialServerData = document.querySelectorAll('noscript#' + SERVER_INITIAL_DATA).item(0);
 
   if (!initialServerData) {
-    const matchedRoutes = matchingRoutes(routes, pathname);
+    const matchedRoutes = await matchingRoutes(routes, pathname);
     return loadInitialProps(matchedRoutes, ctx);
   }
 
+  const { textContent } = initialServerData;
+  const data = JSON.parse(textContent || '');
+
   return {
-    data: initialServerData,
+    data,
   };
 };
