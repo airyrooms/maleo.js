@@ -95,6 +95,11 @@ Here is the draft:
         <td> translate/< name > </td>
         <td> Add or edit documentation's translation </td>
     </tr>
+    <tr>
+        <td> Example </td>
+        <td> example/< name > </td>
+        <td> Add or edit Maleo's examples </td>
+    </tr>
 </table>
 
 For example if you want to contribute to fix bug in Maleo.js you need to create new branch with `fix/` as the prefix.
