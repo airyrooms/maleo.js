@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.13](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.12-canary.1...@airy/maleo@0.0.13) (2019-03-25)
+
+
+### Bug Fixes
+
+* **maleo-core:** fix webpack undefined ([#150](https://github.com/airyrooms/maleo.js/issues/150)) [skip ci] ([c6467c1](https://github.com/airyrooms/maleo.js/commit/c6467c1)), closes [#149](https://github.com/airyrooms/maleo.js/issues/149)
+
+
+
+
+
 ## [0.0.12](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.12-canary.1...@airy/maleo@0.0.12) (2019-03-25)
 
 **Note:** Version bump only for package @airy/maleo

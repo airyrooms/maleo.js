@@ -1,6 +1,6 @@
 {
   "name": "@airy/maleo-gulp-plugin",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "main": "index.js",
   "license": "MIT",
   "peerDependencies": {
@@ -19,5 +19,5 @@
     "gulp-uglify": "^3.0.1",
     "gulp-watch": "^5.0.1"
   },
-  "gitHead": "03e32998afe75f07c1b65c40080565fef1209867"
+  "gitHead": "4d30934c4d56387cbac02a1333a54125b422722b"
 }
