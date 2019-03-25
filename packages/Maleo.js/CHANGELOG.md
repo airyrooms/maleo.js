@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.12-canary.1](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.12-canary.0...@airy/maleo@0.0.12-canary.1) (2019-03-25)
+
+
+### Features
+
+* **maleo-core:** use noscript for initial data ([#146](https://github.com/airyrooms/maleo.js/issues/146)) ([d84545e](https://github.com/airyrooms/maleo.js/commit/d84545e)), closes [#49](https://github.com/airyrooms/maleo.js/issues/49)
+
+
+
+
+
 ## [0.0.12-canary.0](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.10-canary.0...@airy/maleo@0.0.12-canary.0) (2019-03-25)
 
 
