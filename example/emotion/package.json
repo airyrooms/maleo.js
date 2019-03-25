@@ -1,0 +1,23 @@
+{
+  "name": "@airy/maleo-emotion",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "maleo dev",
+    "build": "export NODE_ENV=production && maleo build",
+    "start": "export NODE_ENV=production && maleo run"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@airy/maleo": "latest",
+    "@emotion/core": "^10.0.9",
+    "react": "latest"
+  },
+  "devDependencies": {
+    "@emotion/babel-preset-css-prop": "^10.0.9",
+    "babel-plugin-emotion": "^10.0.9"
+  }
+}
