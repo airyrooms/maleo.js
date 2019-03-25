@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.12-canary.1](https://github.com/airyrooms/maleo.js/compare/@airy/maleo-redux-plugin@0.0.12-canary.0...@airy/maleo-redux-plugin@0.0.12-canary.1) (2019-03-25)
+
+
+### Bug Fixes
+
+* **maleo-plugins:** fix redux-plugins to follow csp standards noscript ([#147](https://github.com/airyrooms/maleo.js/issues/147)) ([b2b7004](https://github.com/airyrooms/maleo.js/commit/b2b7004)), closes [#49](https://github.com/airyrooms/maleo.js/issues/49)
+
+
+
+
+
 ## [0.0.12-canary.0](https://github.com/airyrooms/maleo.js/compare/@airy/maleo-redux-plugin@0.0.10-canary.0...@airy/maleo-redux-plugin@0.0.12-canary.0) (2019-03-25)
 
 **Note:** Version bump only for package @airy/maleo-redux-plugin
