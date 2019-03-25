@@ -29,6 +29,14 @@
       "allowBranch": [
         "master",
         "canary"
+      ],
+      "ignoreChanges": [
+        "*.md",
+        "*.test.*",
+        "example/**",
+        "**/__test__/**",
+        "*.yml",
+        "*.sh"
       ]
     },
     "publish": {
@@ -38,7 +46,15 @@
         "master",
         "canary"
       ],
-      "registry": "https://registry.npmjs.org/"
+      "registry": "https://registry.npmjs.org/",
+      "ignoreChanges": [
+        "*.md",
+        "*.test.*",
+        "example/**",
+        "**/__test__/**",
+        "*.yml",
+        "*.sh"
+      ]
     }
   }
 }
