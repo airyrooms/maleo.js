@@ -8,13 +8,23 @@ export const withRedux = (makeStoreClient) => {
   return (App) =>
     class ReduxWrapper extends React.Component {
       static getInitialProps(ctx) {
-        return {
-          store: makeStoreClient(isServer, typeof window !== 'undefined' ? window[STORE_KEY] : {}),
-        };
-      }
+        if (isServer) {
+          return {
+            store: makeStoreClient(isServer, {}),
+          };
+        }
 
-      constructor(props) {
-        super(props);
+        const initialState = document.querySelectorAll('noscript#' + STORE_KEY).item(0);
+        let data = {};
+
+        if (initialState) {
+          const { textContent } = initialState;
+          data = JSON.parse(textContent || '');
+        }
+
+        return {
+          store: makeStoreClient(isServer, data),
+        };
       }
 
       render() {
