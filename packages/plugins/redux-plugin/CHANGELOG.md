@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.13-canary.0](https://github.com/airyrooms/maleo.js/compare/@airy/maleo-redux-plugin@0.0.12-canary.1...@airy/maleo-redux-plugin@0.0.13-canary.0) (2019-03-25)
+
+**Note:** Version bump only for package @airy/maleo-redux-plugin
+
+
+
+
+
 ## [0.0.12](https://github.com/alvinkl/maleo.js/compare/@airy/maleo-redux-plugin@0.0.12-canary.1...@airy/maleo-redux-plugin@0.0.12) (2019-03-25)
 
 **Note:** Version bump only for package @airy/maleo-redux-plugin
