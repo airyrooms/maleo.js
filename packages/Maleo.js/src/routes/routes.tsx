@@ -36,6 +36,7 @@ export const renderRoutes = (
             <r.component
               {...{
                 ...extraProps,
+                ...(initialData[r.key as string] || {}),
                 route: r,
                 key: r.key || `wrapper-${r.component.displayName}-${i}`,
               }}>

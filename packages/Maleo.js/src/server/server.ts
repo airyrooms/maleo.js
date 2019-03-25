@@ -71,8 +71,8 @@ export class Server {
       this.setupDevServer(this.app);
     }
 
-    // Header for XSS protection, etc
-    this.app.use(helmet());
+    // Set secure server
+    this.setupSecureServer(this.app);
 
     // Set static assets route handler
     this.setAssetsStaticRoute(this.app);
@@ -93,6 +93,18 @@ export class Server {
 
     // asset serving
     app.use(SERVER_ASSETS_ROUTE, express.static(this.options.assetDir as string));
+  };
+
+  private setupSecureServer = (app: Express) => {
+    // Header for XSS protection, etc
+    app.use(helmet());
+
+    // Header for CSP
+    // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+    app.use(function contentSecurityPolicy(req, res, next) {
+      res.setHeader('Content-Security-Policy', `script-src 'self'`);
+      next();
+    });
   };
 
   private setupDevServer = (app: Express) => {
