@@ -10,6 +10,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * **maleo-plugin:** improve maleo plugin [skip ci] ([#154](https://github.com/alvinkl/maleo.js/issues/154)) ([10638c5](https://github.com/alvinkl/maleo.js/commit/10638c5)), closes [#152](https://github.com/alvinkl/maleo.js/issues/152)
 
+## [0.0.13-canary.0](https://github.com/airyrooms/maleo.js/compare/@airy/maleo-css-plugin@0.0.12-canary.0...@airy/maleo-css-plugin@0.0.13-canary.0) (2019-03-25)
+
 
 
 

@@ -7,6 +7,8 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 **Note:** Version bump only for package @airy/maleo-redux-plugin
 
+## [0.0.13-canary.0](https://github.com/airyrooms/maleo.js/compare/@airy/maleo-redux-plugin@0.0.12-canary.1...@airy/maleo-redux-plugin@0.0.13-canary.0) (2019-03-25)
+
 
 
 

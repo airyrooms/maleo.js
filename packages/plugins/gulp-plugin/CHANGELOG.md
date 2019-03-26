@@ -9,6 +9,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
+## [0.0.13-canary.0](https://github.com/airyrooms/maleo.js/compare/@airy/maleo-gulp-plugin@0.0.12-canary.0...@airy/maleo-gulp-plugin@0.0.13-canary.0) (2019-03-25)
 
 
 ## [0.0.13](https://github.com/alvinkl/maleo.js/compare/@airy/maleo-gulp-plugin@0.0.12-canary.0...@airy/maleo-gulp-plugin@0.0.13) (2019-03-25)

@@ -11,6 +11,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **maleo-core:** fix webpack undefined ([#150](https://github.com/airyrooms/maleo.js/issues/150)) [skip ci] ([c6467c1](https://github.com/airyrooms/maleo.js/commit/c6467c1)), closes [#149](https://github.com/airyrooms/maleo.js/issues/149)
 
 
+## [0.0.13-canary.0](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.12-canary.1...@airy/maleo@0.0.13-canary.0) (2019-03-25)
+
+**Note:** Version bump only for package @airy/maleo
+
+
+
 
 
 
