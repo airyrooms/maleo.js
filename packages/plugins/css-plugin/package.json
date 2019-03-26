@@ -1,6 +1,6 @@
 {
   "name": "@airy/maleo-css-plugin",
-  "version": "0.0.13",
+  "version": "0.1.0",
   "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
@@ -29,5 +29,5 @@
     "@airy/maleo-gulp-plugin": "latest",
     "gulp": "gulpjs/gulp.git#4.0"
   },
-  "gitHead": "4d30934c4d56387cbac02a1333a54125b422722b"
+  "gitHead": "a1ac0be142870f4f92a26ad44308f24309fe1859"
 }

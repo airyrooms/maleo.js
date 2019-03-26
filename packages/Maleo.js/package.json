@@ -1,6 +1,6 @@
 {
     "name": "@airy/maleo",
-    "version": "0.0.13",
+    "version": "0.0.14",
     "description": "Un-opinionated Universal Rendering Javascript Framework",
     "repository": {
         "type": "git",
@@ -81,5 +81,5 @@
         "gulp-watch": "^5.0.1",
         "react": "^16.8.4"
     },
-    "gitHead": "4d30934c4d56387cbac02a1333a54125b422722b"
+    "gitHead": "a1ac0be142870f4f92a26ad44308f24309fe1859"
 }
