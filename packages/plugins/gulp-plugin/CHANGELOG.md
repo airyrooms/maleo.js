@@ -3,7 +3,16 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.0.14](https://github.com/alvinkl/maleo.js/compare/@airy/maleo-gulp-plugin@0.0.12-canary.0...@airy/maleo-gulp-plugin@0.0.14) (2019-03-26)
+
+**Note:** Version bump only for package @airy/maleo-gulp-plugin
+
+
+
 ## [0.0.13-canary.0](https://github.com/airyrooms/maleo.js/compare/@airy/maleo-gulp-plugin@0.0.12-canary.0...@airy/maleo-gulp-plugin@0.0.13-canary.0) (2019-03-25)
+
+
+## [0.0.13](https://github.com/alvinkl/maleo.js/compare/@airy/maleo-gulp-plugin@0.0.12-canary.0...@airy/maleo-gulp-plugin@0.0.13) (2019-03-25)
 
 **Note:** Version bump only for package @airy/maleo-gulp-plugin
 

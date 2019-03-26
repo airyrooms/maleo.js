@@ -1,0 +1,23 @@
+.h1 {
+  padding: 25% 100px;
+  display: inline-block;
+  margin: 0;
+}
+
+.teal {
+  background-color: teal;
+}
+
+.green {
+  background-color: greenyellow
+}
+
+.lime {
+  background-color: lime
+}
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #666666;
+}

@@ -181,7 +181,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
    */
   if (typeof webpack === 'function') {
     const next: WebpackCustomConfigCallback = (cc) => {
-      if (typeof cc.webpack === 'function') {
+      if (cc && typeof cc.webpack === 'function') {
         return cc.webpack(baseConfigs, buildContext, next);
       }
 

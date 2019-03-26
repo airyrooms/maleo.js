@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Wrap from '@airy/maleo/wrap';
-import pageWithStyles from '@airy/maleo-css-plugin/lib/pageWithStyles';
+import pageWithStyles from '@airy/maleo-css-plugin/pageWithStyles';
 import { withRedux } from '@airy/maleo-redux-plugin';
 
 import { makeStoreClient } from './store';
