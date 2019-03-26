@@ -650,15 +650,16 @@ module.exports = {
 == TO BE DETERMINED == 
 
 ## Plugins
-- [css-plugin](https://github.com/airyrooms/maleo.js/tree/canary/packages/plugins/css-plugin)
-- [typescript-plugin](https://github.com/airyrooms/maleo.js/tree/canary/packages/plugins/typescript-plugin)
-- [redux-plugin](https://github.com/airyrooms/maleo.js/tree/canary/packages/plugins/redux-plugin)
+- [css-plugin](https://github.com/airyrooms/maleo-plugins/tree/master/packages/css-plugin)
+- [redux-plugin](https://github.com/airyrooms/maleo-plugins/tree/master/packages/redux-plugin)
+- [typescript-plugin](https://github.com/airyrooms/maleo-plugins/tree/master/packages/typescript-plugin)
+- [more](https://github.com/airyrooms/maleo-plugins)
 
 
 ## Contributing
 [Please follow these steps to contribute to Maleo.js](https://github.com/airyrooms/maleo.js/blob/canary/CONTRIBUTING.md)
 
-[Please follow these steps to contribute to Maleo.js' plugins](https://github.com/airyrooms/maleo.js/tree/canary/packages/plugins)
+[Please follow these steps to contribute to Maleo.js' plugins](https://github.com/airyrooms/maleo-plugins#contributing-guidelines)
 
 
 ## Contributors
@@ -666,7 +667,6 @@ module.exports = {
 This project exists thanks to all the people who contribute. [Contribute](CONTRIBUTING.md).
 
 Many thanks to our **[contributors](https://github.com/airyrooms/maleo.js/graphs/contributors)**!
-
 
 
 ## License

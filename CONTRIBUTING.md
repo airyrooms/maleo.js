@@ -125,7 +125,7 @@ During development we are more likely watch our code changes, therefore we use t
 $ yarn watch
 ```
 
-The command above watches for every changes from folder `/packages/plugins`  and `/packages/Maleo.js`
+The command above watches for every changes from folder `/packages`
 
 **Test**
 
