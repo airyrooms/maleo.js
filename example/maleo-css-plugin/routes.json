@@ -1,0 +1,22 @@
+[
+  {
+    "page": "./src/WrapComponent",
+    "routes": [
+      {
+        "path": "/",
+        "page": "./src/RootComponent",
+        "exact": true
+      },
+      {
+        "path": "/A",
+        "page": "./src/ComponentA",
+        "exact": true
+      },
+      {
+        "path": "/B",
+        "page": "./src/ComponentB",
+        "exact": true
+      }
+    ]
+  }
+]

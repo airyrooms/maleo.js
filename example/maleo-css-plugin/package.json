@@ -1,0 +1,20 @@
+{
+  "name": "example-maleo-css-plugin",
+  "version": "1.0.0",
+  "description": "example for maleo using css plugin",
+  "main": "index.js",
+  "repository": "https://github.com/airyrooms/maleo.js",
+  "author": "alvinkl",
+  "license": "MIT",
+  "scripts": {
+    "dev": "maleo dev",
+    "build": "export NODE_ENV=production && maleo build",
+    "start": "export NODE_ENV=production && node .maleo/server.js"
+  },
+  "dependencies": {
+    "@airy/maleo": "latest",
+    "@airy/maleo-css-plugin": "latest",
+    "classnames": "^2.2.6",
+    "react": "^16.8.5"
+  }
+}
