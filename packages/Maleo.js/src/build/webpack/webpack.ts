@@ -576,11 +576,11 @@ const getStaticEntries = (context: BuildContext, config: CustomConfig) => {
   const routes = cRoutes || defaultUserRoutes;
 
   const document =
-    cDoc || fileExist(projectDir, '_document') ? defaultUserDocument : defaultDocument;
+    cDoc || (fileExist(projectDir, '_document') ? defaultUserDocument : defaultDocument);
 
-  const wrap = cWrap || fileExist(projectDir, '_wrap') ? defaultUserWrap : defaultWrap;
+  const wrap = cWrap || (fileExist(projectDir, '_wrap') ? defaultUserWrap : defaultWrap);
 
-  const app = cApp || fileExist(projectDir, '_app') ? defaultUserApp : defaultApp;
+  const app = cApp || (fileExist(projectDir, '_app') ? defaultUserApp : defaultApp);
 
   return {
     routes,

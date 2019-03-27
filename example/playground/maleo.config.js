@@ -5,6 +5,7 @@ module.exports = tsPlugin(
   cssPlugin({
     cssPluginOptions: {
       enableISL: true
-    }
+    },
+    customWrap: './custom-wrap.tsx'
   }),
 );
