@@ -9,9 +9,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Bug Fixes
 
 * **babelconfigjs:** fix built absolute path to relative path ([#19](https://github.com/airyrooms/maleo.js/issues/19)) ([064352c](https://github.com/airyrooms/maleo.js/commit/064352c))
+* **circleci:** add build workflow ([c56f528](https://github.com/airyrooms/maleo.js/commit/c56f528))
 * **css-plugin:** first render isl not working ([#48](https://github.com/airyrooms/maleo.js/issues/48)) ([7e67643](https://github.com/airyrooms/maleo.js/commit/7e67643))
+* **development:** fix tslint exclude node_modules [skip ci] ([#155](https://github.com/airyrooms/maleo.js/issues/155)) ([68b121a](https://github.com/airyrooms/maleo.js/commit/68b121a))
 * **getinitialprops:** fix get initial props ([#133](https://github.com/airyrooms/maleo.js/issues/133)) [skip ci] ([98c65c7](https://github.com/airyrooms/maleo.js/commit/98c65c7)), closes [#131](https://github.com/airyrooms/maleo.js/issues/131)
 * **maleo-core:** fix webpack undefined ([#150](https://github.com/airyrooms/maleo.js/issues/150)) [skip ci] ([c6467c1](https://github.com/airyrooms/maleo.js/commit/c6467c1)), closes [#149](https://github.com/airyrooms/maleo.js/issues/149)
+* **maleo-plugins:** fix redux-plugins to follow csp standards noscript ([#147](https://github.com/airyrooms/maleo.js/issues/147)) ([b2b7004](https://github.com/airyrooms/maleo.js/commit/b2b7004)), closes [#49](https://github.com/airyrooms/maleo.js/issues/49)
 * **require cache hmr:** add nextjs license ([#40](https://github.com/airyrooms/maleo.js/issues/40)) ([e5d0cc9](https://github.com/airyrooms/maleo.js/commit/e5d0cc9))
 * **ssr:** fix component getinitialprops ([#127](https://github.com/airyrooms/maleo.js/issues/127)) ([91f7257](https://github.com/airyrooms/maleo.js/commit/91f7257))
 * **webpack:** fix get static entries wront custom entries [skip ci ]([#160](https://github.com/airyrooms/maleo.js/issues/160)) ([6c073fb](https://github.com/airyrooms/maleo.js/commit/6c073fb))
@@ -25,6 +28,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **maleo playground:** add default server and client ([#29](https://github.com/airyrooms/maleo.js/issues/29)) ([e40897b](https://github.com/airyrooms/maleo.js/commit/e40897b))
 * **maleo webpack:** add rimraf before run and cache server ([#35](https://github.com/airyrooms/maleo.js/issues/35)) ([3b45e4e](https://github.com/airyrooms/maleo.js/commit/3b45e4e))
 * **maleo-core:** use noscript for initial data ([#146](https://github.com/airyrooms/maleo.js/issues/146)) ([d84545e](https://github.com/airyrooms/maleo.js/commit/d84545e)), closes [#49](https://github.com/airyrooms/maleo.js/issues/49)
+* **maleo-plugin:** improve maleo plugin [skip ci] ([#154](https://github.com/airyrooms/maleo.js/issues/154)) ([10638c5](https://github.com/airyrooms/maleo.js/commit/10638c5)), closes [#152](https://github.com/airyrooms/maleo.js/issues/152)
 * **maleo-routes-split:** auto add key for routes ([#42](https://github.com/airyrooms/maleo.js/issues/42)) ([7a61301](https://github.com/airyrooms/maleo.js/commit/7a61301))
 * **webpack:** change maleo-routes.json to routes.json ([#74](https://github.com/airyrooms/maleo.js/issues/74)) ([b3b9e2f](https://github.com/airyrooms/maleo.js/commit/b3b9e2f))
 * **webpack client preset:** add simple hmr refresh ([#37](https://github.com/airyrooms/maleo.js/issues/37)) ([61fc321](https://github.com/airyrooms/maleo.js/commit/61fc321))
@@ -65,133 +69,3 @@ error caused by webpack getting imported to server.ts not sure what cause the er
 feat(client): added register entry class
 
 docs(readmemd): update register route readme
-
-
-
-
-
-## [0.0.14](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.12-canary.1...@airy/maleo@0.0.14) (2019-03-26)
-
-
-### Bug Fixes
-
-* **maleo-core:** fix webpack undefined ([#150](https://github.com/airyrooms/maleo.js/issues/150)) [skip ci] ([c6467c1](https://github.com/airyrooms/maleo.js/commit/c6467c1)), closes [#149](https://github.com/airyrooms/maleo.js/issues/149)
-
-
-## [0.0.13-canary.0](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.12-canary.1...@airy/maleo@0.0.13-canary.0) (2019-03-25)
-
-**Note:** Version bump only for package @airy/maleo
-
-
-
-
-
-
-## [0.0.13](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.12-canary.1...@airy/maleo@0.0.13) (2019-03-25)
-
-
-### Bug Fixes
-
-* **maleo-core:** fix webpack undefined ([#150](https://github.com/airyrooms/maleo.js/issues/150)) [skip ci] ([c6467c1](https://github.com/airyrooms/maleo.js/commit/c6467c1)), closes [#149](https://github.com/airyrooms/maleo.js/issues/149)
-
-
-
-
-
-## [0.0.12](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.12-canary.1...@airy/maleo@0.0.12) (2019-03-25)
-
-**Note:** Version bump only for package @airy/maleo
-
-
-
-
-
-## [0.0.12-canary.1](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.12-canary.0...@airy/maleo@0.0.12-canary.1) (2019-03-25)
-
-
-### Features
-
-* **maleo-core:** use noscript for initial data ([#146](https://github.com/airyrooms/maleo.js/issues/146)) ([d84545e](https://github.com/airyrooms/maleo.js/commit/d84545e)), closes [#49](https://github.com/airyrooms/maleo.js/issues/49)
-
-
-
-
-
-## [0.0.12-canary.0](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.10-canary.0...@airy/maleo@0.0.12-canary.0) (2019-03-25)
-
-
-### Bug Fixes
-
-* **getinitialprops:** fix get initial props ([#133](https://github.com/airyrooms/maleo.js/issues/133)) [skip ci] ([98c65c7](https://github.com/airyrooms/maleo.js/commit/98c65c7)), closes [#131](https://github.com/airyrooms/maleo.js/issues/131)
-* **ssr:** fix component getinitialprops ([#127](https://github.com/airyrooms/maleo.js/issues/127)) ([91f7257](https://github.com/airyrooms/maleo.js/commit/91f7257))
-
-
-
-
-
-## [0.0.11](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.9-canary.1...@airy/maleo@0.0.11) (2019-03-22)
-
-
-### Bug Fixes
-
-* **getinitialprops:** fix get initial props ([#133](https://github.com/airyrooms/maleo.js/issues/133)) [skip ci] ([98c65c7](https://github.com/airyrooms/maleo.js/commit/98c65c7)), closes [#131](https://github.com/airyrooms/maleo.js/issues/131)
-* **ssr:** fix component getinitialprops ([#127](https://github.com/airyrooms/maleo.js/issues/127)) ([91f7257](https://github.com/airyrooms/maleo.js/commit/91f7257))
-
-
-
-
-
-## [0.0.10](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.9-canary.1...@airy/maleo@0.0.10) (2019-03-22)
-
-
-### Bug Fixes
-
-* **ssr:** fix component getinitialprops ([#127](https://github.com/airyrooms/maleo.js/issues/127)) ([91f7257](https://github.com/airyrooms/maleo.js/commit/91f7257))
-
-
-
-
-
-## [0.0.9](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.9-canary.1...@airy/maleo@0.0.9) (2019-03-20)
-
-**Note:** Version bump only for package @airy/maleo
-
-
-
-
-
-## [0.0.9-canary.1](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.8-canary.3...@airy/maleo@0.0.9-canary.1) (2019-03-20)
-
-**Note:** Version bump only for package @airy/maleo
-
-
-
-
-
-## [0.0.9-canary.0](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.8-canary.3...@airy/maleo@0.0.9-canary.0) (2019-03-20)
-
-**Note:** Version bump only for package @airy/maleo
-
-
-
-
-
-## [0.0.8](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.8-canary.3...@airy/maleo@0.0.8) (2019-03-19)
-
-**Note:** Version bump only for package @airy/maleo
-
-
-
-
-
-## [0.0.8-canary.3](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.8-canary.2...@airy/maleo@0.0.8-canary.3) (2019-03-19)
-
-**Note:** Version bump only for package @airy/maleo
-
-
-
-
-
-## [0.0.8-canary.2](https://github.com/airyrooms/maleo.js/compare/@airy/maleo@0.0.8-alpha.0...@airy/maleo@0.0.8-canary.2) (2019-03-18)
-
-**Note:** Version bump only for package @airy/maleo
