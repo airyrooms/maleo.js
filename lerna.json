@@ -1,8 +1,8 @@
 {
   "lerna": "3.13.1",
-  "version": "independent",
+  "version": "0.1.0",
   "packages": [
-    "packages/**"
+    "packages/*"
   ],
   "npmClient": "yarn",
   "npmClientArgs": [
@@ -22,10 +22,9 @@
   ],
   "command": {
     "version": {
-      "exact": true,
+      "exact": false,
       "githubRelease": true,
       "noCommitHooks": true,
-      "noChangelog": true,
       "conventionalCommits": true,
       "allowBranch": [
         "master",
@@ -35,7 +34,6 @@
     "publish": {
       "forcePublish": false,
       "npmClient": "npm",
-      "noChangelog": true,
       "allowBranch": [
         "master",
         "canary"

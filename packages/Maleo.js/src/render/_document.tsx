@@ -100,9 +100,10 @@ export class Scripts extends React.Component {
 
     return (
       <Fragment>
-        <script
+        <noscript
+          id={SERVER_INITIAL_DATA}
           dangerouslySetInnerHTML={{
-            __html: `var ${SERVER_INITIAL_DATA} = ${JSON.stringify(data)}`,
+            __html: JSON.stringify(data),
           }}
         />
         {preloadScripts.map((p, i) => (

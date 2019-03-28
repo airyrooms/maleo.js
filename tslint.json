@@ -33,6 +33,7 @@
         "variable-name": [true, "ban-keywords", "allow-leading-underscore"],
         "no-bitwise": false,
         "no-string-literal": false,
+        "no-unused-expression": false,
 
         "jsx-no-lambda": true,
         "jsx-no-string-ref": true,

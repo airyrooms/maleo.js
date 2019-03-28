@@ -181,7 +181,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
    */
   if (typeof webpack === 'function') {
     const next: WebpackCustomConfigCallback = (cc) => {
-      if (typeof cc.webpack === 'function') {
+      if (cc && typeof cc.webpack === 'function') {
         return cc.webpack(baseConfigs, buildContext, next);
       }
 
@@ -576,11 +576,11 @@ const getStaticEntries = (context: BuildContext, config: CustomConfig) => {
   const routes = cRoutes || defaultUserRoutes;
 
   const document =
-    cDoc || fileExist(projectDir, '_document') ? defaultUserDocument : defaultDocument;
+    cDoc || (fileExist(projectDir, '_document') ? defaultUserDocument : defaultDocument);
 
-  const wrap = cWrap || fileExist(projectDir, '_wrap') ? defaultUserWrap : defaultWrap;
+  const wrap = cWrap || (fileExist(projectDir, '_wrap') ? defaultUserWrap : defaultWrap);
 
-  const app = cApp || fileExist(projectDir, '_app') ? defaultUserApp : defaultApp;
+  const app = cApp || (fileExist(projectDir, '_app') ? defaultUserApp : defaultApp);
 
   return {
     routes,

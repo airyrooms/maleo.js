@@ -2,6 +2,7 @@ import React from 'react';
 
 import { matchingRoutes } from '@airy/maleo/lib/server/routeHandler';
 import { loadInitialProps, loadComponentProps } from '@airy/maleo/lib/server/loadInitialProps';
+import { MimickLoadable } from '../test-utils/mimick-loadable';
 
 const initialProps = {
   root: {
@@ -41,6 +42,12 @@ class MatchComponent extends React.Component {
   }
 }
 
+class NotMatchComponent extends React.Component {
+  render() {
+    return <h1>Not Match Component</h1>;
+  }
+}
+
 class ComponentNoInitialProps extends React.Component {
   render() {
     return <h1>No initial props</h1>;
@@ -54,25 +61,31 @@ describe('[Load Initial Props] Simple', () => {
     routes = [
       {
         path: '/not-matched',
-        component: () => <h1>Not Matched</h1>,
+        component: MimickLoadable(NotMatchComponent),
         key: 'not-matched',
       },
       {
         path: '/match',
-        component: MatchComponent,
+        component: MimickLoadable(MatchComponent),
         key: 'match',
-        isExact: true,
+        exact: true,
       },
     ];
   });
 
   test('Should return matched route', async () => {
     const pathname = '/match';
-    const mr = matchingRoutes(routes, pathname);
+    const mr = await matchingRoutes(routes, pathname);
     const { branch } = await loadInitialProps(mr, {});
 
+    let matchedEqual = routes.find((r) => r.key === 'match');
+    matchedEqual = {
+      ...matchedEqual,
+      component: (await matchedEqual.component.preload()).default,
+    };
+
     expect(branch).toHaveProperty('route');
-    expect(branch.route).toEqual(routes.find((r) => r.key === 'match'));
+    expect(branch.route).toEqual(matchedEqual);
     expect(branch).toHaveProperty('match');
     expect(branch.match).toEqual({
       path: '/match',
@@ -84,7 +97,7 @@ describe('[Load Initial Props] Simple', () => {
 
   test('Should return inital props', async () => {
     const pathname = '/match';
-    const mr = matchingRoutes(routes, pathname);
+    const mr = await matchingRoutes(routes, pathname);
     const { data } = await loadInitialProps(mr, {});
 
     expect(data).toEqual({ match: initialProps.match });
@@ -92,7 +105,7 @@ describe('[Load Initial Props] Simple', () => {
 
   test('Should return no matched route', async () => {
     const pathname = '/404';
-    const mr = matchingRoutes(routes, pathname);
+    const mr = await matchingRoutes(routes, pathname);
     const { branch, data } = await loadInitialProps(mr, {});
 
     expect(branch).toBe(undefined);
@@ -107,17 +120,17 @@ describe('[Load Initial Props] Nested', () => {
     routes = [
       {
         path: '/',
-        component: RootComponent,
+        component: MimickLoadable(RootComponent),
         key: 'root',
         routes: [
           {
             path: '/match',
-            component: MatchComponent,
+            component: MimickLoadable(MatchComponent),
             key: 'match',
           },
           {
             path: '/not-matched',
-            component: () => <h1>Not Matched</h1>,
+            component: MimickLoadable(NotMatchComponent),
             key: 'not-matched',
           },
         ],
@@ -127,7 +140,7 @@ describe('[Load Initial Props] Nested', () => {
 
   test('Should render matched route(s)', async () => {
     const pathname = '/match';
-    const mr = matchingRoutes(routes, pathname);
+    const mr = await matchingRoutes(routes, pathname);
     const { branch } = await loadInitialProps(mr, {});
 
     expect(branch.route.routes.length).toBe(2);
@@ -135,7 +148,7 @@ describe('[Load Initial Props] Nested', () => {
 
   test('Should return inital props', async () => {
     const pathname = '/match';
-    const mr = matchingRoutes(routes, pathname);
+    const mr = await matchingRoutes(routes, pathname);
     const { data } = await loadInitialProps(mr, {});
 
     expect(data).toEqual(initialProps);

@@ -1,6 +1,6 @@
 {
     "name": "@airy/maleo",
-    "version": "0.0.10-canary.0",
+    "version": "0.1.0",
     "description": "Un-opinionated Universal Rendering Javascript Framework",
     "repository": {
         "type": "git",
@@ -40,8 +40,9 @@
         "@babel/runtime-corejs2": "7.2.0",
         "babel-loader": "8.0.4",
         "case-sensitive-paths-webpack-plugin": "2.1.2",
+        "compression": "1.7.4",
         "es6-promise": "4.2.5",
-        "eventsource": "^1.0.7",
+        "eventsource": "1.0.7",
         "express": "4.16.4",
         "figlet": "1.2.1",
         "friendly-errors-webpack-plugin": "1.7.0",
@@ -81,5 +82,5 @@
         "gulp-watch": "^5.0.1",
         "react": "^16.8.4"
     },
-    "gitHead": "aeef6690154b4f9c2bc9d417a36130349204b0fc"
+    "gitHead": "a1ac0be142870f4f92a26ad44308f24309fe1859"
 }

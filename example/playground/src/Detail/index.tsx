@@ -1,7 +1,6 @@
 import React from 'react';
 import withStyles from '@airy/maleo-css-plugin/lib/withStyles';
 
-
 const style = require('./detail.css');
 
 @withStyles(style)
