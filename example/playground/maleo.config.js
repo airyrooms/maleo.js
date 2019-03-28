@@ -3,9 +3,7 @@ const cssPlugin = require('@airy/maleo-css-plugin');
 
 module.exports = tsPlugin(
   cssPlugin({
-    cssPluginOptions: {
-      enableISL: true
-    },
+    enableISL: true,
     customWrap: './custom-wrap.tsx'
   }),
 );
