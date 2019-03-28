@@ -1,5 +1,5 @@
 echo "chore: syncing master to canary"
-git fetch origin canary:canary
+git fetch origin canary:canary --force
 echo "Checking out to canary"
 git checkout canary
 echo "Merging Master to Canary"
