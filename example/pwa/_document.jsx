@@ -4,7 +4,7 @@ import { default as Document, Header, Scripts, Main } from '@airy/maleo/document
 export default class CustomDocument extends Document {
   render() {
     return (
-      <html>
+      <html lang="en">
         <Header>
           <meta charSet="utf-8" />
           <meta http-equiv="X-UA-Compatible" content="IE=edge" />
