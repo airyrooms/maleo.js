@@ -183,6 +183,7 @@ After done so checkout to the master branch by using this command
 $ git fetch upstream master:master
 $ git checkout master
 $ git log #to check if the log the same with remote's
+$ git push origin master --force #to make sure your remote master is the same
 ```
 
 Now in order to publish the stable version, start by running this command
@@ -216,21 +217,29 @@ The command above will run
 - `yarn publish:prepublish` this command is to make sure packages are ready for publishing, usually runs package build specific for publishing.
 - `yarn publish:stable` this command runs lerna publish and publish it to NPM, this command will add git head revision to the bottom of respective package's `package.json`
 
-Now you need to add all the git head revision changes to the latest commit by running this command
+Now you need to ignore the git revision head, since if we commit amend the git revision head, it will remove the tag.
 ```bash
-$ git add .
-$ git commit --amend --no-edit
+$ git checkout -- .
 ```
 
 After doing all of the above, now you are good to push all this changes to upstream remote by running
 ```bash
-$ git push upstream master
+$ git push upstream master --follow-tags #push commits, version changes, and new tags
 ```
 
 ---
-**NOTICE**
+⚠️**NOTICE** ⚠️
 
-By pushing those changes to the remote master branch, it will trigger [travis-ci](https://travis-ci.org/airyrooms/maleo.js) pipeline to sync the `master` branch with `canary` branch.
+
+After pushing all the changes above, we need to sync the `master` branch with `canary` branch.
+By running 
+```bash
+$ bash ./ci/travis-sync-master-canary.sh #checkout to canary and push changes to remote canary
+$ git push upstream canary #push to upstream remote canary
+```
+
+Should you find any merge conflicts, please resolve it carefully and respectfully. And commit the merge resolution with this message `'chore: syncing master to canary'`
+
 During this process, the pipeline will also publish a new canary version for it and during this process you **must not** merge any PR to make sure the `canary.0` version is clean.
 
 ---

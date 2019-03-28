@@ -8,8 +8,10 @@ import 'isomorphic-fetch';
  */
 
 import express, { Express, Request, Response } from 'express';
+import { ApplicationRequestHandler } from 'express-serve-static-core';
+import compression from 'compression';
+import zlib from 'zlib';
 import path from 'path';
-import Loadable from 'react-loadable';
 import helmet from 'helmet';
 
 import { IOptions } from '@interfaces/server/IOptions';
@@ -21,6 +23,7 @@ import { AsyncRouteProps } from '@interfaces/render/IRender';
 
 export class Server {
   app: Express;
+  middlewares: any[] = [];
   options: IOptions;
 
   static init = (options: IOptions) => {
@@ -32,29 +35,27 @@ export class Server {
       assetDir: path.resolve('.', BUILD_DIR, 'client'),
       routes: requireRuntime(path.resolve('.', BUILD_DIR, 'routes.js')) as AsyncRouteProps[],
       port: 8080,
-
       ...options,
     } as IOptions;
 
     this.options = defaultOptions;
-
-    this.setupExpress();
+    this.app = express();
   }
 
-  run = (handler) => {
+  run = async (handler) => {
+    await this.setupExpress();
+
     return this.app.listen(this.options.port, handler);
   };
 
-  applyExpressMiddleware = (middleware: express.RequestHandler) => {
-    this.app.use(middleware);
+  applyExpressMiddleware: ApplicationRequestHandler<Express.Application> = (...handlers) => {
+    this.middlewares.push(handlers);
+
+    return this.app;
   };
 
   routeHandler = async (req: Request, res: Response) => {
-    const html = await render({
-      req,
-      res,
-      dir: this.options.assetDir,
-    });
+    const html = await render({ req, res, dir: this.options.assetDir });
 
     res.send(html);
   };
@@ -64,18 +65,20 @@ export class Server {
   };
 
   private setupExpress = async () => {
-    this.app = express();
+    // Set Compression
+    !__DEV__ && this.setupCompression(this.app);
 
     // Setup for development HMR, etc
-    if (__DEV__) {
-      this.setupDevServer(this.app);
-    }
+    __DEV__ && this.setupDevServer(this.app);
 
     // Set secure server
     this.setupSecureServer(this.app);
 
     // Set static assets route handler
     this.setAssetsStaticRoute(this.app);
+
+    // Applying user's middleware
+    this.middlewares.map((args) => this.app.use(...args));
 
     // Set favicon handler
     this.app.use('/favicon.ico', this.faviconHandler);
@@ -85,14 +88,14 @@ export class Server {
   };
 
   private setAssetsStaticRoute = (app: Express) => {
-    // asset caching
-    app.use(SERVER_ASSETS_ROUTE, (req, res, next) => {
-      res.set('Cache-Control', 'public, max-age=60');
-      next();
-    });
-
-    // asset serving
-    app.use(SERVER_ASSETS_ROUTE, express.static(this.options.assetDir as string));
+    // asset serving and caching for 30 days
+    // since we use ETAG we don't have to worry user won't get the newest assets
+    // by the time we have new build that changes the ETAG, browser will automatically
+    // request the file again
+    app.use(
+      SERVER_ASSETS_ROUTE,
+      express.static(this.options.assetDir as string, { maxAge: '30 days' }),
+    );
   };
 
   private setupSecureServer = (app: Express) => {
@@ -105,6 +108,24 @@ export class Server {
       res.setHeader('Content-Security-Policy', `script-src 'self'`);
       next();
     });
+  };
+
+  private setupCompression = (app: Express) => {
+    const option = {
+      filter(req, res) {
+        if (req.headers['x-no-compression']) {
+          // don't compress responses with this request header
+          return false;
+        }
+
+        // fallback to standard filter function
+        return compression.filter(req, res);
+      },
+      strategy: zlib.Z_DEFAULT_STRATEGY,
+      level: zlib.Z_DEFAULT_COMPRESSION,
+    };
+
+    app.use(compression(option));
   };
 
   private setupDevServer = (app: Express) => {
@@ -123,10 +144,9 @@ export class Server {
       serverSideRender: true,
       hot: true,
       writeToDisk: true,
-      // @ts-ignore
       publicPath: clientCompiler.options.output.publicPath || WEBPACK_PUBLIC_PATH,
       watchOptions: { ignored },
-    };
+    }; // @ts-ignore
     app.use(requireRuntime('webpack-dev-middleware')(multiCompiler, wdmOptions));
 
     const whmOptions = {
