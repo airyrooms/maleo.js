@@ -8,8 +8,8 @@ import 'isomorphic-fetch';
  */
 
 import express, { Express, Request, Response } from 'express';
+import { ApplicationRequestHandler } from 'express-serve-static-core';
 import path from 'path';
-import Loadable from 'react-loadable';
 import helmet from 'helmet';
 
 import { IOptions } from '@interfaces/server/IOptions';
@@ -21,6 +21,7 @@ import { AsyncRouteProps } from '@interfaces/render/IRender';
 
 export class Server {
   app: Express;
+  middlewares: any[] = [];
   options: IOptions;
 
   static init = (options: IOptions) => {
@@ -32,29 +33,27 @@ export class Server {
       assetDir: path.resolve('.', BUILD_DIR, 'client'),
       routes: requireRuntime(path.resolve('.', BUILD_DIR, 'routes.js')) as AsyncRouteProps[],
       port: 8080,
-
       ...options,
     } as IOptions;
 
     this.options = defaultOptions;
-
-    this.setupExpress();
+    this.app = express();
   }
 
-  run = (handler) => {
+  run = async (handler) => {
+    await this.setupExpress();
+
     return this.app.listen(this.options.port, handler);
   };
 
-  applyExpressMiddleware = (middleware: express.RequestHandler) => {
-    this.app.use(middleware);
+  applyExpressMiddleware: ApplicationRequestHandler<Express.Application> = (...handlers) => {
+    this.middlewares.push(handlers);
+
+    return this.app;
   };
 
   routeHandler = async (req: Request, res: Response) => {
-    const html = await render({
-      req,
-      res,
-      dir: this.options.assetDir,
-    });
+    const html = await render({ req, res, dir: this.options.assetDir });
 
     res.send(html);
   };
@@ -64,8 +63,6 @@ export class Server {
   };
 
   private setupExpress = async () => {
-    this.app = express();
-
     // Setup for development HMR, etc
     if (__DEV__) {
       this.setupDevServer(this.app);
@@ -76,6 +73,9 @@ export class Server {
 
     // Set static assets route handler
     this.setAssetsStaticRoute(this.app);
+
+    // Applying user's middleware
+    this.middlewares.map((args) => this.app.use(...args));
 
     // Set favicon handler
     this.app.use('/favicon.ico', this.faviconHandler);
@@ -123,10 +123,9 @@ export class Server {
       serverSideRender: true,
       hot: true,
       writeToDisk: true,
-      // @ts-ignore
       publicPath: clientCompiler.options.output.publicPath || WEBPACK_PUBLIC_PATH,
       watchOptions: { ignored },
-    };
+    }; // @ts-ignore
     app.use(requireRuntime('webpack-dev-middleware')(multiCompiler, wdmOptions));
 
     const whmOptions = {
