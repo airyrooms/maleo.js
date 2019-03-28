@@ -9,6 +9,8 @@ import 'isomorphic-fetch';
 
 import express, { Express, Request, Response } from 'express';
 import { ApplicationRequestHandler } from 'express-serve-static-core';
+import compression from 'compression';
+import zlib from 'zlib';
 import path from 'path';
 import helmet from 'helmet';
 
@@ -63,10 +65,11 @@ export class Server {
   };
 
   private setupExpress = async () => {
+    // Set Compression
+    !__DEV__ && this.setupCompression(this.app);
+
     // Setup for development HMR, etc
-    if (__DEV__) {
-      this.setupDevServer(this.app);
-    }
+    __DEV__ && this.setupDevServer(this.app);
 
     // Set secure server
     this.setupSecureServer(this.app);
@@ -85,14 +88,14 @@ export class Server {
   };
 
   private setAssetsStaticRoute = (app: Express) => {
-    // asset caching
-    app.use(SERVER_ASSETS_ROUTE, (req, res, next) => {
-      res.set('Cache-Control', 'public, max-age=60');
-      next();
-    });
-
-    // asset serving
-    app.use(SERVER_ASSETS_ROUTE, express.static(this.options.assetDir as string));
+    // asset serving and caching for 30 days
+    // since we use ETAG we don't have to worry user won't get the newest assets
+    // by the time we have new build that changes the ETAG, browser will automatically
+    // request the file again
+    app.use(
+      SERVER_ASSETS_ROUTE,
+      express.static(this.options.assetDir as string, { maxAge: '30 days' }),
+    );
   };
 
   private setupSecureServer = (app: Express) => {
@@ -105,6 +108,24 @@ export class Server {
       res.setHeader('Content-Security-Policy', `script-src 'self'`);
       next();
     });
+  };
+
+  private setupCompression = (app: Express) => {
+    const option = {
+      filter(req, res) {
+        if (req.headers['x-no-compression']) {
+          // don't compress responses with this request header
+          return false;
+        }
+
+        // fallback to standard filter function
+        return compression.filter(req, res);
+      },
+      strategy: zlib.Z_DEFAULT_STRATEGY,
+      level: zlib.Z_DEFAULT_COMPRESSION,
+    };
+
+    app.use(compression(option));
   };
 
   private setupDevServer = (app: Express) => {
