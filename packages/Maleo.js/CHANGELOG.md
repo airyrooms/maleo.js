@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.1.0](https://github.com/airyrooms/maleo.js/compare/v0.0.15...v0.1.0) (2019-03-28)
+
+
+### Bug Fixes
+
+* **maleo-core:** fix apply server middleware [skip ci] ([#164](https://github.com/airyrooms/maleo.js/issues/164)) ([4e8a08f](https://github.com/airyrooms/maleo.js/commit/4e8a08f))
+
+
+### Features
+
+* **maleo-core:** add gzip compression [skip ci] ([#165](https://github.com/airyrooms/maleo.js/issues/165)) ([ca8fded](https://github.com/airyrooms/maleo.js/commit/ca8fded))
+
+
+
+
+
 ## 0.0.15 (2019-03-27)
 
 
