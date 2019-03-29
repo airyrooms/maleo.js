@@ -1,8 +1,14 @@
 import { Server } from '~/src/server/server';
 
+let SelectedServer = Server;
+// No need to load DevServer code for production server
+if (__DEV__) {
+  SelectedServer = require('~/src/server/dev-server').default;
+}
+
 const PORT = process.env.PORT || 3000;
 
-const defaultServer = Server.init({
+const defaultServer = SelectedServer.init({
   port: PORT,
 });
 

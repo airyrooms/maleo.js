@@ -73,6 +73,7 @@ if (type === 'run') {
         env,
         buildType: 'server',
         callback: exec,
+        minimalBuild: true,
       });
     }
   });

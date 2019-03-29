@@ -65,7 +65,7 @@ const defaultUserConfig: CustomConfig = {
 };
 
 export const createWebpackConfig = (context: Context, customConfig: CustomConfig) => {
-  const { env, isServer } = context;
+  const { env, isServer, minimalBuild } = context;
   const {
     cache,
     buildDir,
@@ -96,6 +96,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
     analyzeBundle,
     buildDirectory,
     name,
+    minimalBuild,
   };
 
   const [entry, optimization, rules, plugins, output] = [
@@ -207,7 +208,7 @@ export const getDefaultEntry = (
   context: BuildContext,
   customConfig: CustomConfig,
 ): Configuration['entry'] => {
-  const { isServer, projectDir, isDev } = context;
+  const { isServer, projectDir, isDev, minimalBuild } = context;
 
   const { routes, document, wrap, app } = getStaticEntries(context, customConfig);
 
@@ -217,13 +218,22 @@ export const getDefaultEntry = (
       ? path.join(projectDir, SERVER_ENTRY_NAME)
       : path.resolve(__dirname, '../../../lib/default/_server.js');
 
-    return {
+    const serverEntries = {
       server: [isDev && 'webpack/hot/signal', serverEntry].filter(Boolean) as string[],
       routes,
       document,
       wrap,
       app,
     };
+
+    if (minimalBuild) {
+      console.log('[Webpack] Running minimal server build');
+      return {
+        server: serverEntries.server,
+      };
+    }
+
+    return serverEntries;
   }
 
   const customClientExist = fileExist(projectDir, path.join(projectDir, 'client'));
@@ -263,25 +273,25 @@ export const getDefaultOptimizations = (
   let clientOptimizations: Configuration['optimization'];
   clientOptimizations = {
     ...commonOptimizations,
-
-    runtimeChunk: {
-      name: RUNTIME_CHUNK_FILE,
-    },
+    runtimeChunk: { name: RUNTIME_CHUNK_FILE },
     splitChunks: {
-      chunks: 'all',
+      chunks: 'async',
+      minSize: 30000,
+      maxSize: 0,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      name: false,
       cacheGroups: {
-        default: false,
         vendors: {
+          name: 'vendors',
           test: /[\\/]node_modules[\\/]/,
-          // test: /node_modules\/(?!((.*)webpack(.*))).*/,
-          name(module) {
-            // get the name. E.g. node_modules/packageName/not/this/part.js
-            // or node_modules/packageName
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-
-            // npm package names are URL-safe, but some servers don't like @ symbols
-            return `npm.${packageName.replace('@', '')}`;
-          },
+          priority: -10,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
         },
       },
     },
@@ -290,7 +300,38 @@ export const getDefaultOptimizations = (
   if (!isDev) {
     clientOptimizations = {
       ...clientOptimizations,
+      splitChunks: {
+        chunks: 'all',
+        name: false,
+        minSize: 30000,
+        maxSize: 0,
+        cacheGroups: {
+          default: false,
+          vendors: false,
+          react: {
+            name: 'react',
+            chunks: 'all',
+            test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+          },
+          commons: { name: 'commons', chunks: 'all', minChunks: 2 },
+        },
+      },
+      //   chunks: 'async', // splitChunks: {
+      //   cacheGroups: {
+      //     default: false,
+      //     vendors: {
+      //       test: /[\\/]node_modules[\\/]/,
+      //       name(module) {
+      //         // get the name. E.g. node_modules/packageName/not/this/part.js
+      //         // or node_modules/packageName
+      //         const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
 
+      //         // npm package names are URL-safe, but some servers don't like @ symbols
+      //         return `npm.${packageName.replace('@', '')}`;
+      //       },
+      //     },
+      //   },
+      // },
       minimize: true,
       minimizer: [
         new TerserPlugin({
@@ -314,25 +355,6 @@ export const getDefaultOptimizations = (
           },
         }),
       ],
-
-      splitChunks: {
-        chunks: 'all',
-        cacheGroups: {
-          default: false,
-          vendors: false,
-
-          commons: {
-            name: 'commons',
-            chunks: 'all',
-            minChunks: 2,
-          },
-          react: {
-            name: 'commons',
-            chunks: 'all',
-            test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          },
-        },
-      },
     };
   }
 

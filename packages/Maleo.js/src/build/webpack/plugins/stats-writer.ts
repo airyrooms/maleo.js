@@ -33,10 +33,7 @@ export class StatsWriterPlugin {
     // Extract dynamic assets to dynamic key
 
     const key = 'assetsByChunkName';
-    stats = {
-      static: this.extractDynamic(stats[key], false),
-      dynamic: this.extractDynamic(stats[key], true),
-    };
+    stats = mapStats(stats, key);
 
     // Transform to string
     const [err, statsStr] = await to<string>(
@@ -68,25 +65,6 @@ export class StatsWriterPlugin {
       return void callback();
     }
   };
-
-  // Extract dynamic assets
-  extractDynamic = (stats, isDynamic = false) => {
-    return Object.keys(stats)
-      .filter((k) => {
-        const regex = /dynamic\./;
-        if (isDynamic) {
-          return !!regex.test(k);
-        }
-        return !regex.test(k);
-      })
-      .reduce(
-        (p, c) => ({
-          ...p,
-          [c]: stats[c],
-        }),
-        {},
-      );
-  };
 }
 
 export function to<T, U = Error>(
@@ -103,3 +81,29 @@ export function to<T, U = Error>(
       return [err, undefined];
     });
 }
+
+export const mapStats = (stats: any, key: string) => {
+  // Extract dynamic assets
+  const extractDynamic = (stat, isDynamic = false) => {
+    return Object.keys(stat)
+      .filter((k) => {
+        const regex = /dynamic\./;
+        if (isDynamic) {
+          return !!regex.test(k);
+        }
+        return !regex.test(k);
+      })
+      .reduce(
+        (p, c) => ({
+          ...p,
+          [c]: stat[c],
+        }),
+        {},
+      );
+  };
+
+  return {
+    static: extractDynamic(stats[key], false),
+    dynamic: extractDynamic(stats[key], true),
+  };
+};

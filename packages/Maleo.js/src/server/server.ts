@@ -15,19 +15,11 @@ import path from 'path';
 import helmet from 'helmet';
 
 import { IOptions } from '@interfaces/server/IOptions';
-
+import { BUILD_DIR, SERVER_ASSETS_ROUTE, CLIENT_BUILD_DIR } from '@constants/index';
 import { render } from './render';
-import {
-  BUILD_DIR,
-  SERVER_ASSETS_ROUTE,
-  SERVER_BUILD_DIR,
-  CLIENT_BUILD_DIR,
-} from '@constants/index';
-import { requireRuntime } from '@utils/require';
-import { AsyncRouteProps } from '@interfaces/render/IRender';
 
 export class Server {
-  app: Express;
+  public app: Express = express();
   middlewares: any[] = [];
   options: IOptions;
 
@@ -38,15 +30,11 @@ export class Server {
   constructor(options: IOptions) {
     const defaultOptions = {
       assetDir: path.resolve('.', BUILD_DIR, CLIENT_BUILD_DIR),
-      routes: requireRuntime(
-        path.resolve('.', BUILD_DIR, SERVER_BUILD_DIR, 'routes.js'),
-      ) as AsyncRouteProps[],
       port: 8080,
       ...options,
     } as IOptions;
 
     this.options = defaultOptions;
-    this.app = express();
   }
 
   run = async (handler) => {
@@ -79,17 +67,14 @@ export class Server {
     // Set Compression
     !__DEV__ && this.setupCompression(this.app);
 
-    // Setup for development HMR, etc
-    __DEV__ && this.setupDevServer(this.app);
-
     // Set secure server
     this.setupSecureServer(this.app);
 
-    // Set static assets route handler
-    this.setAssetsStaticRoute(this.app);
-
     // Applying user's middleware
     this.middlewares.map((args) => this.app.use(...args));
+
+    // Set static assets route handler
+    this.setAssetsStaticRoute(this.app);
 
     // Set favicon handler
     this.app.use('/favicon.ico', this.faviconHandler);
@@ -138,34 +123,6 @@ export class Server {
 
     app.use(compression(option));
   };
-
-  private setupDevServer = (app: Express) => {
-    // Webpack Dev Server
-    const { getConfigs } = requireRuntime(path.resolve(__dirname, '../build/index'));
-    const webpack = requireRuntime('webpack');
-
-    const configs = getConfigs({ env: 'development' });
-    const multiCompiler = webpack(configs);
-
-    const [clientCompiler] = multiCompiler.compilers;
-
-    const ignored = [/\.git/, /\.maleo\//, /node_modules/];
-    const wdmOptions = {
-      stats: false,
-      serverSideRender: true,
-      hot: true,
-      writeToDisk: true,
-      publicPath: clientCompiler.options.output.publicPath || WEBPACK_PUBLIC_PATH,
-      watchOptions: { ignored },
-    }; // @ts-ignore
-    app.use(requireRuntime('webpack-dev-middleware')(multiCompiler, wdmOptions));
-
-    const whmOptions = {
-      // tslint:disable-next-line:no-console
-      log: console.log,
-      path: '/__webpack_hmr',
-      heartbeat: 10 * 10000,
-    };
-    app.use(requireRuntime('webpack-hot-middleware')(clientCompiler, whmOptions));
-  };
 }
+
+export default Server;
