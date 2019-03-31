@@ -1,0 +1,12 @@
+[
+  {
+    "page": "./src/RootComponent",
+    "routes": [
+      {
+        "path": "/",
+        "page": "./src/Home",
+        "exact": true
+      }
+    ]
+  }
+]
