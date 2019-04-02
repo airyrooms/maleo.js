@@ -9,7 +9,7 @@ import { Context, CustomConfig, StaticPages } from '@interfaces/build/IWebpackIn
 import { buildStatic } from '@build/static/static';
 
 export const getConfigs = (options: IBuildOptions): Configuration[] => {
-  const { env, buildType, minimalBuild } = options;
+  const { env, buildType, minimalBuild, experimentalLazyBuild } = options;
 
   const context: Context = {
     env,
@@ -17,12 +17,9 @@ export const getConfigs = (options: IBuildOptions): Configuration[] => {
   };
 
   const userConfig: CustomConfig = loadUserConfig(context.projectDir);
-  const clientConfig = createWebpackConfig(
-    { isServer: false, ...context, minimalBuild },
-    userConfig,
-  );
+  const clientConfig = createWebpackConfig({ isServer: false, ...context }, userConfig);
   const serverConfig = createWebpackConfig(
-    { isServer: true, ...context, minimalBuild },
+    { isServer: true, ...context, minimalBuild, experimentalLazyBuild },
     userConfig,
   );
 

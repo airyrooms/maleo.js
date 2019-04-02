@@ -1,8 +1,6 @@
 import webpack from 'webpack';
+import { Context } from './IWebpackInterfaces';
 
-export interface IBuildOptions {
-  env: 'development' | 'production' | 'none';
-  buildType: 'server' | 'client' | 'all';
-  minimalBuild?: boolean;
+export interface IBuildOptions extends Context {
   callback?: (err: Error, stats: webpack.Stats) => void;
 }

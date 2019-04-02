@@ -21,6 +21,7 @@ class DevServer extends Server {
 
   memoryStats = null;
   wdm;
+  lazyBuild;
 
   constructor(options: IOptions) {
     super(options);
@@ -43,10 +44,13 @@ class DevServer extends Server {
     const webpack = requireRuntime('webpack');
     const { getConfigs } = requireRuntime(path.resolve(__dirname, '../build/index'));
 
-    // const lazyBuild = new LazyBuild();
-
     const [clientConfig, serverConfig] = getConfigs({ env: 'development' });
-    // clientConfig.plugins.push(lazyBuild.createPlugin());
+
+    if (__EXPERIMENTAL_LAZY_BUILD__) {
+      const { LazyBuild } = require('./lazy-development-build');
+      this.lazyBuild = new LazyBuild();
+      clientConfig.plugins.push(this.lazyBuild.createPlugin());
+    }
 
     const multiCompiler = webpack([clientConfig, serverConfig]);
     const [clientCompiler, serverCompiler] = multiCompiler.compilers;
@@ -67,8 +71,11 @@ class DevServer extends Server {
     };
 
     this.wdm = devMiddleware(compiler, wdmOptions);
-    // this.applyExpressMiddleware(lazyBuild.createMiddleware(this.wdm));
-    this.applyExpressMiddleware(this.wdm);
+    if (__EXPERIMENTAL_LAZY_BUILD__) {
+      this.applyExpressMiddleware(this.lazyBuild.createMiddleware(this.wdm));
+    } else {
+      this.applyExpressMiddleware(this.wdm);
+    }
 
     const whmOptions = {
       // tslint:disable-next-line:no-console

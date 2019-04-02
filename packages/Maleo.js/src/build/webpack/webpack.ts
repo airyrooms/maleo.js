@@ -9,7 +9,6 @@ import {
   NoEmitOnErrorsPlugin,
   BannerPlugin,
 } from 'webpack';
-import fs from 'fs';
 
 // Webpack Optimizations Plugin
 import TerserPlugin from 'terser-webpack-plugin';
@@ -51,7 +50,7 @@ import {
   WebpackCustomConfigCallback,
 } from '@interfaces/build/IWebpackInterfaces';
 import { fileExist } from '@utils/index';
-import { requireFile, requireRuntime } from '@utils/require';
+import { requireFile } from '@utils/require';
 
 // Default Config if user doesn't have maleo.config.js
 const defaultUserConfig: CustomConfig = {
@@ -394,7 +393,17 @@ export const getDefaultPlugins = (
   context: BuildContext,
   customConfig: CustomConfig,
 ): Configuration['plugins'] => {
-  const { isDev, projectDir, publicPath, env, isServer, analyzeBundle, name } = context;
+  const {
+    isDev,
+    projectDir,
+    publicPath,
+    env,
+    isServer,
+    analyzeBundle,
+    name,
+    experimentalLazyBuild,
+    minimalBuild,
+  } = context;
 
   const commonPlugins: Configuration['plugins'] =
     ([
@@ -469,6 +478,16 @@ export const getDefaultPlugins = (
         }),
 
         isDev &&
+          new DefinePlugin({
+            __EXPERIMENTAL_LAZY_BUILD__: JSON.stringify(experimentalLazyBuild),
+          }),
+
+        // no need to cache minimal built server
+        // only cache during full build
+        // caching minimal build causes issue such as when we are using define plugin
+        // the definition got cached therefore the value is unpredictable
+        !minimalBuild &&
+          isDev &&
           new HardSourcePlugin({
             cacheDirectory: path.join(
               projectDir,
