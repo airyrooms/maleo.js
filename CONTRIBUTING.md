@@ -139,6 +139,32 @@ Running test:
 $ yarn test
 ```
 
+You can also play around with the changes you made on `example/playground`.
+
+By doing `yarn link` maleo to the playground *you only need to do this once, or everytime after you do yarn install*.
+
+To do so you need to go to `packages/Maleo.js` then run 
+```bash
+$ yarn link
+```
+
+You should see something like 
+```
+success Registered "@airy/maleo".
+```
+
+After that you go to `example/playground` and remove `@airy/maleo` from `package.json` dependencies, then run `yarn` to install all dependencies except `@airy/maleo`.
+> this need to be done to prevent CommonJS dependencies error: because of duplicate dependencies webpack encounter, due to our monorepo design. If you find this to be cumbersome you can create new project outside Maleo's repo and do the yarn link there instead
+
+After yarn has finished installed all the dependencies, now you can run
+```bash
+$ yarn link @airy/maleo
+```
+
+And you are good to test your changes on Maleo you have made. 
+
+> For every changes you have made on Maleo, you need to restart the playground app.
+
 **Commit and Push Changes**
 
 Awesome 🎉! 
