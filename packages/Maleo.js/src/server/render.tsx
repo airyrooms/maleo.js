@@ -18,6 +18,9 @@ import {
 } from '@interfaces/render/IRender';
 import extractStats from './extract-stats';
 
+// * HTML doctype * //
+const DOCTYPE = '<!DOCTYPE html>';
+
 export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: RenderPageParams) => {
   return async (): Promise<{
     html: string;
@@ -144,7 +147,9 @@ export const render = async ({ req, res, dir, renderPage = defaultRenderPage }: 
 
     const initialProps = await Document.getInitialProps(docContext);
 
-    return renderToString(<Document {...initialProps} />);
+    const getRenderedString = renderToString(<Document {...initialProps} />);
+
+    return `${DOCTYPE}${getRenderedString}`;
   }
 
   // TODO: add customizable error page
