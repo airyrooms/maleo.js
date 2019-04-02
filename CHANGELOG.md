@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1-canary.2](https://github.com/airyrooms/maleo.js/compare/v0.1.1-canary.1...v0.1.1-canary.2) (2019-04-02)
+
+
+### Bug Fixes
+
+* **render.tsx on server folder:** add html doctype ([#176](https://github.com/airyrooms/maleo.js/issues/176)) ([00e88d8](https://github.com/airyrooms/maleo.js/commit/00e88d8)), closes [#173](https://github.com/airyrooms/maleo.js/issues/173)
+
+
+
+
+
 ## [0.1.1-canary.1](https://github.com/airyrooms/maleo.js/compare/v0.1.1-canary.0...v0.1.1-canary.1) (2019-03-29)
 
 
