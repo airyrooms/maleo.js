@@ -17,7 +17,12 @@ import helmet from 'helmet';
 import { IOptions } from '@interfaces/server/IOptions';
 
 import { render } from './render';
-import { BUILD_DIR, SERVER_ASSETS_ROUTE } from '@constants/index';
+import {
+  BUILD_DIR,
+  SERVER_ASSETS_ROUTE,
+  SERVER_BUILD_DIR,
+  CLIENT_BUILD_DIR,
+} from '@constants/index';
 import { requireRuntime } from '@utils/require';
 import { AsyncRouteProps } from '@interfaces/render/IRender';
 
@@ -32,8 +37,10 @@ export class Server {
 
   constructor(options: IOptions) {
     const defaultOptions = {
-      assetDir: path.resolve('.', BUILD_DIR, 'client'),
-      routes: requireRuntime(path.resolve('.', BUILD_DIR, 'routes.js')) as AsyncRouteProps[],
+      assetDir: path.resolve('.', BUILD_DIR, CLIENT_BUILD_DIR),
+      routes: requireRuntime(
+        path.resolve('.', BUILD_DIR, SERVER_BUILD_DIR, 'routes.js'),
+      ) as AsyncRouteProps[],
       port: 8080,
       ...options,
     } as IOptions;
@@ -55,7 +62,11 @@ export class Server {
   };
 
   routeHandler = async (req: Request, res: Response) => {
-    const html = await render({ req, res, dir: this.options.assetDir });
+    const html = await render({
+      req,
+      res,
+      dir: this.options.assetDir,
+    });
 
     res.send(html);
   };
