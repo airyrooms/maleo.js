@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1-canary.3](https://github.com/airyrooms/maleo.js/compare/v0.1.1-canary.2...v0.1.1-canary.3) (2019-04-02)
+
+
+### Features
+
+* **build, render:** add html static export ([#50](https://github.com/airyrooms/maleo.js/issues/50)) ([45ef879](https://github.com/airyrooms/maleo.js/commit/45ef879)), closes [#10](https://github.com/airyrooms/maleo.js/issues/10)
+
+
+
+
+
 ## [0.1.1-canary.2](https://github.com/airyrooms/maleo.js/compare/v0.1.1-canary.1...v0.1.1-canary.2) (2019-04-02)
 
 
