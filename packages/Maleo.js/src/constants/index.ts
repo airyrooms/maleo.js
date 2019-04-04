@@ -46,3 +46,9 @@ export const REGISTERS = {
 };
 
 export const STATIC_ENTRIES = ['document', 'wrap', 'app', 'routes'];
+
+export const STATIC_BUILD_DIR: string = path.join(BUILD_DIR, 'static');
+
+export const SERVER_BUILD_DIR = 'server';
+
+export const CLIENT_BUILD_DIR = 'client';

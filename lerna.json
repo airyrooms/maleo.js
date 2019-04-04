@@ -1,6 +1,6 @@
 {
   "lerna": "3.13.1",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "packages": [
     "packages/*"
   ],
@@ -38,7 +38,26 @@
         "master",
         "canary"
       ],
-      "registry": "https://registry.npmjs.org/"
+      "registry": "https://registry.npmjs.org/",
+      "ignoreChanges": [
+        "*.md",
+        "*.test.*",
+        "example/**",
+        "**/__test__/**",
+        "*.yml",
+        "*.sh"
+      ]
+    },
+    "changelog": {
+      "labels": {
+        "documentation": "Documentation",
+        "feature": "New Feature",
+        "bug": "Bug Fix",
+        "enhancement": "Enhancement and Optimization"
+      },
+      "ignoreCommitters": [
+        "airyrooms-engineering"
+      ]
     }
   }
 }

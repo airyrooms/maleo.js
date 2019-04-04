@@ -126,8 +126,6 @@ export interface RenderParam {
 
 export interface RenderPageParams {
   req: Request;
-  // App?: React.ReactElement<AppProps>;
-  // Wrap?: React.ReactElement<any>;
   App: typeof React.Component;
   Wrap: typeof React.Component;
   routes: AsyncRouteProps[];
