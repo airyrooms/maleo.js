@@ -46,7 +46,7 @@
     "publish:prepublish": "lerna run prepublish",
     "publish:version-canary": "lerna version prerelease --preid canary --message \"chore(release): publish canary %s [skip ci]\" --yes",
     "publish:canary": "lerna publish from-package --no-git-reset --canary --dist-tag canary --yes",
-    "publish:version-stable": "lerna version --message \"chore(release): publish stable %s\"",
+    "publish:version-stable": "lerna version --message \"chore(release): publish stable %s\" --git-remote upstream",
     "publish:stable": "lerna publish from-package --no-git-reset --yes"
   },
   "husky": {
