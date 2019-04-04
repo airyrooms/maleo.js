@@ -55,6 +55,15 @@
         "*.yml",
         "*.sh"
       ]
+    },
+    "changelog": {
+      "labels": {
+        "documentation": "Documentation",
+        "feature": "New Feature",
+        "bug": "Bug Fix",
+        "enhancement": "Enhancement and Optimization"
+      },
+      "ignoreCommitters": ["airyrooms-engineering"]
     }
   }
 }

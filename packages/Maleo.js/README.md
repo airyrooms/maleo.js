@@ -4,6 +4,7 @@
 [![Issues](http://img.shields.io/github/issues/airyrooms/maleo.js.svg)]( https://github.com/airyrooms/maleo.js/issues)
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/airyrooms/maleo.js/blob/canary/LICENSE)
 [![Discord Chat](https://img.shields.io/discord/550498214789513218.svg)](https://discord.gg/9eArCQn)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-green.svg)](https://conventionalcommits.org)
 
 
 # Welcome to Maleo.js
