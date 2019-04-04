@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.2-canary.0](https://github.com/airyrooms/maleo.js/compare/v0.1.1...v0.1.2-canary.0) (2019-04-04)
+
+**Note:** Version bump only for package airy-maleojs
+
+
+
+
+
 ## [0.1.1](https://github.com/airyrooms/maleo.js/compare/v0.1.1-canary.3...v0.1.1) (2019-04-04)
 
 **Note:** Version bump only for package airy-maleojs
