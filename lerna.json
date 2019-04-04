@@ -1,6 +1,6 @@
 {
   "lerna": "3.13.1",
-  "version": "0.1.1-canary.3",
+  "version": "0.1.1",
   "packages": [
     "packages/*"
   ],
@@ -63,7 +63,9 @@
         "bug": "Bug Fix",
         "enhancement": "Enhancement and Optimization"
       },
-      "ignoreCommitters": ["airyrooms-engineering"]
+      "ignoreCommitters": [
+        "airyrooms-engineering"
+      ]
     }
   }
 }
