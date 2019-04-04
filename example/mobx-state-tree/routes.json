@@ -1,12 +1,7 @@
 [
   {
-    "page": "./src/RootComponent",
-    "routes": [
-      {
-        "path": "/",
-        "page": "./src/Home",
-        "exact": true
-      }
-    ]
+    "path": "/",
+    "page": "./src/Home",
+    "exact": true
   }
 ]
