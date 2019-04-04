@@ -10,7 +10,6 @@ import { render } from './render';
 import { RenderParam } from '../interfaces/render/IRender';
 import { mapAssets } from './extract-stats';
 import { mapStats } from '@build/webpack/plugins/stats-writer';
-// import { LazyBuild } from './lazy-development-build';
 
 const ignored = [/\.git/, /\.maleo\//, /node_modules/];
 
