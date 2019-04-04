@@ -3,6 +3,47 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.1-canary.3](https://github.com/airyrooms/maleo.js/compare/v0.1.1-canary.2...v0.1.1-canary.3) (2019-04-02)
+
+
+### Features
+
+* **build, render:** add html static export ([#50](https://github.com/airyrooms/maleo.js/issues/50)) ([45ef879](https://github.com/airyrooms/maleo.js/commit/45ef879)), closes [#10](https://github.com/airyrooms/maleo.js/issues/10)
+
+
+
+
+
+## [0.1.1-canary.2](https://github.com/airyrooms/maleo.js/compare/v0.1.1-canary.1...v0.1.1-canary.2) (2019-04-02)
+
+
+### Bug Fixes
+
+* **render.tsx on server folder:** add html doctype ([#176](https://github.com/airyrooms/maleo.js/issues/176)) ([00e88d8](https://github.com/airyrooms/maleo.js/commit/00e88d8)), closes [#173](https://github.com/airyrooms/maleo.js/issues/173)
+
+
+
+
+
+## [0.1.1-canary.1](https://github.com/airyrooms/maleo.js/compare/v0.1.1-canary.0...v0.1.1-canary.1) (2019-03-29)
+
+
+### Bug Fixes
+
+* **maleo-core:** show error message for dev build ([#169](https://github.com/airyrooms/maleo.js/issues/169)) ([5c4d44a](https://github.com/airyrooms/maleo.js/commit/5c4d44a)), closes [#153](https://github.com/airyrooms/maleo.js/issues/153)
+
+
+
+
+
+## [0.1.1-canary.0](https://github.com/airyrooms/maleo.js/compare/v0.1.0...v0.1.1-canary.0) (2019-03-28)
+
+**Note:** Version bump only for package @airy/maleo
+
+
+
+
+
 # [0.1.0](https://github.com/airyrooms/maleo.js/compare/v0.0.15...v0.1.0) (2019-03-28)
 
 

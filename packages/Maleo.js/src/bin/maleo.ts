@@ -24,9 +24,9 @@ import rimraf from 'rimraf';
 import { spawn } from 'child_process';
 
 // Importing required bin dependencies
-import { build } from '@build/index';
+import { build, exportStatic } from '@build/index';
 import { loadUserConfig } from '@build/webpack/webpack';
-import { BUILD_DIR } from '@constants/index';
+import { BUILD_DIR, SERVER_BUILD_DIR } from '@constants/index';
 
 console.log(
   figlet.textSync('Maleo.js', {
@@ -35,11 +35,11 @@ console.log(
   }),
 );
 
-const userConfig = loadUserConfig(projectPath, true);
+const userConfig = loadUserConfig(projectPath);
 const buildDirectory = userConfig.buildDir || BUILD_DIR;
 
 // Generating server execution
-const serverPath = path.join(buildDirectory, 'server.js');
+const serverPath = path.join(buildDirectory, SERVER_BUILD_DIR, 'server.js');
 const exec = spawn.bind(null, 'node', [serverPath], {
   stdio: 'inherit',
 });
@@ -47,6 +47,10 @@ const exec = spawn.bind(null, 'node', [serverPath], {
 if (type === 'run') {
   console.log('[MALEO] Running Application');
   exec();
+} else if (type === 'export') {
+  console.log('[MALEO] Running static export');
+  global.__DEV__ = isDev;
+  exportStatic(userConfig);
 } else {
   // Clean up the folder
   rimraf(path.join(projectPath, buildDirectory), {}, () => {

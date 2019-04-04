@@ -9,6 +9,7 @@ import {
   NoEmitOnErrorsPlugin,
   BannerPlugin,
 } from 'webpack';
+import fs from 'fs';
 
 // Webpack Optimizations Plugin
 import TerserPlugin from 'terser-webpack-plugin';
@@ -40,6 +41,8 @@ import {
   DOCUMENT_ENTRY_NAME,
   WRAP_ENTRY_NAME,
   APP_ENTRY_NAME,
+  CLIENT_BUILD_DIR,
+  SERVER_BUILD_DIR,
 } from '@constants/index';
 import {
   Context,
@@ -47,8 +50,8 @@ import {
   BuildContext,
   WebpackCustomConfigCallback,
 } from '@interfaces/build/IWebpackInterfaces';
-import { requireRuntime } from '@utils/require';
 import { fileExist } from '@utils/index';
+import { requireFile, requireRuntime } from '@utils/require';
 
 // Default Config if user doesn't have maleo.config.js
 const defaultUserConfig: CustomConfig = {
@@ -57,6 +60,8 @@ const defaultUserConfig: CustomConfig = {
   sourceMaps: true,
   analyzeBundle: false,
   buildDir: BUILD_DIR,
+  assetDir: path.resolve('.', BUILD_DIR, CLIENT_BUILD_DIR),
+  distDir: path.resolve('.', 'dist'),
 };
 
 export const createWebpackConfig = (context: Context, customConfig: CustomConfig) => {
@@ -503,7 +508,7 @@ export const getDefaultOutput = (
     return {
       filename: '[name].js',
       chunkFilename: '[name].js',
-      path: path.resolve(projectDir, buildDirectory),
+      path: path.resolve(projectDir, buildDirectory, SERVER_BUILD_DIR),
 
       library: '[name]',
       libraryTarget: 'commonjs2',
@@ -512,7 +517,7 @@ export const getDefaultOutput = (
   }
 
   return {
-    path: path.resolve(projectDir, buildDirectory, 'client'),
+    path: path.resolve(projectDir, buildDirectory, CLIENT_BUILD_DIR),
     publicPath,
 
     chunkFilename: isDev ? '[name].js' : '[name]-[hash].js',
@@ -525,29 +530,16 @@ export const getDefaultOutput = (
 /**
  * Load User Config with file name USER_CUSTOM_CONFIG (maleo.config.js)
  */
-export const loadUserConfig = (dir: string, quiet?: boolean): CustomConfig => {
+export const loadUserConfig = (dir: string): CustomConfig => {
   const cwd: string = path.resolve(dir);
   const userConfigPath: string = path.resolve(cwd, USER_CUSTOM_CONFIG);
-  try {
-    const userConfig = requireRuntime(userConfigPath);
-
-    if (userConfig !== undefined) {
-      // tslint:disable-next-line:no-unused-expression quotemark
-      !quiet && console.log("[Webpack] Using user's config");
-      return {
+  const userConfig = requireFile(userConfigPath);
+  return userConfig
+    ? {
         ...defaultUserConfig,
         ...userConfig,
-      };
-    }
-
-    return defaultUserConfig;
-  } catch (err) {
-    if (err.code !== 'MODULE_NOT_FOUND') {
-      // tslint:disable-next-line:no-unused-expression
-      !quiet && console.log('[Webpack] Using Default Config');
-    }
-    return defaultUserConfig;
-  }
+      }
+    : defaultUserConfig;
 };
 
 /**

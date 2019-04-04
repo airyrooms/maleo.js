@@ -4,9 +4,14 @@ import { renderToString } from 'react-dom/server';
 import Loadable from 'react-loadable';
 import { getBundles } from 'react-loadable/webpack';
 
-import { REACT_LOADABLE_MANIFEST, BUILD_DIR } from '@constants/index';
+import {
+  REACT_LOADABLE_MANIFEST,
+  BUILD_DIR,
+  CLIENT_BUILD_DIR,
+  SERVER_BUILD_DIR,
+} from '@constants/index';
 import { isPromise } from '@utils/index';
-import { requireDynamic, requireRuntime } from '@utils/require';
+import { requireDynamic, requireRuntime, requireFile } from '@utils/require';
 import { loadInitialProps, loadComponentProps } from './loadInitialProps';
 import { matchingRoutes } from './routeHandler';
 import {
@@ -17,6 +22,9 @@ import {
   ServerAssets,
 } from '@interfaces/render/IRender';
 import extractStats from './extract-stats';
+
+// * HTML doctype * //
+const DOCTYPE = '<!DOCTYPE html>';
 
 export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: RenderPageParams) => {
   return async (): Promise<{
@@ -31,16 +39,23 @@ export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: Rende
 
     // get required bundles from react-loadable.json
     const modules: string[] = [];
-    const reportResults = (moduleName) => modules.push(moduleName);
+    const reportResults = (moduleName) => {
+      modules.push(moduleName);
+    };
 
     // execute getInitialProps in Wrap and App component
     const wrapProps = props && props.wrap ? props.wrap : {};
     const appProps = props && props.app ? props.app : {};
 
+    await Loadable.preloadAll(); // Make sure all dynamic imports are loaded
+
+    // in SSR, we need to manually define location object
+    // to be passed in App because withRouter doesn't work on server side
+    const location = req.originalUrl;
     const asyncOrSyncRender = renderer(
       <Loadable.Capture report={reportResults}>
-        <Wrap location={req.originalUrl} context={appContext} server {...wrapProps}>
-          <App {...{ routes, data, location: { pathname: req.originalUrl }, ...appProps }} />
+        <Wrap location={location} context={appContext} server {...wrapProps}>
+          <App {...{ routes, data, location: { pathname: location }, ...appProps }} />
         </Wrap>
       </Loadable.Capture>,
     );
@@ -53,17 +68,15 @@ export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: Rende
 
     try {
       reactLoadableJson = await requireDynamic(
-        path.resolve('.maleo', 'client', REACT_LOADABLE_MANIFEST),
+        path.resolve(BUILD_DIR, CLIENT_BUILD_DIR, REACT_LOADABLE_MANIFEST),
       );
     } catch (error) {}
 
     const bundles: LoadableBundles[] = getBundles(reactLoadableJson, modules)
-      // removes falsy value
-      .filter(Boolean)
-      // removes .map files
-      .filter((b) => b.file.endsWith('.js'))
-      // maps to readable bundle array
+      .filter(Boolean) // removes falsy value
+      .filter((b) => b.file.endsWith('.js')) // removes .map files
       .map((bundle) => ({
+        // maps to readable bundle array
         name: bundle.name,
         filename: bundle.file,
       }));
@@ -144,15 +157,80 @@ export const render = async ({ req, res, dir, renderPage = defaultRenderPage }: 
 
     const initialProps = await Document.getInitialProps(docContext);
 
+    const getRenderedString = renderToString(<Document {...initialProps} />);
+
+    return `${DOCTYPE}${getRenderedString}`;
+  }
+
+  // TODO: add customizable error page
+  return defaultRenderErrorPage();
+};
+
+export const renderStatic = async ({ req, res, renderPage = defaultRenderPage }: RenderParam) => {
+  const { document: Document, routes, wrap: Wrap, app: App } = getServerAssets();
+
+  // matching routes
+  const matchedRoutes = await matchingRoutes(routes, req.originalUrl);
+
+  // get Wrap props & App props
+  const ctx = { req, res };
+  const wrapProps = await loadComponentProps(Wrap, ctx);
+  const appProps = await loadComponentProps(App, ctx);
+
+  // execute getInitialProps on every matched component
+  const { data, branch } = await loadInitialProps(matchedRoutes, {
+    req,
+    res,
+    ...wrapProps,
+    ...appProps,
+  });
+
+  // setup Document component & renderToString to client
+  if (branch) {
+    const { html } = await renderPage({
+      req,
+      Wrap,
+      App,
+      routes,
+      data,
+      props: { wrap: wrapProps, app: appProps },
+    })();
+
+    // Loads Loadable bundle first
+
+    const docContext: DocumentContext = {
+      req,
+      res,
+      data,
+      branch,
+      preloadScripts: [],
+      html,
+      ...wrapProps,
+      ...appProps,
+    };
+
+    const initialProps = await Document.getInitialProps(docContext);
+
     return renderToString(<Document {...initialProps} />);
   }
 
   // TODO: add customizable error page
-  return 'error';
+  return defaultRenderErrorPage();
+};
+
+const defaultRenderErrorPage = () => {
+  return (
+    <html>
+      <head>
+        <title>Error</title>
+      </head>
+      <body>Error</body>
+    </html>
+  );
 };
 
 const getServerAssets = (): ServerAssets => {
-  const serverDir = path.join(process.cwd(), BUILD_DIR);
+  const serverDir = path.join(process.cwd(), BUILD_DIR, SERVER_BUILD_DIR);
   const assets = extractStats(serverDir);
 
   const serverRequiredAssets = assets.filter((a) => /(routes|document|wrap|app)/.test(a.name));

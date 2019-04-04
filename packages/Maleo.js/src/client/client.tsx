@@ -23,7 +23,7 @@ export const init = async () => {
 
     const RenderApp = () => (
       <Wrap {...wrapProps}>
-        <App data={data} routes={routes} {...appProps} {...wrapProps} />
+        <App data={data} routes={routes} location={location} {...appProps} {...wrapProps} />
       </Wrap>
     );
 

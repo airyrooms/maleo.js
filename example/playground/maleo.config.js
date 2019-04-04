@@ -4,6 +4,15 @@ const cssPlugin = require('@airy/maleo-css-plugin');
 module.exports = tsPlugin(
   cssPlugin({
     enableISL: true,
-    customWrap: './custom-wrap.tsx'
+    customWrap: './custom-wrap.tsx',
+    env: 'production',
+    staticPages: {
+      '/detail': {
+        page: './src/Detail/index.tsx'
+      },
+      '/search': {
+        page: './src/Search/index.tsx'
+      }
+    }
   }),
 );
