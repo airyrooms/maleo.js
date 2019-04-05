@@ -353,7 +353,8 @@ import { Wrap } from '@airy/maleo/wrap';
 import { withRedux } from '@airy/maleo-redux-plugin';
 
 // Custom Wrapper that will be rendered for the whole Application
-import CustomWrapper from './component/CustomWrapper';
+import Content from './component/Content';
+import NavigationBar from './component/NavigationBar';
 
 import { createStore } from './store';
 
@@ -368,10 +369,15 @@ export default class extends Wrap {
   }
 
   render() {
+    const { Container, containerProps, App, appProps } = this.props
+
     return (
-      <CustomWrapper>
-        {super.render()}
-      </CustomWrapper>
+      <Container {...containerProps}>
+        <NavigationBar />
+        <Content>
+          <App {...appProps}/>
+        </Content>
+      </Container>
     )
   }
 }

@@ -16,7 +16,6 @@
     "@airy/maleo-css-plugin": "latest",
     "@airy/maleo-typescript-plugin": "latest",
     "@airy/maleo-redux-plugin": "latest",
-    "@airy/maleo": "latest",
     "react": "latest",
     "react-redux": "^5.1.1",
     "redux": "^4.0.1"

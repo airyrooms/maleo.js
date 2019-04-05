@@ -8,11 +8,11 @@ module.exports = tsPlugin(
     env: 'production',
     staticPages: {
       '/detail': {
-        page: './src/Detail/index.tsx'
+        page: './src/Detail/index.tsx',
       },
       '/search': {
-        page: './src/Search/index.tsx'
-      }
-    }
+        page: './src/Search/index.tsx',
+      },
+    },
   }),
 );
