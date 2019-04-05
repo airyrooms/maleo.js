@@ -9,20 +9,22 @@ export const matchingRoutes = async (
 
   const preloadedMatchedRoutes: Branch[] = [];
 
-  await matchedRoutes.map(async (branch) => {
-    const { component } = branch.route;
+  await Promise.all(
+    matchedRoutes.map(async (branch) => {
+      const { component } = branch.route;
 
-    // Preload Component route
-    const { default: preloadComponent } = await component.preload();
+      // Preload Component route
+      const { default: preloadComponent } = await component.preload();
 
-    preloadedMatchedRoutes.push({
-      ...branch,
-      route: {
-        ...branch.route,
-        component: preloadComponent,
-      },
-    } as Branch);
-  });
+      preloadedMatchedRoutes.push({
+        ...branch,
+        route: {
+          ...branch.route,
+          component: preloadComponent,
+        },
+      } as Branch);
+    }),
+  );
 
   return preloadedMatchedRoutes;
 };

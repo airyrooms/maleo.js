@@ -103,7 +103,7 @@ export const render = async ({ req, res, dir, renderPage = defaultRenderPage }: 
   // matching routes
   const matchedRoutes = await matchingRoutes(routes, req.originalUrl);
 
-  if (!matchedRoutes) {
+  if (!matchedRoutes.length) {
     res.status(404);
     return;
   }
