@@ -1,28 +1,23 @@
 [
   {
-    "page": "./src/MainApp",
+    "path": "/",
+    "page": "./src/Root",
+    "exact": true
+  },
+  {
+    "path": "/search",
+    "page": "./src/Search",
     "routes": [
       {
-        "path": "/",
-        "page": "./src/Search",
-        "exact": true
-      },
-      {
-        "path": "/search",
-        "page": "./src/Search",
-        "routes": [
-          {
-            "path": "/search/hello",
-            "page": "./src/Detail",
-            "exact": true
-          }
-        ]
-      },
-      {
-        "path": "/detail",
+        "path": "/search/hello",
         "page": "./src/Detail",
         "exact": true
       }
     ]
+  },
+  {
+    "path": "/detail",
+    "page": "./src/Detail",
+    "exact": true
   }
 ]

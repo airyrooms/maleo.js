@@ -1,11 +1,5 @@
 import * as React from 'react';
-import Loadable from 'react-loadable';
-
-const DetailComponent = Loadable({
-  loading: () => <div>loading getting detail...</div>,
-  loader: () => import('src/Detail' /* webpackChunkName:"Detail" */),
-  modules: ['./src/Detail'],
-});
+import { Link } from 'react-router-dom';
 
 export class RoomsSearch extends React.Component<any, any> {
   static displayName = 'RoomsSearch';
@@ -22,18 +16,14 @@ export class RoomsSearch extends React.Component<any, any> {
     return (
       <div
         style={{
-          backgroundColor: 'blue',
+          backgroundColor: 'teal',
           display: 'inline-block',
           float: 'left',
           maxWidth: '50%',
         }}>
         <h1>Rooms Search</h1>
+        <Link to="/search/hello">Hello</Link>
         {this.props.children}
-
-        <br />
-        <br />
-        <br />
-        <DetailComponent />
       </div>
     );
   }

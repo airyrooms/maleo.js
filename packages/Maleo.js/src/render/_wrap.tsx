@@ -1,12 +1,13 @@
 import React from 'react';
-import { createBrowserHistory } from 'history';
-import { Router, StaticRouter, Switch } from 'react-router-dom';
+
+import { AppProps, ContainerProps } from '@interfaces/render/IRender';
 
 interface WrapProps {
   children: React.ReactElement<any>;
-  context?: any;
-  location?: string;
-  server?: boolean;
+  Container: typeof React.Component;
+  App: typeof React.Component;
+  containerProps: ContainerProps;
+  appProps: AppProps;
 }
 
 export default class _Wrap extends React.Component<WrapProps, {}> {
@@ -14,21 +15,13 @@ export default class _Wrap extends React.Component<WrapProps, {}> {
     super(props);
   }
 
-  history = !this.props.server ? createBrowserHistory() : null;
-
   render() {
-    if (!this.props.server) {
-      return (
-        <Router history={this.history as History<any>}>
-          <Switch>{this.props.children}</Switch>
-        </Router>
-      );
-    }
+    const { Container, App, containerProps, appProps } = this.props;
 
     return (
-      <StaticRouter location={this.props.location} context={this.props.context}>
-        <Switch>{this.props.children}</Switch>
-      </StaticRouter>
+      <Container {...containerProps}>
+        <App {...appProps} />
+      </Container>
     );
   }
 }

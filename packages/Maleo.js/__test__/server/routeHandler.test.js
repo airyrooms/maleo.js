@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { matchingRoutes } from '@airy/maleo/lib/server/routeHandler';
+import { matchingRoutes } from '@airy/maleo/lib/routes/matching-routes';
 import { MimickLoadable } from '../test-utils/mimick-loadable';
 
 const NotMatchedComponent = MimickLoadable(() => <h1>Not Matched</h1>);
