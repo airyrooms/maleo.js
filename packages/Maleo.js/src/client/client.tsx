@@ -5,8 +5,9 @@ import Loadable from 'react-loadable';
 import { loadInitialProps, loadComponentProps } from '@server/loadInitialProps';
 import { InitialProps } from '@interfaces/render/IRender';
 import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@constants/index';
-import { matchingRoutes } from '@server/routeHandler';
+import { matchingRoutes } from '@routes/matching-routes';
 import { RegisterEntry } from './registerEntry';
+import { ContainerComponent } from '@render/_container';
 
 export const init = async () => {
   try {
@@ -19,12 +20,25 @@ export const init = async () => {
     const { data } = await ensureReady(routes, location.pathname, {});
 
     const wrapProps = await loadComponentProps(Wrap);
-    const appProps = await loadComponentProps(App);
+    const appInitialProps = await loadComponentProps(App);
+
+    const appProps = {
+      data,
+      routes,
+      location,
+      ...appInitialProps,
+      ...wrapProps,
+    };
+    const containerProps = {};
 
     const RenderApp = () => (
-      <Wrap {...wrapProps}>
-        <App data={data} routes={routes} location={location} {...appProps} {...wrapProps} />
-      </Wrap>
+      <Wrap
+        App={App}
+        Container={ContainerComponent}
+        appProps={appProps}
+        containerProps={containerProps}
+        {...wrapProps}
+      />
     );
 
     hydrate(RenderApp);

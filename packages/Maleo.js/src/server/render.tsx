@@ -11,9 +11,9 @@ import {
   SERVER_BUILD_DIR,
 } from '@constants/index';
 import { isPromise } from '@utils/index';
-import { requireDynamic, requireRuntime, requireFile } from '@utils/require';
+import { requireDynamic, requireRuntime } from '@utils/require';
 import { loadInitialProps, loadComponentProps } from './loadInitialProps';
-import { matchingRoutes } from './routeHandler';
+import { matchingRoutes } from '@routes/matching-routes';
 import {
   RenderParam,
   RenderPageParams,
@@ -22,6 +22,8 @@ import {
   ServerAssets,
 } from '@interfaces/render/IRender';
 import extractStats from './extract-stats';
+
+import { ContainerComponent } from '@render/_container';
 
 // * HTML doctype * //
 const DOCTYPE = '<!DOCTYPE html>';
@@ -52,11 +54,16 @@ export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: Rende
     // in SSR, we need to manually define location object
     // to be passed in App because withRouter doesn't work on server side
     const location = req.originalUrl;
+
     const asyncOrSyncRender = renderer(
       <Loadable.Capture report={reportResults}>
-        <Wrap location={location} context={appContext} server {...wrapProps}>
-          <App {...{ routes, data, location: { pathname: location }, ...appProps }} />
-        </Wrap>
+        <Wrap
+          Container={ContainerComponent}
+          App={App}
+          containerProps={{ location, context: appContext, server: true }}
+          appProps={{ ...{ routes, data, location: { pathname: location }, ...appProps } }}
+          {...wrapProps}
+        />
       </Loadable.Capture>,
     );
 
@@ -103,7 +110,7 @@ export const render = async ({ req, res, dir, renderPage = defaultRenderPage }: 
   // matching routes
   const matchedRoutes = await matchingRoutes(routes, req.originalUrl);
 
-  if (!matchedRoutes) {
+  if (!matchedRoutes.length) {
     res.status(404);
     return;
   }

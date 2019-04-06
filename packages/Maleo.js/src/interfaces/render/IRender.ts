@@ -17,6 +17,13 @@ export interface AppProps {
   server?: boolean;
 }
 
+export interface ContainerProps {
+  server: boolean;
+  children: React.ReactElement<any>;
+  location: string;
+  context: any;
+}
+
 export interface HeaderProps {
   title?: string;
   defaultTitle?: string;

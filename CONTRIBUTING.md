@@ -247,11 +247,11 @@ Now you need to ignore the git revision head, since if we commit amend the git r
 ```bash
 $ git checkout -- .
 ```
-
+<!-- 
 After doing all of the above, now you are good to push all this changes to upstream remote by running
 ```bash
 $ git push upstream master --follow-tags #push commits, version changes, and new tags
-```
+``` -->
 
 ---
 ⚠️**NOTICE** ⚠️
