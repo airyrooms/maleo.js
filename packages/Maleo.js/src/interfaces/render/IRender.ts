@@ -129,6 +129,17 @@ export interface RenderParam {
   renderPage?: (
     param: RenderPageParams,
   ) => (fn?: ModPageFn) => Promise<{ html: string; bundles: LoadableBundles[] }>;
+
+  preloadScripts: (
+    dir: string,
+    tempArray: any[],
+    context: PreloadScriptContext,
+  ) => any[] | Promise<any[]>;
+}
+
+export interface PreloadScriptContext {
+  req: Request;
+  res: Response;
 }
 
 export interface RenderPageParams {

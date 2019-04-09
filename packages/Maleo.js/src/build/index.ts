@@ -8,20 +8,20 @@ import { IBuildOptions } from '@interfaces/build/IBuildOptions';
 import { Context, CustomConfig, StaticPages } from '@interfaces/build/IWebpackInterfaces';
 import { buildStatic } from '@build/static/static';
 
-const cwd = process.cwd();
-
 export const getConfigs = (options: IBuildOptions): Configuration[] => {
-  const { env, buildType } = options;
+  const { env, buildType, minimalBuild, experimentalLazyBuild } = options;
 
   const context: Context = {
     env,
-    projectDir: cwd,
+    projectDir: process.cwd(),
   };
 
-  const userConfig: CustomConfig = loadUserConfig(cwd);
-
+  const userConfig: CustomConfig = loadUserConfig(context.projectDir);
   const clientConfig = createWebpackConfig({ isServer: false, ...context }, userConfig);
-  const serverConfig = createWebpackConfig({ isServer: true, ...context }, userConfig);
+  const serverConfig = createWebpackConfig(
+    { isServer: true, ...context, minimalBuild, experimentalLazyBuild },
+    userConfig,
+  );
 
   if (buildType === 'server') {
     return [serverConfig];
@@ -43,7 +43,7 @@ export const exportStatic = (userConfig: CustomConfig) => {
     const staticPages: StaticPages = userConfig.staticPages;
     try {
       console.log('[STATIC] Starting to export static pages');
-      buildStatic(staticPages, cwd);
+      buildStatic(staticPages, process.cwd());
     } catch (error) {
       console.log('[STATIC] Error when tried to export static pages, error:', error);
     }

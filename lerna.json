@@ -1,6 +1,6 @@
 {
   "lerna": "3.13.1",
-  "version": "0.2.0",
+  "version": "0.2.1-canary.1",
   "packages": [
     "packages/*"
   ],
@@ -29,14 +29,6 @@
       "allowBranch": [
         "master",
         "canary"
-      ],
-      "ignoreChanges": [
-        "*.md",
-        "*.test.*",
-        "example/**",
-        "**/__test__/**",
-        "*.yml",
-        "*.sh"
       ]
     },
     "publish": {

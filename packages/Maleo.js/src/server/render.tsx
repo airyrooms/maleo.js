@@ -20,6 +20,7 @@ import {
   LoadableBundles,
   DocumentContext,
   ServerAssets,
+  PreloadScriptContext,
 } from '@interfaces/render/IRender';
 import extractStats from './extract-stats';
 
@@ -92,20 +93,15 @@ export const defaultRenderPage = ({ req, Wrap, App, routes, data, props }: Rende
   };
 };
 
-let preloadScripts: any[] = [];
-export const render = async ({ req, res, dir, renderPage = defaultRenderPage }: RenderParam) => {
+let preloadedAssets: any[] = [];
+export const render = async ({
+  req,
+  res,
+  dir,
+  renderPage = defaultRenderPage,
+  preloadScripts = defaultPreloadScripts,
+}: RenderParam) => {
   const { document: Document, routes, wrap: Wrap, app: App } = getServerAssets();
-
-  // sort preload with main last
-  if (__DEV__ || (!__DEV__ && !preloadScripts.length)) {
-    preloadScripts = extractStats(dir);
-    const mainIndex = preloadScripts.findIndex((p) => /main/.test(p.filename));
-    preloadScripts = [
-      ...preloadScripts.slice(0, mainIndex),
-      ...preloadScripts.slice(mainIndex + 1),
-      preloadScripts[mainIndex],
-    ];
-  }
 
   // matching routes
   const matchedRoutes = await matchingRoutes(routes, req.originalUrl);
@@ -149,7 +145,11 @@ export const render = async ({ req, res, dir, renderPage = defaultRenderPage }: 
     })();
 
     // Loads Loadable bundle first
-    const scripts = [...bundles, ...preloadScripts];
+    preloadedAssets = await preloadScripts(dir, preloadedAssets, {
+      req,
+      res,
+    });
+    const scripts = [...bundles, ...preloadedAssets];
 
     const docContext: DocumentContext = {
       req,
@@ -249,4 +249,23 @@ const getServerAssets = (): ServerAssets => {
     }),
     {},
   ) as ServerAssets;
+};
+
+const defaultPreloadScripts: RenderParam['preloadScripts'] = (
+  dir: string,
+  tempArray: any[],
+  context: PreloadScriptContext,
+) => {
+  // sort preload with main last
+  if (!tempArray.length) {
+    tempArray = extractStats(dir);
+    const mainIndex = tempArray.findIndex((p) => /main/.test(p.filename));
+    return [
+      ...tempArray.slice(0, mainIndex),
+      ...tempArray.slice(mainIndex + 1),
+      tempArray[mainIndex],
+    ];
+  }
+
+  return tempArray;
 };

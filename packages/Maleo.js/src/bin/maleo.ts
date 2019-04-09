@@ -7,7 +7,44 @@ process.exitCode = 0;
 // process.stdout.write('\033c'); // clears console
 
 // PROCESS USER INPUTS
-const [, , type, buildType = 'all', ...args] = process.argv;
+const [, , type, ...args] = process.argv;
+
+const defaultArgs = {
+  buildType: 'all',
+  experimentalLazyBuild: false,
+};
+
+const userArgs = args.reduce((prev, arg) => {
+  // match --[keyArgument]=[value] or --keyArgument
+  // if no value is present then it is considered to be true
+  const match = arg.match(/--(.+)(?:=){0,1}(.*)/);
+
+  if (match) {
+    const [, keyArgument, value] = match;
+    switch (keyArgument) {
+      case 'experimentalLazyBuild':
+        return {
+          ...prev,
+          [keyArgument]: value === '' || Boolean(JSON.parse(value)),
+        };
+      case 'buildType':
+        let typeValue = value;
+        if (value !== 'all' && value !== 'server' && value !== 'client') {
+          typeValue = 'all';
+        }
+
+        return {
+          ...prev,
+          [keyArgument]: typeValue,
+        };
+      default:
+        return prev;
+    }
+  }
+  return prev;
+}, defaultArgs);
+
+const { buildType, experimentalLazyBuild } = userArgs;
 
 // Declare needed vars
 const env = process.env.NODE_ENV || 'development';
@@ -58,7 +95,7 @@ if (type === 'run') {
     console.log('==> Current Build Directory: ', buildDirectory);
     console.log('==> Environment (isDevelopment): ', env, '(' + isDev + ')');
     console.log('==> Running Command: ', type);
-    console.log('==> Command Args: ', args);
+    console.log('==> Command Args: ', userArgs);
 
     if (type === 'build') {
       console.log('==> Running build');
@@ -73,6 +110,8 @@ if (type === 'run') {
         env,
         buildType: 'server',
         callback: exec,
+        minimalBuild: true,
+        experimentalLazyBuild,
       });
     }
   });
