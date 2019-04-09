@@ -5,7 +5,6 @@ module.exports = tsPlugin(
   cssPlugin({
     enableISL: true,
     customWrap: './custom-wrap.tsx',
-    env: 'production',
     staticPages: {
       '/detail': {
         page: './src/Detail/index.tsx',

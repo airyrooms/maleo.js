@@ -571,9 +571,12 @@ export const getDefaultOutput = (
 /**
  * Load User Config with file name USER_CUSTOM_CONFIG (maleo.config.js)
  */
-export const loadUserConfig = (dir: string): CustomConfig => {
+export const loadUserConfig = (
+  dir: string,
+  filename: string = USER_CUSTOM_CONFIG,
+): CustomConfig => {
   const cwd: string = path.resolve(dir);
-  const userConfigPath: string = path.resolve(cwd, USER_CUSTOM_CONFIG);
+  const userConfigPath: string = path.resolve(cwd, filename);
   const userConfig = requireFile(userConfigPath);
   return userConfig
     ? {

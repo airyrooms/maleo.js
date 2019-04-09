@@ -20,6 +20,7 @@ import { render } from './render';
 
 export class Server {
   public app: Express = express();
+  protected server: http.Server;
   middlewares: any[] = [];
   options: IOptions;
 
@@ -40,7 +41,8 @@ export class Server {
   run = async (handler) => {
     await this.setupExpress();
 
-    return this.app.listen(this.options.port, handler);
+    this.server = this.app.listen(this.options.port, handler);
+    return this.server;
   };
 
   applyExpressMiddleware: ApplicationRequestHandler<Express.Application> = (...handlers) => {

@@ -59,11 +59,12 @@ import path from 'path';
 import figlet from 'figlet';
 import rimraf from 'rimraf';
 import { spawn } from 'child_process';
+import fs from 'fs';
 
 // Importing required bin dependencies
 import { build, exportStatic } from '@build/index';
 import { loadUserConfig } from '@build/webpack/webpack';
-import { BUILD_DIR, SERVER_BUILD_DIR } from '@constants/index';
+import { BUILD_DIR, SERVER_BUILD_DIR, USER_CUSTOM_CONFIG } from '@constants/index';
 
 console.log(
   figlet.textSync('Maleo.js', {
@@ -77,9 +78,10 @@ const buildDirectory = userConfig.buildDir || BUILD_DIR;
 
 // Generating server execution
 const serverPath = path.join(buildDirectory, SERVER_BUILD_DIR, 'server.js');
-const exec = spawn.bind(null, 'node', [serverPath], {
-  stdio: 'inherit',
-});
+const exec = () =>
+  spawn('node', [serverPath], {
+    stdio: 'inherit',
+  });
 
 if (type === 'run') {
   console.log('[MALEO] Running Application');
@@ -109,9 +111,29 @@ if (type === 'run') {
       build({
         env,
         buildType: 'server',
-        callback: exec,
         minimalBuild: true,
         experimentalLazyBuild,
+        callback: () => {
+          const appProcess = exec();
+
+          const userConfigLocation = path.resolve(projectPath, USER_CUSTOM_CONFIG);
+
+          fs.watchFile(userConfigLocation, (curr, prev) => {
+            if (curr.size > 0 || prev.size > 0) {
+              fs.unwatchFile(userConfigLocation);
+              console.log(
+                `\n> Found a change in ${USER_CUSTOM_CONFIG}. Restarting the server to see the changes in effect.`,
+              );
+
+              appProcess.kill();
+
+              if (appProcess.killed) {
+                process.kill(appProcess.pid + 1, 'SIGHUP');
+                spawn('maleo', ['dev', buildType, ...args], { stdio: 'inherit' });
+              }
+            }
+          });
+        },
       });
     }
   });
