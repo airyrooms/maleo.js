@@ -4,6 +4,8 @@ export interface Context {
   isServer?: boolean;
   env: 'development' | 'production' | 'none';
   projectDir: string;
+  minimalBuild?: boolean;
+  experimentalLazyBuild?: boolean;
 }
 
 export interface CustomConfig {
