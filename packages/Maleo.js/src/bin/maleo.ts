@@ -122,7 +122,7 @@ if (type === 'run') {
             if (curr.size > 0 || prev.size > 0) {
               fs.unwatchFile(userConfigLocation);
               console.log(
-                `\n> Found a change in ${USER_CUSTOM_CONFIG}. Restarting the server to see the changes in effect.`,
+                `\n> Found a change in ${USER_CUSTOM_CONFIG}. Restarting Maleo to apply changes.`,
               );
 
               appProcess.kill();

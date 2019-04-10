@@ -135,6 +135,8 @@ export interface RenderParam {
     tempArray: any[],
     context: PreloadScriptContext,
   ) => any[] | Promise<any[]>;
+
+  getServerAssets: () => Promise<ServerAssets>;
 }
 
 export interface PreloadScriptContext {
