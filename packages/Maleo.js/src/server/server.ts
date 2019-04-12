@@ -1,3 +1,5 @@
+// tslint:disable: no-console
+
 /**
  * Polyfill
  */
@@ -20,6 +22,7 @@ import { render } from './render';
 
 export class Server {
   public app: Express = express();
+  protected server: http.Server;
   middlewares: any[] = [];
   options: IOptions;
 
@@ -31,16 +34,18 @@ export class Server {
     const defaultOptions = {
       assetDir: path.resolve('.', BUILD_DIR, CLIENT_BUILD_DIR),
       port: 8080,
+      runHandler: this.defaultHandler,
       ...options,
     } as IOptions;
 
     this.options = defaultOptions;
   }
 
-  run = async (handler) => {
+  run = async () => {
     await this.setupExpress();
 
-    return this.app.listen(this.options.port, handler);
+    this.server = this.app.listen(this.options.port, this.options.runHandler);
+    return this.server;
   };
 
   applyExpressMiddleware: ApplicationRequestHandler<Express.Application> = (...handlers) => {
@@ -70,11 +75,13 @@ export class Server {
     // Set secure server
     this.setupSecureServer(this.app);
 
-    // Applying user's middleware
-    this.middlewares.map((args) => this.app.use(...args));
-
     // Set static assets route handler
     this.setAssetsStaticRoute(this.app);
+
+    // Applying user's middleware
+    // middleware need to be applied after static assets serving
+    // due to issues such as dev middleware for serving an outdated asset from it's memory-fs system
+    this.middlewares.map((args) => this.app.use(...args));
 
     // Set favicon handler
     this.app.use('/favicon.ico', this.faviconHandler);
@@ -122,6 +129,10 @@ export class Server {
     };
 
     app.use(compression(option));
+  };
+
+  protected defaultHandler = () => {
+    console.log('[Server] is running on port :' + this.options.port);
   };
 }
 

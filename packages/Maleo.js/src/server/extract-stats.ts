@@ -2,9 +2,9 @@ import path from 'path';
 
 import { requireRuntime } from '@utils/require';
 
-export const extractStats = (dir: string) => {
+export const extractStats = (statsPath: string) => {
   // get bundles from webpack assets.json
-  return mapAssets(requireRuntime(path.join(dir, 'stats.json')));
+  return mapAssets(requireRuntime(statsPath));
 };
 
 export default extractStats;

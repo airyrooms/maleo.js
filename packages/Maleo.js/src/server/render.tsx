@@ -100,8 +100,9 @@ export const render = async ({
   dir,
   renderPage = defaultRenderPage,
   preloadScripts = defaultPreloadScripts,
+  getServerAssets = defaultGetServerAssets,
 }: RenderParam) => {
-  const { document: Document, routes, wrap: Wrap, app: App } = getServerAssets();
+  const { document: Document, routes, wrap: Wrap, app: App } = await getServerAssets();
 
   // matching routes
   const matchedRoutes = await matchingRoutes(routes, req.originalUrl);
@@ -173,8 +174,13 @@ export const render = async ({
   return defaultRenderErrorPage();
 };
 
-export const renderStatic = async ({ req, res, renderPage = defaultRenderPage }: RenderParam) => {
-  const { document: Document, routes, wrap: Wrap, app: App } = getServerAssets();
+export const renderStatic = async ({
+  req,
+  res,
+  renderPage = defaultRenderPage,
+  getServerAssets = defaultGetServerAssets,
+}: RenderParam) => {
+  const { document: Document, routes, wrap: Wrap, app: App } = await getServerAssets();
 
   // matching routes
   const matchedRoutes = await matchingRoutes(routes, req.originalUrl);
@@ -236,9 +242,10 @@ const defaultRenderErrorPage = () => {
   );
 };
 
-const getServerAssets = (): ServerAssets => {
+const defaultGetServerAssets = async (): Promise<ServerAssets> => {
   const serverDir = path.join(process.cwd(), BUILD_DIR, SERVER_BUILD_DIR);
-  const assets = extractStats(serverDir);
+  const serverStatsPath = path.join(serverDir, 'stats.json');
+  const assets = extractStats(serverStatsPath);
 
   const serverRequiredAssets = assets.filter((a) => /(routes|document|wrap|app)/.test(a.name));
 
