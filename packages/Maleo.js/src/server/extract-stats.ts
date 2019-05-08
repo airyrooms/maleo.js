@@ -12,7 +12,7 @@ export default extractStats;
 export const mapAssets = (stats: any) => {
   let assets = stats.static;
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV === 'development') {
     assets = {
       ...assets,
       ...stats.development,

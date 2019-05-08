@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "export NODE_ENV=production && maleo build",
+    "start": "export NODE_ENV=production && maleo run",
+    "build:stg": "export NODE_ENV=staging && maleo build",
+    "start:stg": "export NODE_ENV=staging && maleo run",
     "dev": "maleo dev",
-    "export": "export NODE_ENV=production && maleo export",
-    "start": "export NODE_ENV=production && maleo run"
+    "export": "export NODE_ENV=production && maleo export"
   },
     "keywords": [],
   "author": "",

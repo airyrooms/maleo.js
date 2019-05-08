@@ -2,7 +2,7 @@ import { Server } from '~/src/server/server';
 
 let SelectedServer = Server;
 // No need to load DevServer code for production server
-if (__DEV__) {
+if (process.env.NODE_ENV === 'development') {
   SelectedServer = require('~/src/server/dev-server').default;
 }
 

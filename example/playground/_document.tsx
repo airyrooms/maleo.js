@@ -7,6 +7,7 @@ export default class MyDocument extends Document {
   static getInitialProps = async (ctx) => {
     const initialProps = await Document.getInitialProps(ctx);
 
+    console.log(process.env.NODE_ENV);
     return { ...initialProps };
   };
 
