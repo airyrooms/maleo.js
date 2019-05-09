@@ -30,6 +30,8 @@ export interface CustomConfig {
   distDir?: string;
   assetDir?: string;
 
+  isDev?: boolean;
+
   // static export
   staticPages?: StaticPages;
 }

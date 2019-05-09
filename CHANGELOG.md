@@ -3,7 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-## [0.2.1-canary.2](https://github.com/airyrooms/maleo.js/compare/v0.2.1-canary.1...v0.2.1-canary.2) (2019-04-12)
+# [0.3.0](https://github.com/airyrooms/maleo.js/compare/v0.2.1...v0.3.0) (2019-05-09)
+
+
+### Features
+
+* **maleo-core/server:** not to replace node_env ([#191](https://github.com/airyrooms/maleo.js/issues/191)) ([d677368](https://github.com/airyrooms/maleo.js/commit/d677368))
+
+
+
+
+
+## [0.2.1](https://github.com/airyrooms/maleo.js/compare/v0.2.1-canary.1...v0.2.1) (2019-04-09)
 
 **Note:** Version bump only for package airy-maleojs
 
