@@ -65,7 +65,7 @@ export class Server {
 
   private setupExpress = async () => {
     // Set Compression
-    !__DEV__ && this.setupCompression(this.app);
+    process.env.NODE_ENV !== 'development' && this.setupCompression(this.app);
 
     // Set secure server
     this.setupSecureServer(this.app);

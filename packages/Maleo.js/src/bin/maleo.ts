@@ -46,10 +46,6 @@ const userArgs = args.reduce((prev, arg) => {
 
 const { buildType, experimentalLazyBuild } = userArgs;
 
-// Declare needed vars
-const env = process.env.NODE_ENV || 'development';
-const isDev = env === 'development';
-
 const binaryPath = path.resolve(__dirname);
 const projectPath = path.resolve(process.cwd());
 
@@ -72,21 +68,28 @@ console.log(
   }),
 );
 
+// Initiate default value for NODE_ENV if not set by user
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
 const userConfig = loadUserConfig(projectPath);
 const buildDirectory = userConfig.buildDir || BUILD_DIR;
 
+// Declare needed vars
+const env = process.env.NODE_ENV;
+const { isDev = env === 'development' } = userConfig;
+
 // Generating server execution
 const serverPath = path.join(buildDirectory, SERVER_BUILD_DIR, 'server.js');
-const exec = spawn.bind(null, 'node', [serverPath], {
-  stdio: 'inherit',
-});
-
+const exec = () => {
+  spawn('node', [serverPath], {
+    stdio: 'inherit',
+  });
+};
 if (type === 'run') {
   console.log('[MALEO] Running Application');
   exec();
 } else if (type === 'export') {
   console.log('[MALEO] Running static export');
-  global.__DEV__ = isDev;
   exportStatic(userConfig);
 } else {
   // Clean up the folder

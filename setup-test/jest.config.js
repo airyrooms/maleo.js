@@ -52,8 +52,6 @@ module.exports = {
   // A set of global variables that need to be available in all test environments
   globals: {
     WEBPACK_PUBLIC_PATH: '/_assets_/',
-    __DEV__: false,
-    __ENV__: 'test',
   },
 
   // An array of directory names to be searched recursively up from the requiring module's location

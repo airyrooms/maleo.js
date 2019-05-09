@@ -73,9 +73,8 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
     publicPath: _publicPath,
     sourceMaps,
     alias: _alias,
+    isDev = env === 'development',
   } = customConfig;
-
-  const isDev = env === 'development' ? true : false;
 
   const buildDirectory = buildDir || BUILD_DIR;
   const name = isServer ? 'server' : 'client';
@@ -90,6 +89,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
 
   const buildContext: BuildContext = {
     ...context,
+    env,
     isDev,
     publicPath,
     analyzeBundle,
@@ -264,6 +264,7 @@ export const getDefaultOptimizations = (
   if (isServer) {
     return {
       ...commonOptimizations,
+      nodeEnv: false,
       splitChunks: false,
       minimize: false,
     };
@@ -418,8 +419,6 @@ export const getDefaultPlugins = (
 
       new DefinePlugin({
         WEBPACK_PUBLIC_PATH: JSON.stringify(publicPath),
-        __DEV__: isDev,
-        __ENV__: JSON.stringify(env),
         __IS_SERVER__: isServer,
       }),
 
