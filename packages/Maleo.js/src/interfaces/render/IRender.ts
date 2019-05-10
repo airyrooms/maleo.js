@@ -125,6 +125,7 @@ export interface RenderParam {
   req: Request;
   res: Response;
   dir: string;
+  renderStatic?: boolean;
 
   renderPage?: (
     param: RenderPageParams,
@@ -150,6 +151,7 @@ export interface RenderPageParams {
   Wrap: typeof React.Component;
   routes: AsyncRouteProps[];
   data: any;
+  renderer?: (element: React.ReactElement<any>) => { html: string } | any;
   props?: {
     wrap?: any;
     app?: any;

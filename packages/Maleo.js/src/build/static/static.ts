@@ -2,7 +2,7 @@
 import fs from 'fs';
 import path from 'path';
 import { StaticPages } from '@interfaces/build/IWebpackInterfaces';
-import { renderStatic } from '@server/render';
+import { render } from '@server/render';
 import { STATIC_BUILD_DIR } from '@constants/index';
 
 /**
@@ -19,15 +19,15 @@ export const buildStatic = async (staticPages: StaticPages, dir: string) => {
 
   Object.keys(staticPages).map(async (p) => {
     // @ts-ignore
-    const html = await renderStatic({ req: { originalUrl: p }, res: {} });
+    const html = await render({ req: { originalUrl: p }, res: {}, renderStatic: true });
     const pageName: string = p.replace(/\/?(\/*)(.+)/, '$2');
     const pathStaticDir = path.resolve(cwd, STATIC_BUILD_DIR, `${pageName}.html`);
 
     fs.writeFile(pathStaticDir, html, (err) => {
       if (err) {
-        console.error(`Error when write static html page ${pageName} to file`);
+        console.error(`Error when generating static html page ${pageName}`);
       } else {
-        console.log(`Success create file ${pageName}`);
+        console.log(`Static file ${pageName} successfuly generated!`);
       }
     });
   });

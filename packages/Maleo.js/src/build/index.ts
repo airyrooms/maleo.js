@@ -40,7 +40,7 @@ export const build = (options: IBuildOptions) => {
 
 export const exportStatic = (userConfig: CustomConfig) => {
   if (userConfig.staticPages) {
-    const staticPages: StaticPages = userConfig.staticPages;
+    const { staticPages } = userConfig;
     try {
       console.log('[STATIC] Starting to export static pages');
       buildStatic(staticPages, process.cwd());

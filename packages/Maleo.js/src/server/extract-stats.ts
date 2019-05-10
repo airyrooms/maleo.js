@@ -1,5 +1,3 @@
-import path from 'path';
-
 import { requireRuntime } from '@utils/require';
 
 export const extractStats = (statsPath: string) => {
