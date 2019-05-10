@@ -9,6 +9,7 @@ import {
   BUILD_DIR,
   CLIENT_BUILD_DIR,
   SERVER_BUILD_DIR,
+  STATS_FILENAME,
 } from '@constants/index';
 import { isPromise } from '@utils/index';
 import { requireDynamic, requireRuntime } from '@utils/require';
@@ -244,7 +245,7 @@ const defaultRenderErrorPage = () => {
 
 const defaultGetServerAssets = async (): Promise<ServerAssets> => {
   const serverDir = path.join(process.cwd(), BUILD_DIR, SERVER_BUILD_DIR);
-  const serverStatsPath = path.join(serverDir, 'stats.json');
+  const serverStatsPath = path.join(serverDir, STATS_FILENAME);
   const assets = extractStats(serverStatsPath);
 
   const serverRequiredAssets = assets.filter((a) => /(routes|document|wrap|app)/.test(a.name));
@@ -265,7 +266,8 @@ const defaultPreloadScripts: RenderParam['preloadScripts'] = (
 ) => {
   // sort preload with main last
   if (!tempArray.length) {
-    tempArray = extractStats(dir);
+    const assetPath = path.join(dir, STATS_FILENAME);
+    tempArray = extractStats(assetPath);
     const mainIndex = tempArray.findIndex((p) => /main/.test(p.filename));
     return [
       ...tempArray.slice(0, mainIndex),
