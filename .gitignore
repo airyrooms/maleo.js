@@ -64,7 +64,6 @@ package-lock.json
 .log
 
 # generated declaration files
-*.d.ts
 @types
 
 .vscode

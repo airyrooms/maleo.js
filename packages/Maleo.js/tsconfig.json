@@ -64,11 +64,11 @@
         "dist",
         "lib",
         "node_modules",
-        "*.d.ts"
     ],
     "include": [
         "**/*.ts",
         "**/*.tsx",
-        "**/*.js", "../../global.d.ts", "../../typings.d.ts"
+        "**/*.js", 
+        "globals.d.ts"
     ]
 }
