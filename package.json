@@ -79,6 +79,7 @@
     "@types/react-router-dom": "^4.3.3",
     "@types/tapable": "^1.0.4",
     "@types/webpack": "^4.4.14",
+    "@types/webpack-env": "^1.13.9",
     "babel-jest": "^23.6.0",
     "commitizen": "^3.0.5",
     "coveralls": "^3.0.2",

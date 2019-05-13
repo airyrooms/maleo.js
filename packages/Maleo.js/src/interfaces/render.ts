@@ -149,13 +149,13 @@ export interface RenderParam {
     param: RenderPageParams,
   ) => (fn?: ModPageFn) => Promise<{ html: string; bundles: PreloadAssets[] }>;
 
-  preloadScripts: (
+  preloadScripts?: (
     dir: string,
     tempArray: any[],
     context: PreloadScriptContext,
-  ) => any[] | Promise<any[]>;
+  ) => PreloadAssets[] | Promise<PreloadAssets[]>;
 
-  getServerAssets: () => Promise<ServerAssets>;
+  getServerAssets?: () => Promise<ServerAssets>;
 }
 
 export interface PreloadScriptContext {

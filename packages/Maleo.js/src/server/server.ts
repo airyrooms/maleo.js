@@ -15,6 +15,7 @@ import compression from 'compression';
 import zlib from 'zlib';
 import path from 'path';
 import helmet from 'helmet';
+import * as http from 'http';
 
 import { IOptions } from '@interfaces/server';
 import { BUILD_DIR, SERVER_ASSETS_ROUTE, CLIENT_BUILD_DIR } from '@constants/index';
@@ -32,10 +33,9 @@ export class Server {
 
   constructor(options: IOptions) {
     const defaultOptions = {
-      assetDir: path.resolve('.', BUILD_DIR, CLIENT_BUILD_DIR),
-      port: 8080,
-      runHandler: this.defaultHandler,
-      ...options,
+      assetDir: options.assetDir || path.resolve('.', BUILD_DIR, CLIENT_BUILD_DIR),
+      port: options.port || 8080,
+      runHandler: options.runHandler || this.defaultHandler,
     } as IOptions;
 
     this.options = defaultOptions;
@@ -58,7 +58,7 @@ export class Server {
     const html = await render({
       req,
       res,
-      dir: this.options.assetDir,
+      dir: this.options.assetDir as string,
     });
 
     res.send(html);

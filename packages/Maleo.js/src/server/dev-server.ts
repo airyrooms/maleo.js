@@ -67,7 +67,7 @@ class DevServer extends Server {
 
     await this.setupDevelopment();
 
-    this.server = this.run();
+    this.server = await this.run();
   };
 
   private cleanUpServer = async () => {

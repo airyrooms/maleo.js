@@ -1,16 +1,17 @@
 import webpack from 'webpack';
-import { Configuration, RuleSetRule } from 'webpack';
+import { Configuration } from 'webpack';
 
 export interface Context {
   isServer?: boolean;
-  env: 'development' | 'production' | 'none';
-  projectDir: string;
+  env: 'development' | 'production' | 'none' | string;
+  projectDir?: string;
   minimalBuild?: boolean;
   experimentalLazyBuild?: boolean;
 }
 
 export interface IBuildOptions extends Context {
   callback?: (err: Error, stats: webpack.Stats) => void;
+  buildType?: string;
 }
 
 export interface CustomConfig {

@@ -46,7 +46,6 @@ const userArgs = args.reduce((prev, arg) => {
 
 const { buildType, experimentalLazyBuild } = userArgs;
 
-const binaryPath = path.resolve(__dirname);
 const projectPath = path.resolve(process.cwd());
 
 // bin codes starts here
@@ -82,7 +81,7 @@ const { isDev = env === 'development' } = userConfig;
 // Generating server execution
 const serverPath = path.join(buildDirectory, SERVER_BUILD_DIR, 'server.js');
 const exec = () => {
-  spawn('node', [serverPath], {
+  return spawn('node', [serverPath], {
     stdio: 'inherit',
   });
 };

@@ -5,7 +5,7 @@ import webpack, { Configuration } from 'webpack';
 import { createWebpackConfig, loadUserConfig } from './webpack/webpack';
 
 import { IBuildOptions } from '@interfaces/build';
-import { Context, CustomConfig, StaticPages } from '@interfaces/build';
+import { Context, CustomConfig } from '@interfaces/build';
 import { buildStatic } from '@build/static/static';
 
 export const getConfigs = (options: IBuildOptions): Configuration[] => {
@@ -16,7 +16,7 @@ export const getConfigs = (options: IBuildOptions): Configuration[] => {
     projectDir: process.cwd(),
   };
 
-  const userConfig: CustomConfig = loadUserConfig(context.projectDir);
+  const userConfig: CustomConfig = loadUserConfig(context.projectDir!);
   const clientConfig = createWebpackConfig({ isServer: false, ...context }, userConfig);
   const serverConfig = createWebpackConfig(
     { isServer: true, ...context, minimalBuild, experimentalLazyBuild },

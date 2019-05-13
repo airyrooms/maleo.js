@@ -87,7 +87,7 @@ export const render = async ({
     // Loads Loadable bundle first
     let scripts: PreloadAssets[] = [];
     if (!renderStatic) {
-      preloadedAssets = await preloadScripts(dir, preloadedAssets, {
+      preloadedAssets = await preloadScripts!(dir, preloadedAssets, {
         req,
         res,
       });
