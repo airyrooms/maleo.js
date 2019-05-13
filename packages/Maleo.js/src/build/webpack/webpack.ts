@@ -169,7 +169,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
         }),
         nodeExternals({
           modulesFromFile: {
-            fileName: path.join(buildContext.projectDir, 'package.json'),
+            fileName: path.join(buildContext.projectDir!, 'package.json'),
           },
           whitelist,
         }),
@@ -207,7 +207,7 @@ export const getDefaultEntry = (
   context: BuildContext,
   customConfig: CustomConfig,
 ): Configuration['entry'] => {
-  const { isServer, projectDir, isDev, minimalBuild } = context;
+  const { isServer, projectDir = '', isDev, minimalBuild } = context;
 
   const { routes, document, wrap, app } = getStaticEntries(context, customConfig);
 
@@ -368,7 +368,7 @@ export const getDefaultRules = (
   context: BuildContext,
   customConfig: CustomConfig,
 ): RuleSetRule[] => {
-  const { isServer, projectDir } = context;
+  const { isServer, projectDir = '' } = context;
 
   return [
     {
@@ -489,7 +489,7 @@ export const getDefaultPlugins = (
           isDev &&
           new HardSourcePlugin({
             cacheDirectory: path.join(
-              projectDir,
+              projectDir!,
               `node_modules/.cache/hard-source/server/[confighash]`,
             ),
             cachePrune: {
@@ -537,7 +537,7 @@ export const getDefaultOutput = (
   context: BuildContext,
   customConfig: CustomConfig,
 ): Configuration['output'] => {
-  const { isServer, projectDir, buildDirectory, publicPath, isDev } = context;
+  const { isServer, projectDir = '', buildDirectory, publicPath, isDev } = context;
 
   const hmr = {
     hotUpdateChunkFilename: 'hot/hot-update.js',
@@ -591,7 +591,7 @@ export const loadUserConfig = (
  * If file not found then Maleo will use it's default statics
  */
 const getStaticEntries = (context: BuildContext, config: CustomConfig) => {
-  const { projectDir } = context;
+  const { projectDir = '' } = context;
   const { customDocument, customWrap, customApp, routes: customRoutes } = config;
 
   const defaultDocument = path.resolve(__dirname, '../../../lib/render/_document.js');
