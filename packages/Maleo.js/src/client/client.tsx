@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Loadable from 'react-loadable';
 
 import { loadInitialProps, loadComponentProps } from '@server/loadInitialProps';
-import { InitialProps } from '@interfaces/render/IRender';
+import { InitialProps } from '@interfaces/render';
 import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@constants/index';
 import { matchingRoutes } from '@routes/matching-routes';
 import { RegisterEntry } from './registerEntry';

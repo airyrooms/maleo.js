@@ -7,6 +7,9 @@
         "tslint-plugin-prettier"
     ],
     "jsRules": {},
+    "linterOptions": {
+        "exclude": ["node_modules/*"]
+    },
     "rules": {
         "no-require-imports": false,
         "no-var-requires": false,
@@ -38,7 +41,7 @@
         "jsx-no-lambda": true,
         "jsx-no-string-ref": true,
         "jsx-key": true,
-        "jsx-alignment": true,
+        "jsx-alignment": false,
         "jsx-boolean-value": false,
 
         "prettier": true

@@ -4,6 +4,20 @@ import { Request, Response } from 'express';
 import { History, Location } from 'history';
 import Loadable from 'react-loadable';
 
+import { PreloadAssets } from './server';
+import Document from '@render/_document';
+import { _App } from '@render/_app';
+import Wrap from '@render/_wrap';
+
+export interface WithGIP {
+  getInitialProps: (ctx: any) => any;
+}
+
+export type DocumentType = React.ComponentType<Document> & WithGIP;
+export type WrapType = React.ComponentType<Wrap> & WithGIP;
+export type AppType = React.ComponentType<_App> & WithGIP;
+
+// Render Component Interfaces
 export interface AppProps {
   routes: AsyncRouteProps[];
   data?: InitialProps['data'];
@@ -39,19 +53,23 @@ export interface DocumentCommons {
   ctx: any;
 }
 
-export interface LoadableBundles {
-  name: string;
-  filename: string;
-}
-
 export interface DocumentProps extends DocumentCommons {
   html: string;
-  bundles: LoadableBundles[];
+  bundles: PreloadAssets[];
 }
+
 export interface DocumentContext extends DocumentCommons {
   req?: Request;
   res?: Response;
   renderPage?: (fn?) => Promise<any>;
+}
+
+export interface WrapProps {
+  children: React.ReactElement<any>;
+  Container: typeof React.Component;
+  App: typeof React.Component;
+  containerProps: ContainerProps;
+  appProps: AppProps;
 }
 
 export interface AsyncRouteComponentState {
@@ -129,7 +147,7 @@ export interface RenderParam {
 
   renderPage?: (
     param: RenderPageParams,
-  ) => (fn?: ModPageFn) => Promise<{ html: string; bundles: LoadableBundles[] }>;
+  ) => (fn?: ModPageFn) => Promise<{ html: string; bundles: PreloadAssets[] }>;
 
   preloadScripts: (
     dir: string,
@@ -147,8 +165,8 @@ export interface PreloadScriptContext {
 
 export interface RenderPageParams {
   req: Request;
-  App: typeof React.Component;
-  Wrap: typeof React.Component;
+  App: AppType;
+  Wrap: WrapType;
   routes: AsyncRouteProps[];
   data: any;
   renderer?: (element: React.ReactElement<any>) => { html: string } | any;
@@ -164,7 +182,7 @@ export type ModPageFn = <Props>(
 
 export interface ServerAssets {
   routes: AsyncRouteProps[];
-  document: typeof React.Component;
-  app: typeof React.Component;
-  wrap: typeof React.Component;
+  document: DocumentType;
+  app: AppType;
+  wrap: WrapType;
 }

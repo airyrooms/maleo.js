@@ -1,5 +1,5 @@
 import { matchRoutes as reactRouterMatchRoutes } from 'react-router-config';
-import { AsyncRouteProps, Branch, PreBranch } from '@interfaces/render/IRender';
+import { AsyncRouteProps, Branch, PreBranch } from '@interfaces/render';
 
 export const matchingRoutes = async (
   routes: AsyncRouteProps[],

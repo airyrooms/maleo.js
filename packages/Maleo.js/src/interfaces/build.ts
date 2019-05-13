@@ -1,3 +1,4 @@
+import webpack from 'webpack';
 import { Configuration, RuleSetRule } from 'webpack';
 
 export interface Context {
@@ -6,6 +7,10 @@ export interface Context {
   projectDir: string;
   minimalBuild?: boolean;
   experimentalLazyBuild?: boolean;
+}
+
+export interface IBuildOptions extends Context {
+  callback?: (err: Error, stats: webpack.Stats) => void;
 }
 
 export interface CustomConfig {

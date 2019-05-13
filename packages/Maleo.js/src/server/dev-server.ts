@@ -8,7 +8,7 @@ import hotMiddleware from 'webpack-hot-middleware';
 
 import { Server } from './server';
 import { requireRuntime } from '@utils/require';
-import { IOptions } from '../interfaces/server/IOptions';
+import { IOptions } from '../interfaces/server';
 import { render } from './render';
 import { RenderParam, ServerAssets } from '../interfaces/render/IRender';
 import { mapAssets } from './extract-stats';

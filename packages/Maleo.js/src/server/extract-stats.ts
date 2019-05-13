@@ -1,13 +1,14 @@
 import { requireRuntime } from '@utils/require';
+import { RawStats, PreloadAssets } from '@interfaces/server';
 
+// get bundles from webpack assets.json
 export const extractStats = (statsPath: string) => {
-  // get bundles from webpack assets.json
-  return mapAssets(requireRuntime(statsPath));
+  const stats = requireRuntime(statsPath);
+  return mapAssets(stats);
 };
 
-export default extractStats;
-
-export const mapAssets = (stats: any) => {
+// Map stats to assets preload
+export const mapAssets = (stats: RawStats): PreloadAssets[] => {
   let assets = stats.static;
 
   if (process.env.NODE_ENV === 'development') {
@@ -26,5 +27,5 @@ export const mapAssets = (stats: any) => {
       },
     ],
     [],
-  );
+  ) as PreloadAssets[];
 };

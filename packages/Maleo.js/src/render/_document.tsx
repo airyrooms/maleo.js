@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { HeaderProps, DocumentProps, DocumentContext } from '@interfaces/render/IRender';
+import { HeaderProps, DocumentProps, DocumentContext } from '@interfaces/render';
 import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@constants/index';
 
 // Extendable document

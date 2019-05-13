@@ -2,16 +2,17 @@ import React from 'react';
 import { createBrowserHistory } from 'history';
 import { Router, StaticRouter } from 'react-router-dom';
 
-import { ContainerProps } from '@interfaces/render/IRender';
+import { ContainerProps } from '@interfaces/render';
 
 export class ContainerComponent extends React.Component<ContainerProps, {}> {
-  history = !this.props.server ? createBrowserHistory() : null;
+  // @ts-ignore
+  history: History<any> | null = !this.props.server ? createBrowserHistory() : null;
 
   render() {
     const { server, children, location, context } = this.props;
 
     if (!server) {
-      return <Router history={this.history as History<any>}>{children}</Router>;
+      return <Router history={this.history}>{children}</Router>;
     }
 
     return (

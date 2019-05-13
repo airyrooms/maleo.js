@@ -1,7 +1,7 @@
 // tslint:disable:no-console
 import fs from 'fs';
 import path from 'path';
-import { StaticPages } from '@interfaces/build/IWebpackInterfaces';
+import { StaticPages } from '@interfaces/build';
 import { render } from '@server/render';
 import { STATIC_BUILD_DIR } from '@constants/index';
 

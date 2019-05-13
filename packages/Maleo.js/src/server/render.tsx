@@ -11,26 +11,27 @@ import {
   SERVER_BUILD_DIR,
   STATS_FILENAME,
 } from '@constants/index';
-import { isPromise, to } from '@utils/index';
+import { isPromise } from '@utils/index';
 import { requireRuntime } from '@utils/require';
 import { loadInitialProps, loadComponentProps } from './loadInitialProps';
 import { matchingRoutes } from '@routes/matching-routes';
 import {
   RenderParam,
   RenderPageParams,
-  LoadableBundles,
   DocumentContext,
   ServerAssets,
   PreloadScriptContext,
-} from '@interfaces/render/IRender';
-import extractStats from './extract-stats';
+} from '@interfaces/render';
+import { extractStats } from './extract-stats';
 
 import { ContainerComponent } from '@render/_container';
+import { PreloadAssets } from '../interfaces/server';
 
 // * HTML doctype * //
 const DOCTYPE = '<!DOCTYPE html>';
 
-let preloadedAssets: any[] = [];
+// In-memory array of assets object
+let preloadedAssets: PreloadAssets[] = [];
 export const render = async ({
   req,
   res,
@@ -84,7 +85,7 @@ export const render = async ({
     })();
 
     // Loads Loadable bundle first
-    let scripts: any[] = [];
+    let scripts: PreloadAssets[] = [];
     if (!renderStatic) {
       preloadedAssets = await preloadScripts(dir, preloadedAssets, {
         req,
@@ -106,9 +107,9 @@ export const render = async ({
 
     const initialProps = await Document.getInitialProps(docContext);
 
-    const getRenderedString = renderToString(<Document {...initialProps} />);
+    const renderedDocument = renderToString(<Document {...initialProps} />);
 
-    return `${DOCTYPE}${getRenderedString}`;
+    return `${DOCTYPE}${renderedDocument}`;
   }
 
   // TODO: add customizable error page
@@ -133,7 +134,7 @@ export const defaultGetServerAssets = async (): Promise<ServerAssets> => {
 
 export const defaultPreloadScripts: RenderParam['preloadScripts'] = (
   dir: string,
-  tempArray: any[],
+  tempArray: PreloadAssets[],
   context: PreloadScriptContext,
 ) => {
   // sort preload with main last
@@ -166,7 +167,7 @@ export const defaultRenderPage = ({
 }: RenderPageParams) => {
   return async (): Promise<{
     html: string;
-    bundles: LoadableBundles[];
+    bundles: PreloadAssets[];
   }> => {
     const appContext = {};
 
@@ -205,7 +206,7 @@ export const defaultRenderPage = ({
     const loadableFile = path.resolve(BUILD_DIR, CLIENT_BUILD_DIR, REACT_LOADABLE_MANIFEST);
     const reactLoadableJson = requireRuntime(loadableFile);
 
-    const bundles: LoadableBundles[] = getBundles(reactLoadableJson, modules)
+    const bundles: PreloadAssets[] = getBundles(reactLoadableJson, modules)
       .filter(Boolean) // removes falsy value
       .filter((b) => b.file.endsWith('.js')) // removes .map files
       .map((bundle) => ({

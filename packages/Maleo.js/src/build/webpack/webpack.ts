@@ -48,7 +48,7 @@ import {
   CustomConfig,
   BuildContext,
   WebpackCustomConfigCallback,
-} from '@interfaces/build/IWebpackInterfaces';
+} from '@interfaces/build';
 import { fileExist } from '@utils/index';
 import { requireFile } from '@utils/require';
 

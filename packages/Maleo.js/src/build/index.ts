@@ -4,8 +4,8 @@ import webpack, { Configuration } from 'webpack';
 
 import { createWebpackConfig, loadUserConfig } from './webpack/webpack';
 
-import { IBuildOptions } from '@interfaces/build/IBuildOptions';
-import { Context, CustomConfig, StaticPages } from '@interfaces/build/IWebpackInterfaces';
+import { IBuildOptions } from '@interfaces/build';
+import { Context, CustomConfig, StaticPages } from '@interfaces/build';
 import { buildStatic } from '@build/static/static';
 
 export const getConfigs = (options: IBuildOptions): Configuration[] => {

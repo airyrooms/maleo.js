@@ -16,7 +16,7 @@ import zlib from 'zlib';
 import path from 'path';
 import helmet from 'helmet';
 
-import { IOptions } from '@interfaces/server/IOptions';
+import { IOptions } from '@interfaces/server';
 import { BUILD_DIR, SERVER_ASSETS_ROUTE, CLIENT_BUILD_DIR } from '@constants/index';
 import { render } from './render';
 
