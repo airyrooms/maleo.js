@@ -28,3 +28,5 @@ export const matchingRoutes = async (
 
   return preloadedMatchedRoutes;
 };
+
+export default matchingRoutes;

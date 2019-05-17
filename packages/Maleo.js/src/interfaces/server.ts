@@ -1,6 +1,6 @@
 // Custom Server
 export interface IOptions {
-  port: number | string;
+  port?: number | string;
   assetDir?: string;
   runHandler?: () => any;
 }
