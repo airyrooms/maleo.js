@@ -10,7 +10,7 @@ import { makeStoreClient } from './store';
 @pageWithStyles
 @withRedux(makeStoreClient)
 export default class extends Wrap {
-  static getInitialProps = async ({ store, ...context }) => {
+  static getInitialProps = async ({ store }) => {
     // const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
     // const data = await response.json();
     const data = { initialData: true };

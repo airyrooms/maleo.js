@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { AppProps, InitialProps } from '@interfaces/render';
 // import { loadInitialProps } from '@server/loadInitialProps';
 import { renderRoutes } from '@routes/routes';
+import { matchAndLoadInitialProps } from '../client/client';
 
 export interface AppState {
   data?: InitialProps['data'];
@@ -11,7 +12,10 @@ export interface AppState {
   previousLocation: Location<any> | null;
 }
 
+const isClient = typeof window !== 'undefined';
+
 export class _App extends React.PureComponent<AppProps, AppState> {
+  // TODO: add prefetch data for next route
   prefetchCache = {};
 
   state = {
@@ -19,12 +23,25 @@ export class _App extends React.PureComponent<AppProps, AppState> {
     previousLocation: null,
   };
 
-  static getInitialProps = async (ctx) => {
-    return ctx;
+  // only runs on client side rendering during route changes
+  // wrapper will expected to be called for every route changes inside the wrapper
+  runComponentGetInitialProps = async (
+    routes: AppProps['routes'],
+    location: AppProps['location'],
+  ) => {
+    if (isClient) {
+      const { data } = await matchAndLoadInitialProps(routes, location.pathname, {});
+      this.setState({
+        data,
+      });
+    }
   };
 
   componentWillReceiveProps = (nextProps: AppProps) => {
-    const navigated = nextProps.location !== this.props.location;
+    const { location: nextLocation, routes } = nextProps;
+    const { location } = this.props;
+
+    const navigated = nextLocation.pathname !== location.pathname;
     if (navigated) {
       const previousLocation = this.props.location;
 
@@ -33,6 +50,8 @@ export class _App extends React.PureComponent<AppProps, AppState> {
         data: undefined,
         previousLocation,
       });
+
+      this.runComponentGetInitialProps(routes, nextLocation);
 
       // const { routes, location, ...rest } = nextProps;
 

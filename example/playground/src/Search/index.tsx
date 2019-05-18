@@ -5,6 +5,7 @@ export class RoomsSearch extends React.Component<any, any> {
   static displayName = 'RoomsSearch';
 
   static getInitialProps = async (appContext) => {
+    console.log('search get initial props');
     const { store } = appContext;
     if (store) {
       store.dispatch({ type: 'TEST', data: 'searchhh' });
@@ -13,6 +14,7 @@ export class RoomsSearch extends React.Component<any, any> {
   };
 
   render() {
+    console.log('search props', this.props.data);
     return (
       <div
         style={{

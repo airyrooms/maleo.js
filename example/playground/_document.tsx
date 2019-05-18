@@ -8,7 +8,7 @@ export default class MyDocument extends Document {
     const initialProps = await Document.getInitialProps(ctx);
 
     console.log(process.env.NODE_ENV);
-    return { ...initialProps };
+    return initialProps;
   };
 
   render() {

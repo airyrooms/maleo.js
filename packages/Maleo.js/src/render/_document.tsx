@@ -8,27 +8,21 @@ import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@constants/index';
 export default class Document extends React.Component<DocumentProps, {}> {
   // export class Document extends React.Component<DocumentProps, {}> implements IDocument {
   // export const Document: IDocument = class extends React.Component<DocumentProps, {}> {
-  static getInitialProps = async ({
-    preloadScripts,
-    data,
-    branch,
-    html,
-    ...ctx
-  }: DocumentContext) => {
-    return { html, preloadScripts, data, branch, ctx };
+  static getInitialProps = async (documentContext: DocumentContext) => {
+    return documentContext;
   };
 
   static childContextTypes = {
-    preloadScripts: PropTypes.array.isRequired,
     html: PropTypes.element.isRequired,
-    data: PropTypes.any,
+    preloadScripts: PropTypes.array.isRequired,
+    initialProps: PropTypes.any,
     branch: PropTypes.any,
-    ctx: PropTypes.any,
+    ctx: PropTypes.any.isRequired,
   };
 
   getChildContext = () => {
-    const { preloadScripts, ctx, ...rest } = this.props;
-    return { ...rest, preloadScripts, ctx };
+    const { preloadScripts, initialProps, html, branch, ...ctx } = this.props;
+    return { preloadScripts, initialProps, html, branch, ctx };
   };
 
   render() {
@@ -92,18 +86,18 @@ export class Main extends React.Component {
 export class Scripts extends React.Component {
   static contextTypes = {
     preloadScripts: PropTypes.any,
-    data: PropTypes.any,
+    initialProps: PropTypes.any,
   };
 
   render() {
-    const { preloadScripts, data } = this.context;
+    const { preloadScripts, initialProps } = this.context;
 
     return (
       <Fragment>
         <noscript
           id={SERVER_INITIAL_DATA}
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(data),
+            __html: JSON.stringify(initialProps),
           }}
         />
         {preloadScripts.map((p, i) => (
