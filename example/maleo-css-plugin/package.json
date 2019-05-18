@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "maleo dev",
     "build": "export NODE_ENV=production && maleo build",
-    "start": "export NODE_ENV=production && node .maleo/server.js"
+    "start": "export NODE_ENV=production && maleo run"
   },
   "dependencies": {
     "@airy/maleo": "latest",

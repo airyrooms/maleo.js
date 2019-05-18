@@ -68,7 +68,7 @@ Add this script to your `package.json`
   "scripts": {
     "dev": "maleo dev",
     "build": "export NODE_ENV=production && maleo build",
-    "start": "export NODE_ENV=production && node .maleo/server.js"
+    "start": "export NODE_ENV=production && maleo run"
   }
 }
 ```
