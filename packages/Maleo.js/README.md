@@ -421,6 +421,11 @@ Here are the API's for the configuration:
     <td>Enable webpack build caching</td>
   </tr>
   <tr>
+    <td><code>isDev</code></td>
+    <td><code>Boolean?</code> [<code>process.env.NODE_ENV === 'development'</code>]</td>
+    <td>Enable development build configuration</td>
+  </tr>
+  <tr>
     <td><code>sourceMaps</code></td>
     <td><code>Boolean?</code> [<code>true</code>]</td>
     <td>Enable webpack to generate source maps</td>
