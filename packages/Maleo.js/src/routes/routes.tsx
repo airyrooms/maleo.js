@@ -1,11 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { AsyncRouteProps, InitialProps } from '@interfaces/render/IRender';
-
-interface ExtraProps {
-  location?: Location<any> | null;
-  initialData?: InitialProps['data'];
-}
+import { AsyncRouteProps } from '@interfaces/render';
+import { ExtraProps } from '../interfaces/routes';
 
 /* TODO:
     - extend to recursive route rendering to support indented routes to
@@ -33,6 +29,7 @@ export const renderRoutes = (
         // therefore just render the component itself
         if (!r.path) {
           return (
+            // @ts-ignore
             <r.component
               {...{
                 ...extraProps,

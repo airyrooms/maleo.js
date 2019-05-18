@@ -68,7 +68,7 @@ Add this script to your `package.json`
   "scripts": {
     "dev": "maleo dev",
     "build": "export NODE_ENV=production && maleo build",
-    "start": "export NODE_ENV=production && node .maleo/server.js"
+    "start": "export NODE_ENV=production && maleo run"
   }
 }
 ```
@@ -419,6 +419,11 @@ Here are the API's for the configuration:
     <td><code>cache</code></td>
     <td><code>Boolean?</code> [<code>true</code>]</td>
     <td>Enable webpack build caching</td>
+  </tr>
+  <tr>
+    <td><code>isDev</code></td>
+    <td><code>Boolean?</code> [<code>process.env.NODE_ENV === 'development'</code>]</td>
+    <td>Enable development build configuration</td>
   </tr>
   <tr>
     <td><code>sourceMaps</code></td>

@@ -1,4 +1,4 @@
-import { InitialProps, Branch } from '@interfaces/render/IRender';
+import { InitialProps, Branch } from '@interfaces/render';
 // import { isPromise } from '@utils/';
 
 /**

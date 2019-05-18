@@ -1,6 +1,7 @@
 import { Compiler } from 'webpack';
 
 import { to } from '@utils/index';
+import { STATS_FILENAME } from '~/src/constants';
 
 const INDENT = 2;
 const DEFAULT_TRANSFORM = async (data) => JSON.stringify(data, null, INDENT);
@@ -17,7 +18,7 @@ export class StatsWriterPlugin {
 
   constructor(opts?) {
     this.opts = {
-      filename: 'stats.json',
+      filename: STATS_FILENAME,
       isDev: false,
       transform: DEFAULT_TRANSFORM,
       ...opts,

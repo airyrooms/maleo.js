@@ -8,9 +8,9 @@ import hotMiddleware from 'webpack-hot-middleware';
 
 import { Server } from './server';
 import { requireRuntime } from '@utils/require';
-import { IOptions } from '../interfaces/server/IOptions';
+import { IOptions } from '../interfaces/server';
 import { render } from './render';
-import { RenderParam, ServerAssets } from '../interfaces/render/IRender';
+import { RenderParam, ServerAssets } from '../interfaces/render';
 import { mapAssets } from './extract-stats';
 import { mapStats } from '@build/webpack/plugins/stats-writer';
 import {
@@ -48,7 +48,7 @@ class DevServer extends Server {
     const html = await render({
       req,
       res,
-      dir: this.options.assetDir,
+      dir: this.options.assetDir as string,
       preloadScripts: this.getMemoryPreload,
       getServerAssets: this.getServerAssets,
     });
@@ -67,7 +67,7 @@ class DevServer extends Server {
 
     await this.setupDevelopment();
 
-    this.server = this.run();
+    this.server = await this.run();
   };
 
   private cleanUpServer = async () => {

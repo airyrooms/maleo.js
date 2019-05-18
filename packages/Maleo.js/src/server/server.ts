@@ -15,10 +15,13 @@ import compression from 'compression';
 import zlib from 'zlib';
 import path from 'path';
 import helmet from 'helmet';
+import * as http from 'http';
 
-import { IOptions } from '@interfaces/server/IOptions';
+import { IOptions } from '@interfaces/server';
 import { BUILD_DIR, SERVER_ASSETS_ROUTE, CLIENT_BUILD_DIR } from '@constants/index';
-import { render } from './render';
+import { render, defaultGetServerAssets } from './render';
+import matchingRoutes from '../routes/matching-routes';
+import { Branch } from '../interfaces/render';
 
 export class Server {
   public app: Express = express();
@@ -30,12 +33,11 @@ export class Server {
     return new Server(options);
   };
 
-  constructor(options: IOptions) {
+  constructor(options: IOptions = {}) {
     const defaultOptions = {
-      assetDir: path.resolve('.', BUILD_DIR, CLIENT_BUILD_DIR),
-      port: 8080,
-      runHandler: this.defaultHandler,
-      ...options,
+      assetDir: options.assetDir || path.resolve('.', BUILD_DIR, CLIENT_BUILD_DIR),
+      port: options.port || 3000,
+      runHandler: options.runHandler || this.defaultHandler,
     } as IOptions;
 
     this.options = defaultOptions;
@@ -58,7 +60,7 @@ export class Server {
     const html = await render({
       req,
       res,
-      dir: this.options.assetDir,
+      dir: this.options.assetDir as string,
     });
 
     res.send(html);
@@ -78,13 +80,13 @@ export class Server {
     // Set static assets route handler
     this.setAssetsStaticRoute(this.app);
 
+    // Set favicon handler
+    this.app.use('/favicon.ico', this.faviconHandler);
+
     // Applying user's middleware
     // middleware need to be applied after static assets serving
     // due to issues such as dev middleware for serving an outdated asset from it's memory-fs system
     this.middlewares.map((args) => this.app.use(...args));
-
-    // Set favicon handler
-    this.app.use('/favicon.ico', this.faviconHandler);
 
     // Set route handler
     this.app.use(this.routeHandler);

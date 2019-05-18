@@ -133,7 +133,7 @@ function isUpdateAvailable() {
 
 // Webpack disallows updates in other states.
 function canApplyUpdates() {
-  return module.hot.status() === 'idle';
+  return module!.hot!.status() === 'idle';
 }
 
 // There is a newer version of the code available.
@@ -159,7 +159,9 @@ function tryApplyUpdates(onHotUpdateSuccess?) {
   const result = module.hot.check(/* autoApply */ true, handleApplyUpdates);
 
   // // Webpack 2 returns a Promise instead of invoking a callback
+  // @ts-ignore
   if (result && result.then) {
+    // @ts-ignore
     result.then(
       function(updatedModules) {
         handleApplyUpdates(null, updatedModules);

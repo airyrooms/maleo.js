@@ -4,8 +4,8 @@ import webpack, { Configuration } from 'webpack';
 
 import { createWebpackConfig, loadUserConfig } from './webpack/webpack';
 
-import { IBuildOptions } from '@interfaces/build/IBuildOptions';
-import { Context, CustomConfig, StaticPages } from '@interfaces/build/IWebpackInterfaces';
+import { IBuildOptions } from '@interfaces/build';
+import { Context, CustomConfig } from '@interfaces/build';
 import { buildStatic } from '@build/static/static';
 
 export const getConfigs = (options: IBuildOptions): Configuration[] => {
@@ -16,7 +16,7 @@ export const getConfigs = (options: IBuildOptions): Configuration[] => {
     projectDir: process.cwd(),
   };
 
-  const userConfig: CustomConfig = loadUserConfig(context.projectDir);
+  const userConfig: CustomConfig = loadUserConfig(context.projectDir!);
   const clientConfig = createWebpackConfig({ isServer: false, ...context }, userConfig);
   const serverConfig = createWebpackConfig(
     { isServer: true, ...context, minimalBuild, experimentalLazyBuild },
@@ -40,7 +40,7 @@ export const build = (options: IBuildOptions) => {
 
 export const exportStatic = (userConfig: CustomConfig) => {
   if (userConfig.staticPages) {
-    const staticPages: StaticPages = userConfig.staticPages;
+    const { staticPages } = userConfig;
     try {
       console.log('[STATIC] Starting to export static pages');
       buildStatic(staticPages, process.cwd());

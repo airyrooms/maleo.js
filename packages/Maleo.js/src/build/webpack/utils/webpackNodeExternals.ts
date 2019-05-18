@@ -50,7 +50,7 @@ function readDir(dirName) {
         }
         return module;
       })
-      .reduce(function(prev, next) {
+      .reduce(function(prev: string[], next) {
         return prev.concat(next);
       }, []);
   } catch (e) {
@@ -87,7 +87,7 @@ function readFromPackageJson(options) {
   }
   if (options.exclude) {
     sections = sections.filter(function(section) {
-      return [].concat(options.exclude).indexOf(section) === -1;
+      return ([] as string[]).concat(options.exclude).indexOf(section) === -1;
     });
   }
   // collect dependencies
@@ -154,7 +154,7 @@ export default function nodeExternals(options) {
   // create the node modules list
   const nodeModules = modulesFromFile
     ? readFromPackageJson(options.modulesFromFile)
-    : readDir(modulesDir).filter(isNotBinary);
+    : (readDir(modulesDir) as string[]).filter(isNotBinary);
 
   // return an externals function
   return function(context, request, callback) {
