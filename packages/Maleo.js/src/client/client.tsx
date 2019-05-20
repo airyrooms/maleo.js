@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Loadable from 'react-loadable';
 
-import { loadInitialProps, loadComponentProps } from '@server/loadInitialProps';
+import { loadInitialProps, loadComponentProps } from '@routes/loadInitialProps';
 import { InitialProps } from '@interfaces/render';
 import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@constants/index';
 import { matchingRoutes } from '@routes/matching-routes';
@@ -19,15 +19,15 @@ export const init = async () => {
 
     const { data } = await ensureReady(routes, location.pathname, {});
 
-    const wrapProps = await loadComponentProps(Wrap);
+    // Run getInitialProps on client as well
+    const wrapInitialProps = await loadComponentProps(Wrap);
     const appInitialProps = await loadComponentProps(App);
 
     const appProps = {
+      ...appInitialProps,
       data,
       routes,
       location,
-      ...appInitialProps,
-      ...wrapProps,
     };
     const containerProps = {};
 
@@ -37,7 +37,7 @@ export const init = async () => {
         Container={ContainerComponent}
         appProps={appProps}
         containerProps={containerProps}
-        {...wrapProps}
+        {...wrapInitialProps}
       />
     );
 
@@ -58,14 +58,22 @@ export const ensureReady = async (routes, pathname, ctx): Promise<InitialProps> 
   const initialServerData = document.querySelectorAll('noscript#' + SERVER_INITIAL_DATA).item(0);
 
   if (!initialServerData) {
-    const matchedRoutes = await matchingRoutes(routes, pathname);
-    return loadInitialProps(matchedRoutes, ctx);
+    return matchAndLoadInitialProps(routes, pathname, ctx);
   }
 
   const { textContent } = initialServerData;
   const data = JSON.parse(textContent || '');
 
+  // remove initial data after application
+  // has been hydrated
+  initialServerData.remove();
+
   return {
     data,
   };
+};
+
+export const matchAndLoadInitialProps = async (routes, pathname, ctx) => {
+  const matchedRoutes = await matchingRoutes(routes, pathname);
+  return loadInitialProps(matchedRoutes, ctx);
 };

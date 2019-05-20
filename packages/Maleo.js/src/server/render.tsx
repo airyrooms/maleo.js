@@ -13,7 +13,7 @@ import {
 } from '@constants/index';
 import { isPromise } from '@utils/index';
 import { requireRuntime } from '@utils/require';
-import { loadInitialProps, loadComponentProps } from './loadInitialProps';
+import { loadInitialProps, loadComponentProps } from '@routes/loadInitialProps';
 import { matchingRoutes } from '@routes/matching-routes';
 import {
   RenderParam,
@@ -97,12 +97,14 @@ export const render = async ({
     const docContext: DocumentContext = {
       req,
       res,
-      data,
+      initialProps: {
+        ...data,
+        wrap: wrapProps,
+        app: appProps,
+      },
       branch,
       preloadScripts: scripts,
       html,
-      ...wrapProps,
-      ...appProps,
     };
 
     const initialProps = await Document.getInitialProps(docContext);

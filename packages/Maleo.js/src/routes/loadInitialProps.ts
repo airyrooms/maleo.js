@@ -1,5 +1,5 @@
 import { InitialProps, Branch } from '@interfaces/render';
-// import { isPromise } from '@utils/';
+import { to, isPromise } from '@utils/index';
 
 /**
  * loadInitialProps calls every getInitialProps functions on matched components
@@ -13,11 +13,8 @@ export const loadInitialProps = async (matchedRoutes: Branch[], ctx): Promise<In
     return { data };
   }
 
-  for (const route of matchedRoutes) {
-    const {
-      route: { component, key },
-      match,
-    } = route;
+  for (const { route, match } of matchedRoutes) {
+    const { component, key } = route;
 
     if (checkHasGetInitialProps(component)) {
       const keyData = await loadComponentProps(component, { match, ...ctx });
@@ -37,14 +34,24 @@ export const loadInitialProps = async (matchedRoutes: Branch[], ctx): Promise<In
   };
 };
 
-const checkHasGetInitialProps = (object: any): boolean => {
-  return 'getInitialProps' in object && typeof object.getInitialProps === 'function';
-};
-
 export const loadComponentProps = async (component: any, ctx: any = {}) => {
   if (checkHasGetInitialProps(component)) {
-    const res = await component.getInitialProps(ctx);
+    const result = component.getInitialProps(ctx);
+
+    const [error, res] = isPromise(result) ? await to(result) : [null, result];
+    if (error) {
+      // tslint:disable-next-line:no-console
+      console.error(
+        `[Maleo] Error while loading ${component.displayName || component.name} initial props`,
+      );
+      return null;
+    }
+
     return res;
   }
   return null;
+};
+
+export const checkHasGetInitialProps = (object: any): boolean => {
+  return 'getInitialProps' in object && typeof object.getInitialProps === 'function';
 };

@@ -111,7 +111,7 @@ To see how simple this is, check out the sample app!
 
 ## Component Lifecycle 
 
-Maleo.js added a new component lifecycle hook called `getInitialProps`, this function is called during Server Side Rendering (SSR).
+Maleo.js added a new component lifecycle hook called `getInitialProps`, this function is called during Server Side Rendering (SSR) and during route changes on Client Side Rendering (CSR).
 
 This is useful especially for SEO purposes. 
 
@@ -123,6 +123,7 @@ export default class extends React.Component {
   static getInitialProps = async (ctx) => {
     const { req } = ctx;
 
+    // check if getInitialProps is called on server or on client
     const userAgent = req ? req.headers['user-agent'] : navigator.userAgent;
 
     // the return value will be passed as props for this component

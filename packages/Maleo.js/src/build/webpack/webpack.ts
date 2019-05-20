@@ -49,7 +49,7 @@ import {
   BuildContext,
   WebpackCustomConfigCallback,
 } from '@interfaces/build';
-import { fileExist } from '@utils/index';
+import { fileExist } from './utils';
 import { requireFile } from '@utils/require';
 
 // Default Config if user doesn't have maleo.config.js

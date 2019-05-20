@@ -27,6 +27,7 @@ export const renderRoutes = (
       {routes.map((r, i) => {
         // If the route has no path we assume it is only a wrapper
         // therefore just render the component itself
+        // if it has routes inside it we do render it recursively
         if (!r.path) {
           return (
             // @ts-ignore
@@ -46,6 +47,9 @@ export const renderRoutes = (
           const childrenRoutes = !!r.routes && renderRoutes(r.routes, extraProps, switchProps);
 
           return r.render ? (
+            // TODO: supports for custom renderer on each route
+            // for the custom renderer we just pass all the data as is
+            // so user will have more control
             r.render({
               ...props,
               ...extraProps,

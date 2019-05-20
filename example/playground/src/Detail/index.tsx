@@ -8,12 +8,14 @@ export class RoomsDetail extends React.Component<any, any> {
   static displayName = 'RoomsDetail';
 
   static getInitialProps = async (appContext) => {
+    console.log('rooms detail get initial props');
     const { store } = appContext;
 
     return { a: 5, store };
   };
 
   render() {
+    console.log('detaili props', this.props.a);
     return (
       <div className="detail">
         <h1>Rooms Detail</h1>

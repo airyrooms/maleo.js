@@ -46,11 +46,10 @@ export interface HeaderProps {
 }
 
 export interface DocumentCommons {
-  data: InitialProps['data'];
+  initialProps: InitialProps['data'];
   branch: Branch | null;
   preloadScripts: any;
   html: string;
-  ctx: any;
 }
 
 export interface DocumentProps extends DocumentCommons {

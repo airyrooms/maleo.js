@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { matchingRoutes } from '@airy/maleo/lib/routes/matching-routes';
-import { loadInitialProps, loadComponentProps } from '@airy/maleo/lib/server/loadInitialProps';
+import { loadInitialProps, loadComponentProps } from '@airy/maleo/lib/routes/loadInitialProps';
 import { MimickLoadable } from '../test-utils/mimick-loadable';
 
 const initialProps = {
