@@ -6,39 +6,42 @@ import { loadInitialProps, loadComponentProps } from '@routes/loadInitialProps';
 import { InitialProps } from '@interfaces/render';
 import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@constants/index';
 import { matchingRoutes } from '@routes/matching-routes';
-import { RegisterEntry } from './registerEntry';
+import RE from './registerEntry';
 import { ContainerComponent } from '@render/_container';
+import { StateManager, StateContext } from '@render/state-manager';
+
+const routes = RE.findRegister('routes');
+const Wrap = RE.findRegister('wrap');
+const App = RE.findRegister('app');
 
 export const init = async () => {
   try {
-    const RE = new RegisterEntry();
-
-    const routes = RE.findRegister('routes');
-    const Wrap = RE.findRegister('wrap');
-    const App = RE.findRegister('app');
-
-    const { data } = await ensureReady(routes, location.pathname, {});
-
-    // Run getInitialProps on client as well
-    const wrapInitialProps = await loadComponentProps(Wrap);
-    const appInitialProps = await loadComponentProps(App);
+    const data = await StateManager.getInitialProps({});
 
     const appProps = {
-      ...appInitialProps,
+      ...data.app,
       data,
       routes,
       location,
     };
     const containerProps = {};
 
+    const wrapProps = {
+      ...data.wrap,
+      App,
+      Container: ContainerComponent,
+      appProps,
+      containerProps,
+    };
+
+    // StateContext.Consumer is used here to ensure code consistency
+    // that data from StateManager will always be passed as props not context
     const RenderApp = () => (
-      <Wrap
-        App={App}
-        Container={ContainerComponent}
-        appProps={appProps}
-        containerProps={containerProps}
-        {...wrapInitialProps}
-      />
+      <StateManager data={data} routes={routes}>
+        <StateContext.Consumer>
+          {({ data: { wrap: wrapInitialProps } }) => <Wrap {...wrapInitialProps} {...wrapProps} />}
+        </StateContext.Consumer>
+      </StateManager>
     );
 
     hydrate(RenderApp);
@@ -48,17 +51,17 @@ export const init = async () => {
   }
 };
 
-export const hydrate = (App: () => React.ReactElement<any>): void => {
+export const hydrate = (Application: () => React.ReactElement<any>): void => {
   Loadable.preloadReady().then(() => {
-    ReactDOM.hydrate(<App />, document.querySelector(`#${DIV_MALEO_ID}`));
+    ReactDOM.hydrate(<Application />, document.querySelector(`#${DIV_MALEO_ID}`));
   });
 };
 
-export const ensureReady = async (routes, pathname, ctx): Promise<InitialProps> => {
+export const ensureReady = async (pathname, ctx): Promise<InitialProps['data']> => {
   const initialServerData = document.querySelectorAll('noscript#' + SERVER_INITIAL_DATA).item(0);
 
   if (!initialServerData) {
-    return matchAndLoadInitialProps(routes, pathname, ctx);
+    return matchAndLoadInitialProps(pathname, ctx);
   }
 
   const { textContent } = initialServerData;
@@ -68,12 +71,42 @@ export const ensureReady = async (routes, pathname, ctx): Promise<InitialProps> 
   // has been hydrated
   initialServerData.remove();
 
+  // hydrate Wrap and App component initial props
+  // pass the server props then client's hydrated props
+  const { wrap, app } = await hydrateWrapAppProps(ctx);
   return {
-    data,
+    ...data,
+    wrap: {
+      ...data.wrap,
+      ...wrap,
+    },
+    app: {
+      ...data.app,
+      ...app,
+    },
   };
 };
 
-export const matchAndLoadInitialProps = async (routes, pathname, ctx) => {
+export const matchAndLoadInitialProps = async (pathname, ctx?) => {
   const matchedRoutes = await matchingRoutes(routes, pathname);
-  return loadInitialProps(matchedRoutes, ctx);
+  const { data } = await loadInitialProps(matchedRoutes, ctx);
+
+  const { wrap, app } = await hydrateWrapAppProps(ctx);
+
+  return {
+    ...data,
+    wrap,
+    app,
+  };
+};
+
+//
+export const hydrateWrapAppProps = async (ctx) => {
+  const appProps = await loadComponentProps(App, ctx);
+  const wrapProps = await loadComponentProps(Wrap, ctx);
+
+  return {
+    wrap: wrapProps,
+    app: appProps,
+  };
 };

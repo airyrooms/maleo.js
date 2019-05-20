@@ -4,12 +4,14 @@ export class RegisterEntry {
   registerCache = {};
 
   constructor() {
-    if (window[REGISTERS.WINDOW_VAR_NAME]) {
-      window[REGISTERS.WINDOW_VAR_NAME].map(this.register);
-    }
+    if (typeof window !== 'undefined') {
+      if (window[REGISTERS.WINDOW_VAR_NAME]) {
+        window[REGISTERS.WINDOW_VAR_NAME].map(this.register);
+      }
 
-    window[REGISTERS.WINDOW_VAR_NAME] = [];
-    window[REGISTERS.WINDOW_VAR_NAME].push = this.register;
+      window[REGISTERS.WINDOW_VAR_NAME] = [];
+      window[REGISTERS.WINDOW_VAR_NAME].push = this.register;
+    }
   }
 
   register = ([entry, fn]) => {
@@ -21,4 +23,4 @@ export class RegisterEntry {
   };
 }
 
-export default RegisterEntry;
+export default new RegisterEntry();
