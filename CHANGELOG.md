@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.2](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.1...v0.3.1-canary.2) (2019-05-20)
+
+
+### Features
+
+* **maleo-project:** get initial props ([#193](https://github.com/airyrooms/maleo.js/issues/193)) ([40e9a78](https://github.com/airyrooms/maleo.js/commit/40e9a78))
+
+
+
+
+
 ## [0.3.1-canary.1](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.0...v0.3.1-canary.1) (2019-05-18)
 
 **Note:** Version bump only for package airy-maleojs
