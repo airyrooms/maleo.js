@@ -22,6 +22,7 @@ import {
   ServerAssets,
   PreloadScriptContext,
 } from '@interfaces/render';
+import StateManager, { StateContext } from '@render/state-manager';
 import { extractStats } from './extract-stats';
 
 import { ContainerComponent } from '@render/_container';
@@ -191,13 +192,20 @@ export const defaultRenderPage = ({
 
     const asyncOrSyncRender = renderer(
       <Loadable.Capture report={reportResults}>
-        <Wrap
-          Container={ContainerComponent}
-          App={App}
-          containerProps={{ location, context: appContext, server: true }}
-          appProps={{ ...{ routes, data, location: { pathname: location }, ...appProps } }}
-          {...wrapProps}
-        />
+        <StateManager data={data} routes={routes}>
+          <StateContext.Consumer>
+            {({ data: { wrap } }) => (
+              <Wrap
+                Container={ContainerComponent}
+                App={App}
+                containerProps={{ location, context: appContext, server: true }}
+                appProps={{ ...{ location: { pathname: location }, ...appProps } }}
+                {...wrapProps}
+                {...wrap}
+              />
+            )}
+          </StateContext.Consumer>
+        </StateManager>
       </Loadable.Capture>,
     );
 

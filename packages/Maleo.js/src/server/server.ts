@@ -19,9 +19,7 @@ import * as http from 'http';
 
 import { IOptions } from '@interfaces/server';
 import { BUILD_DIR, SERVER_ASSETS_ROUTE, CLIENT_BUILD_DIR } from '@constants/index';
-import { render, defaultGetServerAssets } from './render';
-import matchingRoutes from '../routes/matching-routes';
-import { Branch } from '../interfaces/render';
+import { render } from './render';
 
 export class Server {
   public app: Express = express();

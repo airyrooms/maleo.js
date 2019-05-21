@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { AppProps, InitialProps } from '@interfaces/render';
 // import { loadInitialProps } from '@server/loadInitialProps';
 import { renderRoutes } from '@routes/routes';
-import { matchAndLoadInitialProps } from '../client/client';
+import { matchAndLoadInitialProps } from '@client/client';
+import { StateContext } from './state-manager';
 
 export interface AppState {
   data?: InitialProps['data'];
@@ -15,30 +16,32 @@ export interface AppState {
 const isClient = typeof window !== 'undefined';
 
 export class _App extends React.PureComponent<AppProps, AppState> {
+  static contextType = StateContext;
+
   // TODO: add prefetch data for next route
   prefetchCache = {};
 
   state = {
-    data: this.props.data,
+    data: this.context.data,
     previousLocation: null,
   };
 
   // only runs on client side rendering during route changes
   // wrapper will expected to be called for every route changes inside the wrapper
-  runComponentGetInitialProps = async (
-    routes: AppProps['routes'],
-    location: AppProps['location'],
-  ) => {
+  runComponentGetInitialProps = async (location: AppProps['location']) => {
     if (isClient) {
-      const { data } = await matchAndLoadInitialProps(routes, location.pathname, {});
-      this.setState({
-        data,
-      });
+      const data = await matchAndLoadInitialProps(location.pathname);
+
+      // update to state manager data
+      this.context.updateData(data);
     }
   };
 
-  componentWillReceiveProps = (nextProps: AppProps) => {
-    const { location: nextLocation, routes } = nextProps;
+  componentWillReceiveProps(nextProps: AppProps, nextContext) {
+    // update data from context
+    this.setState({ data: nextContext.data });
+
+    const { location: nextLocation } = nextProps;
     const { location } = this.props;
 
     const navigated = nextLocation.pathname !== location.pathname;
@@ -47,11 +50,10 @@ export class _App extends React.PureComponent<AppProps, AppState> {
 
       window.scrollTo(0, 0);
       this.setState({
-        data: undefined,
         previousLocation,
       });
 
-      this.runComponentGetInitialProps(routes, nextLocation);
+      this.runComponentGetInitialProps(nextLocation);
 
       // const { routes, location, ...rest } = nextProps;
 
@@ -67,7 +69,7 @@ export class _App extends React.PureComponent<AppProps, AppState> {
       //   .catch(console.log);
       this.setState({ previousLocation: null });
     }
-  };
+  }
 
   // prefetch = (pathname: string) => {
   //   loadInitialProps(this.props.routes, pathname, {

@@ -14,11 +14,6 @@ export default class extends Wrap {
     // const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
     // const data = await response.json();
     const data = { initialData: true };
-    console.log('GIP wrap store', store);
-
-    if (store) {
-      store.dispatch({ type: 'TEST', data: 'testttt' });
-    }
 
     return { data, store };
   };
