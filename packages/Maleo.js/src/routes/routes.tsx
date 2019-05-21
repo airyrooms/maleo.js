@@ -28,13 +28,15 @@ export const renderRoutes = (
         // If the route has no path we assume it is only a wrapper
         // therefore just render the component itself
         // if it has routes inside it we do render it recursively
+        const routeInitialData = initialData[r.key as string] || {};
+
         if (!r.path) {
           return (
             // @ts-ignore
             <r.component
               {...{
                 ...extraProps,
-                ...(initialData[r.key as string] || {}),
+                ...routeInitialData,
                 route: r,
                 key: r.key || `wrapper-${r.component.displayName}-${i}`,
               }}>
@@ -62,7 +64,7 @@ export const renderRoutes = (
                 ...props,
                 ...restProps,
                 location,
-                ...(initialData[r.key as string] || {}),
+                ...routeInitialData,
                 route: r,
               }}>
               {childrenRoutes}
