@@ -8,7 +8,7 @@ import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@constants/index';
 import { matchingRoutes } from '@routes/matching-routes';
 import RE from './registerEntry';
 import { ContainerComponent } from '@render/_container';
-import { StateManager, StateContext } from '@render/state-manager';
+import { StateManager, StateContext } from './client-state-manager';
 
 const routes = RE.findRegister('routes');
 const Wrap = RE.findRegister('wrap');
@@ -87,7 +87,7 @@ export const ensureReady = async (pathname, ctx): Promise<InitialProps['data']> 
   };
 };
 
-export const matchAndLoadInitialProps = async (pathname, ctx?) => {
+export const matchAndLoadInitialProps = async (pathname: string, ctx?) => {
   const matchedRoutes = await matchingRoutes(routes, pathname);
   const { data } = await loadInitialProps(matchedRoutes, ctx);
 

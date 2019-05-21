@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ensureReady } from '@client/client';
+import { ensureReady, matchAndLoadInitialProps } from './client';
 
 export const StateContext = React.createContext({
   data: {
@@ -32,12 +32,27 @@ export class StateManager extends React.PureComponent<stateManagerProps> {
     data: this.props.data || {},
   };
 
-  updateData = (data) => this.setState({ data });
+  // only runs on client side rendering during route changes
+  // wrapper will expected to be called for every route changes inside the wrapper
+  clientRouteChangesUpdate = async (location: Location) => {
+    const data = await matchAndLoadInitialProps(location.pathname);
+
+    this.setState({
+      data,
+    });
+  };
 
   render() {
+    const { data } = this.state;
+    const { routes } = this.props;
+
     return (
       <StateContext.Provider
-        value={{ updateData: this.updateData, data: this.state.data, routes: this.props.routes }}>
+        value={{
+          clientRouteChange: this.clientRouteChangesUpdate,
+          data,
+          routes,
+        }}>
         {this.props.children}
       </StateContext.Provider>
     );
