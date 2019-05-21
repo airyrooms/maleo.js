@@ -50,7 +50,7 @@ import {
   WebpackCustomConfigCallback,
 } from '@interfaces/build';
 import { fileExist } from './utils';
-import { requireFile } from '@utils/require';
+import { requireRuntime } from '@utils/require';
 
 // Default Config if user doesn't have maleo.config.js
 const defaultUserConfig: CustomConfig = {
@@ -576,13 +576,23 @@ export const loadUserConfig = (
 ): CustomConfig => {
   const cwd: string = path.resolve(dir);
   const userConfigPath: string = path.resolve(cwd, filename);
-  const userConfig = requireFile(userConfigPath);
-  return userConfig
-    ? {
-        ...defaultUserConfig,
-        ...userConfig,
-      }
-    : defaultUserConfig;
+
+  const cb = (err) => {
+    if (!err) {
+      return console.log('[MALEO] Using custom maleo configuration');
+    }
+
+    if (err.code === 'MODULE_NOT_FOUND') {
+      return console.error('[MALEO] Custom configuration not found, using default configuration');
+    }
+  };
+
+  const userConfig = requireRuntime(userConfigPath, cb);
+
+  return {
+    ...defaultUserConfig,
+    ...userConfig,
+  };
 };
 
 /**

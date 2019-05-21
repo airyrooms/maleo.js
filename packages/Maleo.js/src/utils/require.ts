@@ -1,6 +1,6 @@
 // tslint:disable:no-console
 
-export const requireRuntime = (path: string) => {
+export const requireRuntime = (path: string, callback: (error?: Error) => void = console.error) => {
   // Has to use this kind of require because webpack tries to
   // bundle up normal require as webpack analyzes it as dynamic import
   // more: https://github.com/webpack/webpack/issues/4175
@@ -8,19 +8,10 @@ export const requireRuntime = (path: string) => {
   const req = typeof __non_webpack_require__ !== 'undefined' ? __non_webpack_require__ : require;
   try {
     const requiredModule = req(path);
+    callback();
     return typeof requiredModule.default !== 'undefined' ? requiredModule.default : requiredModule;
   } catch (err) {
-    console.error(err);
-    return {};
-  }
-};
-
-export const requireFile = (path: string) => {
-  try {
-    const file = requireRuntime(path);
-    return file;
-  } catch (error) {
-    console.log(`[ERROR] Error occured when require file ${path}`);
+    callback(err);
     return null;
   }
 };
