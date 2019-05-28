@@ -8,6 +8,8 @@ import { StateContext } from '@client/client-state-manager';
 export interface AppState {
   data?: InitialProps['data'];
   // @ts-ignore
+  currentLocation: Location<any> | null;
+  // @ts-ignore
   previousLocation: Location<any> | null;
 }
 
@@ -19,6 +21,7 @@ export class _App extends React.PureComponent<AppProps, AppState> {
 
   state = {
     data: this.context.data,
+    currentLocation: this.props.location,
     previousLocation: null,
   };
 
@@ -33,28 +36,39 @@ export class _App extends React.PureComponent<AppProps, AppState> {
 
     const navigated = nextLocation.pathname !== location.pathname;
     if (navigated) {
-      const previousLocation = this.props.location;
+      // Wait until context has finished fetching all the initial props
+      // to navigate and render new route
+      this.context.clientRouteChange(nextLocation).then(() => {
+        const previousLocation = this.props.location;
 
-      window.scrollTo(0, 0);
-      this.setState({
-        previousLocation,
+        window.scrollTo(0, 0);
+        this.setState({
+          currentLocation: nextLocation,
+          previousLocation,
+        });
+
+        this.setState({ previousLocation: null });
       });
-
-      this.context.clientRouteChange(nextLocation);
-
-      this.setState({ previousLocation: null });
     }
   }
 
   render() {
-    const { data, previousLocation } = this.state;
-    const { routes, location } = this.props;
-    const initialData = this.prefetchCache[location.pathname] || data;
+    const { data, previousLocation, currentLocation } = this.state;
+    const { routes } = this.context;
+    const initialData = this.prefetchCache[currentLocation.pathname] || data;
 
-    return renderRoutes(routes, {
-      initialData,
-      location: previousLocation || location,
-    });
+    const location = previousLocation || currentLocation;
+
+    return renderRoutes(
+      routes,
+      {
+        initialData,
+        location,
+      },
+      {
+        location,
+      },
+    );
   }
 }
 

@@ -34,6 +34,7 @@ Readme below is the documentation for the `canary` (prerelease) branch. To view 
   - [Customize Server](#customize-server)
   - [Customize Webpack](#customize-webpack)
   - [Customize Babel Config](#customize-babel-config)
+- [Core Utilities Functions](#core-utilities-functions)
 - [CDN Support](#cdn-support)
 - [Plugins](#plugins)
 - [FAQ](#faq)
@@ -643,6 +644,17 @@ The `@airy/maleo/babel` preset includes everything you need to get your developm
 - `@babel/plugin-proposal-object-rest-spread`
 - `@babel/plugin-transform-runtime`
 - `react-loadable/babel`
+
+## Core Utilities Functions
+
+#### Route Matching
+
+To use you can import the matching routes function like this:
+```js
+import { getMatchedRoutes } from '@airy/maleo/utils';
+```
+
+The function will return all matched routes and the route object from `routes.json`
 
 ## CDN Support
 
