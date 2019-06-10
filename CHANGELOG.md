@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.7](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.6...v0.3.1-canary.7) (2019-06-10)
+
+
+### Bug Fixes
+
+* **maleo-project:** utils not found npm ([#198](https://github.com/airyrooms/maleo.js/issues/198)) ([6457694](https://github.com/airyrooms/maleo.js/commit/6457694))
+
+
+
+
+
 ## [0.3.1-canary.6](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.5...v0.3.1-canary.6) (2019-05-28)
 
 
