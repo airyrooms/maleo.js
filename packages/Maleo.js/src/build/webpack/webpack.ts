@@ -551,6 +551,7 @@ export const getDefaultOutput = (
       filename: '[name].js',
       chunkFilename: '[name].js',
       path: path.resolve(projectDir, buildDirectory, SERVER_BUILD_DIR),
+      publicPath,
 
       library: '[name]',
       libraryTarget: 'commonjs2',
