@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.8](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.7...v0.3.1-canary.8) (2019-06-11)
+
+
+### Features
+
+* **maleo-core/build:** add server build whitelist ([#199](https://github.com/airyrooms/maleo.js/issues/199)) ([f8ca9b2](https://github.com/airyrooms/maleo.js/commit/f8ca9b2))
+
+
+
+
+
 ## [0.3.1-canary.7](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.6...v0.3.1-canary.7) (2019-06-10)
 
 
