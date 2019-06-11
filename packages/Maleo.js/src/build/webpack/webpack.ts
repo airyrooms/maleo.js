@@ -74,6 +74,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
     sourceMaps,
     alias: _alias,
     isDev = env === 'development',
+    whitelist: customWhitelist = [],
   } = customConfig;
 
   const buildDirectory = buildDir || BUILD_DIR;
@@ -154,6 +155,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
       /@airy[/\\]maleo/,
       /@babel[/\\]runtime[/\\]/,
       /@babel[/\\]runtime-corejs2[/\\]/,
+      ...customWhitelist,
     ];
 
     baseConfigs = {
