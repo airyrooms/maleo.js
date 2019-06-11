@@ -19,6 +19,9 @@ export interface CustomConfig {
   cache?: boolean;
   sourceMaps?: boolean;
 
+  // server build whitelist
+  whitelist?: Array<string | RegExp>;
+
   alias?: { [key: string]: string };
   publicPath?: string;
   analyzeBundle?: boolean;
