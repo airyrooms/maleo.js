@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.10](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.9...v0.3.1-canary.10) (2019-06-11)
+
+
+### Bug Fixes
+
+* **maleo-core/build:** add publicpath to server build ([#200](https://github.com/airyrooms/maleo.js/issues/200)) ([ff7c1e3](https://github.com/airyrooms/maleo.js/commit/ff7c1e3))
+
+
+
+
+
 ## [0.3.1-canary.9](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.8...v0.3.1-canary.9) (2019-06-11)
 
 **Note:** Version bump only for package airy-maleojs
