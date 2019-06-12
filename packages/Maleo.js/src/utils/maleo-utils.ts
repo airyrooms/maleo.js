@@ -1,10 +1,7 @@
-import { defaultGetServerAssets } from '@server/render';
-import { Branch } from '@interfaces/render';
+import { Branch, AsyncRouteProps } from '@interfaces/render';
 import matchingRoutes from '@routes/matching-routes';
 
-export async function getMatchedRoutes(url: string): Promise<Branch[]> {
-  const { routes } = await defaultGetServerAssets();
-
+export async function getMatchedRoutes(url: string, routes: AsyncRouteProps[]): Promise<Branch[]> {
   const matchedRoutes = await matchingRoutes(routes, url);
 
   return matchedRoutes;

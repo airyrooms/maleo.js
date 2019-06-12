@@ -16,7 +16,7 @@ const App = RE.findRegister('app');
 
 export const init = async () => {
   try {
-    const data = await StateManager.getInitialProps({});
+    const data = await StateManager.getInitialProps({ routes });
 
     const appProps = {
       ...data.app,

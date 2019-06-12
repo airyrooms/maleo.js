@@ -4,16 +4,20 @@ import { Link } from 'react-router-dom';
 import Wrap from '@airy/maleo/wrap';
 import pageWithStyles from '@airy/maleo-css-plugin/pageWithStyles';
 import { withRedux } from '@airy/maleo-redux-plugin';
+import { getMatchedRoutes } from '@airy/maleo/utils';
 
 import { makeStoreClient } from './store';
 
 @pageWithStyles
 @withRedux(makeStoreClient)
 export default class extends Wrap {
-  static getInitialProps = async ({ store }) => {
+  static getInitialProps = async ({ store, routes, req }) => {
     // const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
     // const data = await response.json();
     const data = { initialData: true };
+
+    console.log(routes);
+    console.log(await getMatchedRoutes(!!req ? req.url : location.pathname, routes));
 
     return { data, store };
   };
