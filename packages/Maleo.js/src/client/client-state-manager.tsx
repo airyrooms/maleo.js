@@ -35,7 +35,10 @@ export class StateManager extends React.PureComponent<stateManagerProps> {
   // only runs on client side rendering during route changes
   // wrapper will expected to be called for every route changes inside the wrapper
   clientRouteChangesUpdate = async (location: Location) => {
-    const data = await matchAndLoadInitialProps(location.pathname);
+    const { routes } = this.props;
+
+    const ctx = { routes };
+    const data = await matchAndLoadInitialProps(location.pathname, ctx);
 
     this.setState({
       data,

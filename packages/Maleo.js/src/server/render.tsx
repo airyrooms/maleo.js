@@ -52,7 +52,7 @@ export const render = async ({
   }
 
   // get Wrap props & App props
-  const ctx = { req, res };
+  const ctx = { req, res, routes };
   const wrapProps = await loadComponentProps(Wrap, ctx);
   const appProps = await loadComponentProps(App, ctx);
 
