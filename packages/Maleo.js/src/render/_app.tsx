@@ -18,6 +18,7 @@ export class _App extends React.PureComponent<AppProps, AppState> {
 
   // TODO: add prefetch data for next route
   prefetchCache = {};
+  routeTimeout;
 
   state = {
     data: this.context.data,
@@ -35,6 +36,7 @@ export class _App extends React.PureComponent<AppProps, AppState> {
     const { location } = this.props;
 
     const navigated = nextLocation.pathname !== location.pathname;
+    clearTimeout(this.routeTimeout);
     if (navigated) {
       // Wait until context has finished fetching all the initial props
       // to navigate and render new route
@@ -42,12 +44,19 @@ export class _App extends React.PureComponent<AppProps, AppState> {
         const previousLocation = this.props.location;
 
         window.scrollTo(0, 0);
-        this.setState({
-          currentLocation: nextLocation,
-          previousLocation,
-        });
+        // Hacky fix
+        // To prevent route changes when GIP promise has been resolved
+        // has to wait for all the code in GIP to be done then change route
+        this.routeTimeout = setTimeout(() => {
+          clearTimeout(this.routeTimeout);
 
-        this.setState({ previousLocation: null });
+          this.setState({
+            currentLocation: nextLocation,
+            previousLocation,
+          });
+
+          this.setState({ previousLocation: null });
+        }, 101);
       });
     }
   }

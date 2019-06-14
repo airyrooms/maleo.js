@@ -60,12 +60,13 @@ export class Header extends React.Component<HeaderProps, {}> {
 
     return (
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1.0" />
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
 
-        {this.preloadScripts()}
-
         {children}
+
+        {this.preloadScripts()}
       </head>
     );
   }
