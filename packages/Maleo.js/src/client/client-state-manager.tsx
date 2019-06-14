@@ -52,6 +52,7 @@ export class StateManager extends React.PureComponent<stateManagerProps> {
     return (
       <StateContext.Provider
         value={{
+          // @ts-ignore
           clientRouteChange: this.clientRouteChangesUpdate,
           data,
           routes,
