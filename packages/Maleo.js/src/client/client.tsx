@@ -34,10 +34,13 @@ export const init = async () => {
       containerProps,
     };
 
+    // wrap able to set global function or value
+    const { _global_ } = data.wrap;
+
     // StateContext.Consumer is used here to ensure code consistency
     // that data from StateManager will always be passed as props not context
     const RenderApp = () => (
-      <StateManager data={data} routes={routes}>
+      <StateManager data={data} routes={routes} _global_={_global_}>
         <StateContext.Consumer>
           {({ data: { wrap: wrapInitialProps } }) => <Wrap {...wrapInitialProps} {...wrapProps} />}
         </StateContext.Consumer>
