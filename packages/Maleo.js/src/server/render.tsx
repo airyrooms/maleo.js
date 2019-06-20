@@ -54,12 +54,16 @@ export const render = async ({
   // get Wrap props & App props
   const ctx = { req, res, routes };
   const wrapProps = await loadComponentProps(Wrap, ctx);
-  const appProps = await loadComponentProps(App, ctx);
+  const { _global_ } = wrapProps;
+  const ctxGlobal = {
+    ...ctx,
+    _global_,
+  };
+  const appProps = await loadComponentProps(App, ctxGlobal);
 
   // execute getInitialProps on every matched component
   const { data, branch } = await loadInitialProps(matchedRoutes, {
-    req,
-    res,
+    ...ctxGlobal,
     ...wrapProps,
     ...appProps,
   });
