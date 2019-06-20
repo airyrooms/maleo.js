@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.13](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.12...v0.3.1-canary.13) (2019-06-20)
+
+
+### Features
+
+* **maleo-project:** _global_ ([#204](https://github.com/airyrooms/maleo.js/issues/204)) ([f52dfcd](https://github.com/airyrooms/maleo.js/commit/f52dfcd))
+
+
+
+
+
 ## [0.3.1-canary.12](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.11...v0.3.1-canary.12) (2019-06-14)
 
 
