@@ -261,12 +261,12 @@ export const getDefaultOptimizations = (
 
   const commonOptimizations: Configuration['optimization'] = {
     noEmitOnErrors: true,
+    nodeEnv: false,
   };
 
   if (isServer) {
     return {
       ...commonOptimizations,
-      nodeEnv: false,
       splitChunks: false,
       minimize: false,
     };
@@ -527,6 +527,11 @@ export const getDefaultPlugins = (
       }),
 
       analyzeBundle && new BundleAnalyzerPlugin(),
+
+      // define environment during build time
+      new DefinePlugin({
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      }),
     ].filter(Boolean) as Configuration['plugins']) || [];
 
   return [...clientPlugins, ...commonPlugins];
