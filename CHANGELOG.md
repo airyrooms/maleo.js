@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.15](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.14...v0.3.1-canary.15) (2019-06-25)
+
+
+### Features
+
+* **maleo-core/client:** add route hook ([#206](https://github.com/airyrooms/maleo.js/issues/206)) ([5716cdf](https://github.com/airyrooms/maleo.js/commit/5716cdf))
+
+
+
+
+
 ## [0.3.1-canary.14](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.13...v0.3.1-canary.14) (2019-06-24)
 
 
