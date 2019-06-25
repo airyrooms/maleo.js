@@ -22,3 +22,18 @@ export const to = <T, U = Error>(
       return [err, undefined];
     });
 };
+
+/** @private turn function into promise */
+export const promisify = <T, ReturnType>(func: any): ((...args: T[]) => Promise<ReturnType>) => {
+  let promisifiedFunc = func;
+
+  if (typeof promisifiedFunc !== 'function') {
+    promisifiedFunc = () => {
+      return;
+    };
+  }
+
+  return (...args): Promise<ReturnType> => {
+    return new Promise((resolve) => resolve(promisifiedFunc(...args)));
+  };
+};

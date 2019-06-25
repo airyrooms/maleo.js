@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 
 import { AppProps, InitialProps } from '@interfaces/render';
 import { renderRoutes } from '@routes/routes';
-import { StateContext } from '@client/client-state-manager';
+import { ManagerContext } from '@client/client-manager';
 
 export interface AppState {
   data?: InitialProps['data'];
@@ -14,7 +14,7 @@ export interface AppState {
 }
 
 export class _App extends React.PureComponent<AppProps, AppState> {
-  static contextType = StateContext;
+  static contextType = ManagerContext;
 
   // TODO: add prefetch data for next route
   prefetchCache = {};
@@ -38,25 +38,37 @@ export class _App extends React.PureComponent<AppProps, AppState> {
     const navigated = nextLocation.pathname !== location.pathname;
     clearTimeout(this.routeTimeout);
     if (navigated) {
-      // Wait until context has finished fetching all the initial props
-      // to navigate and render new route
-      this.context.clientRouteChange(nextLocation).then(() => {
-        const previousLocation = this.props.location;
+      const {
+        clientRouteChange,
+        hooks: { onBeforeRouteChange, onAfterRouteChange },
+      } = this.context;
 
-        window.scrollTo(0, 0);
-        // Hacky fix
-        // To prevent route changes when GIP promise has been resolved
-        // has to wait for all the code in GIP to be done then change route
-        this.routeTimeout = setTimeout(() => {
-          clearTimeout(this.routeTimeout);
+      // Run hook for before route change
+      // Block render until hook finished
+      onBeforeRouteChange(location, nextLocation).then(() => {
+        // Wait until context has finished fetching all the initial props
+        // to navigate and render new route
+        clientRouteChange(nextLocation).then(() => {
+          // Hacky fix
+          // To prevent route changes when GIP promise has been resolved
+          // has to wait for all the code in GIP to be done then change route
+          this.routeTimeout = setTimeout(() => {
+            clearTimeout(this.routeTimeout);
 
-          this.setState({
-            currentLocation: nextLocation,
-            previousLocation,
-          });
+            this.setState(
+              {
+                currentLocation: nextLocation,
+                previousLocation: location,
+              },
+              () => {
+                // Run hook for after route changes
+                onAfterRouteChange(location, nextLocation);
+              },
+            );
 
-          this.setState({ previousLocation: null });
-        }, 101);
+            this.setState({ previousLocation: null });
+          }, 101);
+        });
       });
     }
   }
