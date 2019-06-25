@@ -8,7 +8,8 @@ import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@constants/index';
 import { matchingRoutes } from '@routes/matching-routes';
 import RE from './registerEntry';
 import { ContainerComponent } from '@render/_container';
-import { StateManager, StateContext } from './client-state-manager';
+import { ClientManager, ManagerContext } from './client-manager';
+import { promisify } from '@utils/index';
 
 const routes = RE.findRegister('routes');
 const Wrap = RE.findRegister('wrap');
@@ -16,7 +17,7 @@ const App = RE.findRegister('app');
 
 export const init = async () => {
   try {
-    const data = await StateManager.getInitialProps({ routes });
+    const data = await ClientManager.getInitialProps({ routes });
 
     const appProps = {
       ...data.app,
@@ -37,14 +38,22 @@ export const init = async () => {
     // wrap able to set global function or value
     const { _global_ } = data.wrap;
 
-    // StateContext.Consumer is used here to ensure code consistency
+    const { onBeforeRouteChange, onAfterRouteChange } = Wrap;
+    // ManagerContext.Consumer is used here to ensure code consistency
     // that data from StateManager will always be passed as props not context
     const RenderApp = () => (
-      <StateManager data={data} routes={routes} _global_={_global_}>
-        <StateContext.Consumer>
+      <ClientManager
+        data={data}
+        routes={routes}
+        _global_={_global_}
+        hooks={{
+          onBeforeRouteChange: promisify<Location, void>(onBeforeRouteChange),
+          onAfterRouteChange: promisify<Location, void>(onAfterRouteChange),
+        }}>
+        <ManagerContext.Consumer>
           {({ data: { wrap: wrapInitialProps } }) => <Wrap {...wrapInitialProps} {...wrapProps} />}
-        </StateContext.Consumer>
-      </StateManager>
+        </ManagerContext.Consumer>
+      </ClientManager>
     );
 
     hydrate(RenderApp);

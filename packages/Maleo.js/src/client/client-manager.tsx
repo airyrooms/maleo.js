@@ -7,18 +7,23 @@ const defaultData = {
   app: {},
 };
 
-export const StateContext = React.createContext({
+export const ManagerContext = React.createContext({
   data: defaultData,
   routes: undefined,
+  hooks: {},
 });
 
-export interface StateManagerProps {
+export interface ClientManagerProps {
   data?: any;
   _global_?: any;
   routes: any;
+  hooks: {
+    onBeforeRouteChange: (currentLocation: Location, nextLocation: Location) => Promise<void>;
+    onAfterRouteChange: (previousLocation: Location, currentLocation: Location) => Promise<void>;
+  };
 }
 
-export class StateManager extends React.PureComponent<StateManagerProps> {
+export class ClientManager extends React.PureComponent<ClientManagerProps> {
   static getInitialProps = async (context?): Promise<{ [key: string]: any }> => {
     const isServer = typeof window === 'undefined';
 
@@ -50,20 +55,21 @@ export class StateManager extends React.PureComponent<StateManagerProps> {
 
   render() {
     const { data } = this.state;
-    const { routes } = this.props;
+    const { routes, hooks } = this.props;
 
     return (
-      <StateContext.Provider
+      <ManagerContext.Provider
         value={{
           // @ts-ignore
           clientRouteChange: this.clientRouteChangesUpdate,
           data,
           routes,
+          hooks,
         }}>
         {this.props.children}
-      </StateContext.Provider>
+      </ManagerContext.Provider>
     );
   }
 }
 
-export default StateManager;
+export default ClientManager;
