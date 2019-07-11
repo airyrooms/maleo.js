@@ -36,6 +36,12 @@ export class Server {
       assetDir: options.assetDir || path.resolve('.', BUILD_DIR, CLIENT_BUILD_DIR),
       port: options.port || 3000,
       runHandler: options.runHandler || this.defaultHandler,
+      csp: options.csp || {
+        directives: {
+          defaultSrc: [`'self'`],
+          styleSrc: [`'self'`],
+        },
+      },
     } as IOptions;
 
     this.options = defaultOptions;
@@ -64,10 +70,6 @@ export class Server {
     res.send(html);
   };
 
-  faviconHandler = async (req: Request, res: Response) => {
-    res.send('favicon.ico');
-  };
-
   private setupExpress = async () => {
     // Set Compression
     process.env.NODE_ENV !== 'development' && this.setupCompression(this.app);
@@ -79,7 +81,9 @@ export class Server {
     this.setAssetsStaticRoute(this.app);
 
     // Set favicon handler
-    this.app.use('/favicon.ico', this.faviconHandler);
+    this.app.use('/favicon.ico', (req: Request, res: Response) => {
+      res.sendFile(__FAVICON__);
+    });
 
     // Applying user's middleware
     // middleware need to be applied after static assets serving
@@ -107,10 +111,7 @@ export class Server {
 
     // Header for CSP
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-    app.use(function contentSecurityPolicy(req, res, next) {
-      res.setHeader('Content-Security-Policy', `script-src 'self'`);
-      next();
-    });
+    app.use(helmet.contentSecurityPolicy(this.options.csp));
   };
 
   private setupCompression = (app: Express) => {

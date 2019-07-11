@@ -4,7 +4,7 @@ import { Configuration } from 'webpack';
 export interface Context {
   isServer?: boolean;
   env: 'development' | 'production' | 'none' | string;
-  projectDir?: string;
+  projectDir: string;
   minimalBuild?: boolean;
   experimentalLazyBuild?: boolean;
 }
@@ -38,6 +38,7 @@ export interface CustomConfig {
 
   distDir?: string;
   assetDir?: string;
+  favicon?: string;
 
   isDev?: boolean;
 
@@ -61,4 +62,5 @@ export interface BuildContext extends Context {
   analyzeBundle?: boolean;
   buildDirectory: string;
   name: string;
+  favicon: string;
 }
