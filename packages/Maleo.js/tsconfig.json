@@ -27,6 +27,9 @@
             "@routes/*": [
                 "src/routes/*"
             ],
+            "@head/*": [
+                "src/head/*"
+            ],
             "@constants/*": [
                 "src/constants/*"
             ]

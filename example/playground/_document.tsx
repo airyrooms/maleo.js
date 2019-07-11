@@ -14,10 +14,7 @@ export default class MyDocument extends Document {
   render() {
     return (
       <html>
-        <Header>
-          <title>Example Airy Maleo</title>
-        </Header>
-
+        <Header />
         <body>
           <Main />
 

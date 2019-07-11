@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Head from '@airy/maleo/head';
 
 import Wrap from '@airy/maleo/wrap';
 import pageWithStyles from '@airy/maleo-css-plugin/pageWithStyles';
 import { withRedux } from '@airy/maleo-redux-plugin';
-import { getMatchedRoutes } from '@airy/maleo/utils';
 
 import { makeStoreClient } from './store';
 
@@ -15,9 +15,6 @@ export default class extends Wrap {
     // const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
     // const data = await response.json();
     const data = { initialData: true };
-
-    console.log(routes);
-    console.log(await getMatchedRoutes(!!req ? req.url : location.pathname, routes));
 
     return { data, store };
   };
@@ -36,6 +33,9 @@ export default class extends Wrap {
 
     return (
       <Container {...containerProps}>
+        <Head>
+          <title>Hello World</title>
+        </Head>
         <div>
           <h1>This is NAVBARRR</h1>
           <div>

@@ -26,7 +26,8 @@
         "dynamic.js",
         "server.js",
         "wrap.js",
-        "utils.js"
+        "utils.js",
+        "head.js"
     ],
     "dependencies": {
         "@babel/core": "7.1.2",
