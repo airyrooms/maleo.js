@@ -36,7 +36,7 @@ export const init = async () => {
     };
 
     // wrap able to set global function or value
-    const { _global_ } = data.wrap;
+    const { _global_ = {} } = data.wrap || {};
 
     const { onBeforeRouteChange, onAfterRouteChange } = Wrap;
     // ManagerContext.Consumer is used here to ensure code consistency
