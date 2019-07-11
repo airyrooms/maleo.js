@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.16](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.15...v0.3.1-canary.16) (2019-07-11)
+
+
+### Features
+
+* **maleo-core/server:** add customiseable csp and favicon ([#209](https://github.com/airyrooms/maleo.js/issues/209)) ([2caded7](https://github.com/airyrooms/maleo.js/commit/2caded7)), closes [#208](https://github.com/airyrooms/maleo.js/issues/208)
+
+
+
+
+
 ## [0.3.1-canary.15](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.14...v0.3.1-canary.15) (2019-06-25)
 
 
