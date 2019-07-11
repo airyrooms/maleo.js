@@ -64,7 +64,7 @@ const defaultUserConfig: CustomConfig = {
 };
 
 export const createWebpackConfig = (context: Context, customConfig: CustomConfig) => {
-  const { env, isServer, minimalBuild } = context;
+  const { env, isServer, minimalBuild, projectDir } = context;
   const {
     cache,
     buildDir,
@@ -75,6 +75,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
     alias: _alias,
     isDev = env === 'development',
     whitelist: customWhitelist = [],
+    favicon: _favicon,
   } = customConfig;
 
   const buildDirectory = buildDir || BUILD_DIR;
@@ -82,6 +83,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
   const mode = isDev ? 'development' : 'production';
   const publicPath = _publicPath || SERVER_ASSETS_ROUTE;
   const alias = _alias || undefined;
+  const favicon = path.resolve(projectDir, _favicon || 'favicon.ico');
 
   // Support for NODE_PATH
   const nodePathList = (process.env.NODE_PATH || '')
@@ -97,6 +99,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
     buildDirectory,
     name,
     minimalBuild,
+    favicon,
   };
 
   const [entry, optimization, rules, plugins, output] = [
@@ -406,6 +409,7 @@ export const getDefaultPlugins = (
     name,
     experimentalLazyBuild,
     minimalBuild,
+    favicon,
   } = context;
 
   const commonPlugins: Configuration['plugins'] =
@@ -481,6 +485,7 @@ export const getDefaultPlugins = (
         isDev &&
           new DefinePlugin({
             __EXPERIMENTAL_LAZY_BUILD__: JSON.stringify(experimentalLazyBuild),
+            __FAVICON__: JSON.stringify(favicon),
           }),
 
         // no need to cache minimal built server

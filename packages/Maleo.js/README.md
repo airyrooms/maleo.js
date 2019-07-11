@@ -413,6 +413,11 @@ Here are the API's for the configuration:
     <td>Description</td>
   </tr>
   <tr>
+    <td><code>favicon</code></td>
+    <td><code>String</code> [<code>{project-dir}/favicon.ico</code>]</td>
+    <td>Path to favicon file</td>
+  </tr>
+  <tr>
     <td><code>buildDir</code></td>
     <td><code>String?</code> [<code>.maleo</code>]</td>
     <td>Directory to put Maleo.js' build assets</td>
@@ -486,19 +491,17 @@ Create a `server.js` file on root directory where your `package.json` lives.
 Here you can customize Maleo's server.
 ```js
 import { Server } from '@airy/maleo/server';
-import path from 'path';
 
-import routeConfig from './routes';
-
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 
 const maleoServer = Server.init({
   port: PORT,
+  runHandler: () => {
+    console.log('Server running on port :', PORT);
+  }
 });
 
-maleoServer.run(() => {
-  console.log('Server running on port :', PORT);
-});
+maleoServer.run();
 ```
 
 Here are the API's for the configuration:
@@ -518,6 +521,21 @@ Here are the API's for the configuration:
     <td><code>assetDir</code></td>
     <td><code>String?</code> [<code>'<root>/.maleo/client'</code>]</td>
     <td>Directory for all client related assets</td>
+  </tr>
+  <tr>
+    <td><code>runHandler</code></td>
+    <td><code>Function?</code></td>
+    <td>Function called when maleo server starter</td>
+  </tr>
+  <tr>
+    <td><code>csp</code></td>
+    <td><code>cspConfig?</code> [<code>{
+      directives: {
+        defaultSrc: [`'self'`],
+        styleSrc: [`'self'`],
+      },
+    }</code>]</td>
+    <td>Config for <a href="https://developers.google.com/web/fundamentals/security/csp/">Content Security Policy</a>, using <a href="https://helmetjs.github.io/docs/csp/">Helmet-CSP</a></td>
   </tr>
 </table>
 

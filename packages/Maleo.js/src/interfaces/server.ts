@@ -1,8 +1,10 @@
+import { IHelmetContentSecurityPolicyConfiguration } from 'helmet';
 // Custom Server
 export interface IOptions {
   port?: number | string;
   assetDir?: string;
   runHandler?: () => any;
+  csp?: IHelmetContentSecurityPolicyConfiguration;
 }
 
 // Stats
