@@ -199,7 +199,7 @@ export const defaultRenderPage = ({
           Container={ContainerComponent}
           App={App}
           containerProps={{ location, context: appContext, server: true }}
-          appProps={{ ...{ location: { pathname: location }, ...appProps } }}
+          appProps={{ ...{ location: { pathname: location }, ...appProps, routes } }}
           {...wrapProps}
         />
       </Loadable.Capture>,
