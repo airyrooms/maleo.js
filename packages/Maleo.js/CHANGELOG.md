@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.19](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.18...v0.3.1-canary.19) (2019-07-15)
+
+
+### Bug Fixes
+
+* **maleo-core/server:** circular json ([#212](https://github.com/airyrooms/maleo.js/issues/212)) ([75881c9](https://github.com/airyrooms/maleo.js/commit/75881c9))
+
+
+
+
+
 ## [0.3.1-canary.18](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.17...v0.3.1-canary.18) (2019-07-15)
 
 

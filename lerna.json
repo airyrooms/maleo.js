@@ -1,6 +1,6 @@
 {
   "lerna": "3.13.1",
-  "version": "0.3.1-canary.18",
+  "version": "0.3.1-canary.19",
   "packages": [
     "packages/*"
   ],
