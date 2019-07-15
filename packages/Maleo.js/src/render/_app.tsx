@@ -75,7 +75,8 @@ export class _App extends React.PureComponent<AppProps, AppState> {
 
   render() {
     const { data, previousLocation, currentLocation } = this.state;
-    const { routes } = this.context;
+    const { routes } = this.props;
+
     const initialData = this.prefetchCache[currentLocation.pathname] || data;
 
     const location = previousLocation || currentLocation;
