@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.20](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.19...v0.3.1-canary.20) (2019-07-15)
+
+
+### Bug Fixes
+
+* **maleo-core/server:** app didnt receive routes on ssr ([#214](https://github.com/airyrooms/maleo.js/issues/214)) ([d08110b](https://github.com/airyrooms/maleo.js/commit/d08110b))
+
+
+
+
+
 ## [0.3.1-canary.19](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.18...v0.3.1-canary.19) (2019-07-15)
 
 
