@@ -46,6 +46,7 @@
         "eventsource": "1.0.7",
         "express": "4.16.4",
         "figlet": "1.2.1",
+        "flatted": "^2.0.1",
         "friendly-errors-webpack-plugin": "1.7.0",
         "hard-source-webpack-plugin": "0.13.1",
         "helmet": "3.14.0",

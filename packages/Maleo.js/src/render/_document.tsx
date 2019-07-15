@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { stringify } from 'flatted';
 
 import { HeaderProps, DocumentProps, DocumentContext } from '@interfaces/render';
 import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@constants/index';
@@ -98,7 +99,7 @@ export class Scripts extends React.Component {
         <noscript
           id={SERVER_INITIAL_DATA}
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(initialProps),
+            __html: stringify(initialProps),
           }}
         />
         {preloadScripts.map((p, i) => (
