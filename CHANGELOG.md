@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.21](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.20...v0.3.1-canary.21) (2019-07-15)
+
+
+### Features
+
+* **maleo-core/server:** csp config move to maleo config ([#215](https://github.com/airyrooms/maleo.js/issues/215)) ([e8c7d3d](https://github.com/airyrooms/maleo.js/commit/e8c7d3d))
+
+
+
+
+
 ## [0.3.1-canary.20](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.19...v0.3.1-canary.20) (2019-07-15)
 
 
