@@ -6,6 +6,12 @@ const isDev = process.env.NODE_ENV === 'development' || process.env.NODE_ENV ===
 module.exports = tsPlugin(
   cssPlugin({
     enableISL: true,
+    csp: {
+      directives: {
+        defaultSrc: [`'self'`],
+        styleSrc: [`'self'`, `'unsafe-inline'`],
+      },
+    },
     customWrap: './custom-wrap.tsx',
     isDev,
     staticPages: {

@@ -76,6 +76,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
     isDev = env === 'development',
     whitelist: customWhitelist = [],
     favicon: _favicon,
+    csp = false,
   } = customConfig;
 
   const buildDirectory = buildDir || BUILD_DIR;
@@ -100,6 +101,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
     name,
     minimalBuild,
     favicon,
+    csp,
   };
 
   const [entry, optimization, rules, plugins, output] = [
@@ -410,6 +412,7 @@ export const getDefaultPlugins = (
     experimentalLazyBuild,
     minimalBuild,
     favicon,
+    csp,
   } = context;
 
   const commonPlugins: Configuration['plugins'] =
@@ -482,10 +485,14 @@ export const getDefaultPlugins = (
           entryOnly: false,
         }),
 
+        new DefinePlugin({
+          __FAVICON__: JSON.stringify(favicon),
+          __CSP__: JSON.stringify(csp),
+        }),
+
         isDev &&
           new DefinePlugin({
             __EXPERIMENTAL_LAZY_BUILD__: JSON.stringify(experimentalLazyBuild),
-            __FAVICON__: JSON.stringify(favicon),
           }),
 
         // no need to cache minimal built server

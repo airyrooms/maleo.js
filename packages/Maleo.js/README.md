@@ -483,6 +483,21 @@ Here are the API's for the configuration:
     <td><code>string?</code> [<code>rootDir/app.jsx</code>]</td>
     <td>Path to your custom app file</td>
   </tr>
+  <tr>
+    <td><code>csp</code></td>
+    <td><code>boolean | cspConfig</code> [<code>false</code>]</td>
+    <td>Config for <a href="https://developers.google.com/web/fundamentals/security/csp/">Content Security Policy</a>, using <a href="https://helmetjs.github.io/docs/csp/">Helmet-CSP</a>
+    <br/>
+    If set to true it will enable default config:
+    <br/>
+    <code>{
+      directives: {
+        defaultSrc: [`'self'`],
+        styleSrc: [`'self'`],
+      },
+    }</code>
+    </td>
+  </tr>
 </table>
 
 #### Customize Server
@@ -526,16 +541,6 @@ Here are the API's for the configuration:
     <td><code>runHandler</code></td>
     <td><code>Function?</code></td>
     <td>Function called when maleo server starter</td>
-  </tr>
-  <tr>
-    <td><code>csp</code></td>
-    <td><code>cspConfig?</code> [<code>{
-      directives: {
-        defaultSrc: [`'self'`],
-        styleSrc: [`'self'`],
-      },
-    }</code>]</td>
-    <td>Config for <a href="https://developers.google.com/web/fundamentals/security/csp/">Content Security Policy</a>, using <a href="https://helmetjs.github.io/docs/csp/">Helmet-CSP</a></td>
   </tr>
 </table>
 
