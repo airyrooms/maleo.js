@@ -23,15 +23,15 @@ export const preset = (context, opts = {}) => {
 
   const plugins = [
     [
-      require('@babel/plugin-proposal-class-properties').default,
-      opts['class-properties'] || {
-        loose: true,
-      },
-    ],
-    [
       require('@babel/plugin-proposal-decorators'),
       opts['proposal-decorators'] || {
         legacy: true,
+      },
+    ],
+    [
+      require('@babel/plugin-proposal-class-properties'),
+      opts['class-properties'] || {
+        loose: true,
       },
     ],
     require('@babel/plugin-proposal-object-rest-spread'),
