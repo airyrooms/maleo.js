@@ -32,16 +32,18 @@ export class Server {
   };
 
   constructor(options: IOptions = {}) {
+    const defaultCSP = {
+      directives: {
+        defaultSrc: [`'self'`],
+        styleSrc: [`'self'`],
+      },
+    };
+
     const defaultOptions = {
       assetDir: options.assetDir || path.resolve('.', BUILD_DIR, CLIENT_BUILD_DIR),
       port: options.port || 3000,
       runHandler: options.runHandler || this.defaultHandler,
-      csp: options.csp || {
-        directives: {
-          defaultSrc: [`'self'`],
-          styleSrc: [`'self'`],
-        },
-      },
+      csp: options.csp || typeof __CSP__ === 'boolean' ? defaultCSP : __CSP__,
     } as IOptions;
 
     this.options = defaultOptions;
@@ -111,7 +113,7 @@ export class Server {
 
     // Header for CSP
     // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
-    app.use(helmet.contentSecurityPolicy(this.options.csp));
+    __CSP__ && app.use(helmet.contentSecurityPolicy(this.options.csp));
   };
 
   private setupCompression = (app: Express) => {

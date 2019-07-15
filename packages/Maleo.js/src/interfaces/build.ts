@@ -1,5 +1,6 @@
 import webpack from 'webpack';
 import { Configuration } from 'webpack';
+import { IHelmetContentSecurityPolicyConfiguration } from 'helmet';
 
 export interface Context {
   isServer?: boolean;
@@ -44,6 +45,8 @@ export interface CustomConfig {
 
   // static export
   staticPages?: StaticPages;
+
+  csp?: boolean | IHelmetContentSecurityPolicyConfiguration;
 }
 
 export interface StaticPages {
@@ -63,4 +66,5 @@ export interface BuildContext extends Context {
   buildDirectory: string;
   name: string;
   favicon: string;
+  csp: CustomConfig['csp'];
 }
