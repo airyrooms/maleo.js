@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.18](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.17...v0.3.1-canary.18) (2019-07-15)
+
+
+### Bug Fixes
+
+* **maleo-core/build:** babel config decorator ([#211](https://github.com/airyrooms/maleo.js/issues/211)) ([249f744](https://github.com/airyrooms/maleo.js/commit/249f744))
+
+
+
+
+
 ## [0.3.1-canary.17](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.16...v0.3.1-canary.17) (2019-07-11)
 
 
