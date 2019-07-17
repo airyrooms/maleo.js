@@ -26,6 +26,8 @@ import { extractStats } from './extract-stats';
 
 import { ContainerComponent } from '@render/_container';
 import { PreloadAssets } from '../interfaces/server';
+import getHeadProvider from '@head/head-provider';
+import { defaultHead } from '../head/head';
 
 // * HTML doctype * //
 const DOCTYPE = '<!DOCTYPE html>';
@@ -79,7 +81,7 @@ export const render = async ({
       return;
     }
 
-    const { bundles, html } = await renderPage({
+    const { bundles, html, head } = await renderPage({
       req,
       Wrap,
       App,
@@ -109,6 +111,7 @@ export const render = async ({
       branch,
       preloadScripts: scripts,
       html,
+      head,
     };
 
     const initialProps = await Document.getInitialProps(docContext);
@@ -174,6 +177,7 @@ export const defaultRenderPage = ({
   return async (): Promise<{
     html: string;
     bundles: PreloadAssets[];
+    head: Array<React.ReactElement<any>>;
   }> => {
     const appContext = {};
 
@@ -193,21 +197,28 @@ export const defaultRenderPage = ({
     // to be passed in App because withRouter doesn't work on server side
     const location = req.originalUrl;
 
+    // Head provider
+    const { HeadProvider, getHeads } = getHeadProvider();
+
     const asyncOrSyncRender = renderer(
       <Loadable.Capture report={reportResults}>
-        <Wrap
-          Container={ContainerComponent}
-          App={App}
-          containerProps={{ location, context: appContext, server: true }}
-          appProps={{ ...{ location: { pathname: location }, ...appProps, routes } }}
-          {...wrapProps}
-        />
+        <HeadProvider>
+          <Wrap
+            Container={ContainerComponent}
+            App={App}
+            containerProps={{ location, context: appContext, server: true }}
+            appProps={{ ...{ location: { pathname: location }, ...appProps, routes } }}
+            {...wrapProps}
+          />
+        </HeadProvider>
       </Loadable.Capture>,
     );
 
     const { html, ...rest } = isPromise(asyncOrSyncRender)
       ? await asyncOrSyncRender
       : asyncOrSyncRender;
+
+    const head = getHeads() || defaultHead();
 
     const loadableFile = path.resolve(BUILD_DIR, CLIENT_BUILD_DIR, REACT_LOADABLE_MANIFEST);
     const reactLoadableJson = requireRuntime(loadableFile);
@@ -221,6 +232,6 @@ export const defaultRenderPage = ({
         filename: bundle.file,
       }));
 
-    return { html, bundles, ...rest };
+    return { html, head, bundles, ...rest };
   };
 };

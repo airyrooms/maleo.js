@@ -50,6 +50,7 @@ export interface DocumentCommons {
   branch: Branch | null;
   preloadScripts: any;
   html: string;
+  head: Array<React.ReactElement<any>>;
 }
 
 export interface DocumentProps extends DocumentCommons {
@@ -146,7 +147,9 @@ export interface RenderParam {
 
   renderPage?: (
     param: RenderPageParams,
-  ) => (fn?: ModPageFn) => Promise<{ html: string; bundles: PreloadAssets[] }>;
+  ) => (
+    fn?: ModPageFn,
+  ) => Promise<{ html: string; head: Array<React.ReactElement<any>>; bundles: PreloadAssets[] }>;
 
   preloadScripts?: (
     dir: string,

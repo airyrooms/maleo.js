@@ -1,5 +1,6 @@
 import React from 'react';
 import withStyles from '@airy/maleo-css-plugin/lib/withStyles';
+import Head from '@airy/maleo/head';
 
 const style = require('./detail.css');
 
@@ -18,6 +19,9 @@ export class RoomsDetail extends React.Component<any, any> {
     console.log('detaili props', this.props.a);
     return (
       <div className="detail">
+        <Head>
+          <title>Detail</title>
+        </Head>
         <h1>Rooms Detail</h1>
       </div>
     );

@@ -13,6 +13,7 @@ describe('<Document />', () => {
   it('renders Header component', () => {
     const context = {
       preloadScripts,
+      head: [],
     };
     const header = shallow(<Header />, { context });
 

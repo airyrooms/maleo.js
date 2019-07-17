@@ -19,6 +19,7 @@ const paths = {
   client: 'src/client/**',
   bin: 'src/bin/*.ts',
   routes: 'src/routes/**',
+  head: 'src/head/**',
   default: 'src/default/*.ts',
 };
 

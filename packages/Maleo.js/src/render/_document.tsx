@@ -7,14 +7,13 @@ import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@constants/index';
 
 // Extendable document
 export default class Document extends React.Component<DocumentProps, {}> {
-  // export class Document extends React.Component<DocumentProps, {}> implements IDocument {
-  // export const Document: IDocument = class extends React.Component<DocumentProps, {}> {
   static getInitialProps = async (documentContext: DocumentContext) => {
     return documentContext;
   };
 
   static childContextTypes = {
     html: PropTypes.element.isRequired,
+    head: PropTypes.arrayOf(PropTypes.element).isRequired,
     preloadScripts: PropTypes.array.isRequired,
     initialProps: PropTypes.any,
     branch: PropTypes.any,
@@ -22,8 +21,8 @@ export default class Document extends React.Component<DocumentProps, {}> {
   };
 
   getChildContext = () => {
-    const { preloadScripts, initialProps, html, branch, ...ctx } = this.props;
-    return { preloadScripts, initialProps, html, branch, ctx };
+    const { preloadScripts, initialProps, html, head, branch, ...ctx } = this.props;
+    return { preloadScripts, initialProps, html, head, branch, ctx };
   };
 
   render() {
@@ -46,6 +45,7 @@ export default class Document extends React.Component<DocumentProps, {}> {
 export class Header extends React.Component<HeaderProps, {}> {
   static contextTypes = {
     preloadScripts: PropTypes.array.isRequired,
+    head: PropTypes.arrayOf(PropTypes.element).isRequired,
   };
 
   preloadScripts = () => {
@@ -57,6 +57,7 @@ export class Header extends React.Component<HeaderProps, {}> {
   };
 
   render() {
+    const { head } = this.context;
     const { children } = this.props;
 
     return (
@@ -66,6 +67,7 @@ export class Header extends React.Component<HeaderProps, {}> {
         <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
 
         {children}
+        {head}
 
         {this.preloadScripts()}
       </head>

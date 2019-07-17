@@ -10,6 +10,7 @@ import RE from './registerEntry';
 import { ContainerComponent } from '@render/_container';
 import { ClientManager, ManagerContext } from './client-manager';
 import { promisify } from '@utils/index';
+import getHeadProvider from '@head/head-provider';
 
 const routes = RE.findRegister('routes');
 const Wrap = RE.findRegister('wrap');
@@ -39,6 +40,10 @@ export const init = async () => {
     const { _global_ = {} } = data.wrap || {};
 
     const { onBeforeRouteChange, onAfterRouteChange } = Wrap;
+
+    // Head provider
+    const { HeadProvider } = getHeadProvider();
+
     // ManagerContext.Consumer is used here to ensure code consistency
     // that data from StateManager will always be passed as props not context
     const RenderApp = () => (
@@ -51,7 +56,11 @@ export const init = async () => {
           onAfterRouteChange: promisify<Location, void>(onAfterRouteChange),
         }}>
         <ManagerContext.Consumer>
-          {({ data: { wrap: wrapInitialProps } }) => <Wrap {...wrapInitialProps} {...wrapProps} />}
+          {({ data: { wrap: wrapInitialProps } }) => (
+            <HeadProvider>
+              <Wrap {...wrapInitialProps} {...wrapProps} />
+            </HeadProvider>
+          )}
         </ManagerContext.Consumer>
       </ClientManager>
     );
