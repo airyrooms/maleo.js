@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.22](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.21...v0.3.1-canary.22) (2019-07-17)
+
+
+### Features
+
+* **maleo-project:** custom head seo ([#213](https://github.com/airyrooms/maleo.js/issues/213)) ([cd29e45](https://github.com/airyrooms/maleo.js/commit/cd29e45))
+
+
+
+
+
 ## [0.3.1-canary.21](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.20...v0.3.1-canary.21) (2019-07-15)
 
 
