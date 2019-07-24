@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Loadable from 'react-loadable';
+import { parse } from 'flatted';
 
 import { loadInitialProps, loadComponentProps } from '@routes/loadInitialProps';
 import { InitialProps } from '@interfaces/render';
@@ -86,7 +87,7 @@ export const ensureReady = async (pathname, ctx): Promise<InitialProps['data']> 
   }
 
   const { textContent } = initialServerData;
-  const data = JSON.parse(textContent || '');
+  const data = parse(textContent || '');
 
   // remove initial data after application
   // has been hydrated
