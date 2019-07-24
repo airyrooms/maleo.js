@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.24](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.23...v0.3.1-canary.24) (2019-07-24)
+
+
+### Bug Fixes
+
+* **maleo-core/server:** initial props not passed ([#217](https://github.com/airyrooms/maleo.js/issues/217)) ([d0c15ee](https://github.com/airyrooms/maleo.js/commit/d0c15ee))
+
+
+
+
+
 ## [0.3.1-canary.23](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.22...v0.3.1-canary.23) (2019-07-24)
 
 
