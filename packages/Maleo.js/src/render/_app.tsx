@@ -21,7 +21,11 @@ export class _App extends React.PureComponent<AppProps, AppState> {
   routeTimeout;
 
   state = {
-    data: this.context.data,
+    // Context Data is only for client
+    // Server still passes data from props
+    // TODO:
+    //  - refactor to make code more consistent, use context for both server and client
+    data: !__IS_SERVER__ ? this.context.data : this.props.data,
     currentLocation: this.props.location,
     previousLocation: null,
   };

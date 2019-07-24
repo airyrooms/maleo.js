@@ -207,7 +207,7 @@ export const defaultRenderPage = ({
             Container={ContainerComponent}
             App={App}
             containerProps={{ location, context: appContext, server: true }}
-            appProps={{ ...{ location: { pathname: location }, ...appProps, routes } }}
+            appProps={{ ...{ location: { pathname: location }, ...appProps, routes, data } }}
             {...wrapProps}
           />
         </HeadProvider>
