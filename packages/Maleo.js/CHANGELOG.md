@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.23](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.22...v0.3.1-canary.23) (2019-07-24)
+
+
+### Bug Fixes
+
+* **maleo-core/client:** parse using flatted instead of json ([#216](https://github.com/airyrooms/maleo.js/issues/216)) ([29e52a8](https://github.com/airyrooms/maleo.js/commit/29e52a8))
+
+
+
+
+
 ## [0.3.1-canary.22](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.21...v0.3.1-canary.22) (2019-07-17)
 
 
