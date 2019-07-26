@@ -18,7 +18,7 @@ import helmet from 'helmet';
 import * as http from 'http';
 
 import { IOptions } from '@interfaces/server';
-import { BUILD_DIR, SERVER_ASSETS_ROUTE, CLIENT_BUILD_DIR } from '@constants/index';
+import { BUILD_DIR, CLIENT_BUILD_DIR } from '@constants/index';
 import { render } from './render';
 
 export class Server {
@@ -102,7 +102,7 @@ export class Server {
     // by the time we have new build that changes the ETAG, browser will automatically
     // request the file again
     app.use(
-      SERVER_ASSETS_ROUTE,
+      WEBPACK_PUBLIC_PATH,
       express.static(this.options.assetDir as string, { maxAge: '30 days' }),
     );
   };
