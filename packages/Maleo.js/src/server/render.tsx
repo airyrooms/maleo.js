@@ -54,7 +54,8 @@ export const render = async ({
   }
 
   // get Wrap props & App props
-  const ctx = { req, res, routes };
+  const matched = matchedRoutes.map((r) => ({ match: r.match }));
+  const ctx = { req, res, routes, matched };
   const wrapProps = await loadComponentProps(Wrap, ctx);
   const { _global_ = {} } = wrapProps || {};
   const ctxGlobal = {
