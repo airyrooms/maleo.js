@@ -51,3 +51,5 @@ export const SERVER_BUILD_DIR = 'server';
 export const CLIENT_BUILD_DIR = 'client';
 
 export const STATS_FILENAME = 'stats.json';
+
+export const MATCHED_ROUTES_KEY = 'matched';
