@@ -61,7 +61,7 @@ const METATYPES = ['name', 'httpEquiv', 'charSet', 'itemProp'];
  which shouldn't be duplicated, like <title/>
  Also adds support for deduplicated `key` properties
 */
-function unique() {
+export function unique() {
   const keys = new Set();
   const tags = new Set();
   const metaTypes = new Set();
