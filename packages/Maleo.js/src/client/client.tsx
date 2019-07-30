@@ -19,7 +19,8 @@ const App = RE.findRegister('app');
 
 export const init = async () => {
   try {
-    const data = await ClientManager.getInitialProps({ routes });
+    const matched = await getMatchedRoutes();
+    const data = await ClientManager.getInitialProps({ routes, matched });
 
     const appProps = {
       ...data.app,
@@ -111,9 +112,14 @@ export const ensureReady = async (pathname, ctx): Promise<InitialProps['data']> 
 
 export const matchAndLoadInitialProps = async (pathname: string, ctx?) => {
   const matchedRoutes = await matchingRoutes(routes, pathname);
-  const { data } = await loadInitialProps(matchedRoutes, ctx);
+  const matched = matchedRoutes.map((r) => ({ match: r.match, route: r.route }));
+  const context = {
+    ...ctx,
+    matched,
+  };
 
-  const { wrap, app } = await hydrateWrapAppProps(ctx);
+  const { data } = await loadInitialProps(matchedRoutes, context);
+  const { wrap, app } = await hydrateWrapAppProps(context);
 
   return {
     ...data,
@@ -131,4 +137,9 @@ export const hydrateWrapAppProps = async (ctx) => {
     wrap: wrapProps,
     app: appProps,
   };
+};
+
+export const getMatchedRoutes = async () => {
+  const matchedRoutes = await matchingRoutes(routes, location.pathname);
+  return matchedRoutes.map((r) => ({ match: r.match, route: r.route }));
 };
