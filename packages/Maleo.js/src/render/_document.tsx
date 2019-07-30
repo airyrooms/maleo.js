@@ -4,6 +4,7 @@ import { stringify } from 'flatted';
 
 import { HeaderProps, DocumentProps, DocumentContext } from '@interfaces/render';
 import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@constants/index';
+import { unique } from '@head/head';
 
 // Extendable document
 export default class Document extends React.Component<DocumentProps, {}> {
@@ -60,14 +61,11 @@ export class Header extends React.Component<HeaderProps, {}> {
     const { head } = this.context;
     const { children } = this.props;
 
+    const uniqueHead = [...head, ...React.Children.toArray(children)].filter(unique());
+
     return (
       <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1.0" />
-        <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
-
-        {children}
-        {head}
+        {uniqueHead}
 
         {this.preloadScripts()}
       </head>
