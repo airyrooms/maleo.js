@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ensureReady, matchAndLoadInitialProps, getMatchedRoutes } from './client';
+import { ensureReady, matchAndLoadInitialProps } from './client';
 
 const defaultData = {
   wrap: {},

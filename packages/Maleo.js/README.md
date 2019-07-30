@@ -165,6 +165,7 @@ export default Component;
 - `res` - HTTP response object (server only)
 - `...wrapProps` - Spreaded properties from custom Wrap
 - `...appProps` - Spreaded properties from custom App
+- `matched` - Matched routes contains list of object, which is consists of `match` object and `route` object
 
 ## Routing
 
