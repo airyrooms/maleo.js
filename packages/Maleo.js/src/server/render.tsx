@@ -10,9 +10,11 @@ import {
   CLIENT_BUILD_DIR,
   SERVER_BUILD_DIR,
   STATS_FILENAME,
+  MATCHED_ROUTES_KEY,
 } from '@constants/index';
 import { isPromise } from '@utils/index';
 import { requireRuntime } from '@utils/require';
+import { getMatchedRoutes } from '@utils/getMatchedRoutes';
 import { loadInitialProps, loadComponentProps } from '@routes/loadInitialProps';
 import { matchingRoutes } from '@routes/matching-routes';
 import {
@@ -54,7 +56,8 @@ export const render = async ({
   }
 
   // get Wrap props & App props
-  const ctx = { req, res, routes };
+  const matched = await getMatchedRoutes(routes, req.originalUrl, matchedRoutes);
+  const ctx = { req, res, routes, [MATCHED_ROUTES_KEY]: matched };
   const wrapProps = await loadComponentProps(Wrap, ctx);
   const { _global_ = {} } = wrapProps || {};
   const ctxGlobal = {

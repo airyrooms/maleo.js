@@ -5,12 +5,13 @@ import { parse } from 'flatted';
 
 import { loadInitialProps, loadComponentProps } from '@routes/loadInitialProps';
 import { InitialProps } from '@interfaces/render';
-import { SERVER_INITIAL_DATA, DIV_MALEO_ID } from '@constants/index';
+import { SERVER_INITIAL_DATA, DIV_MALEO_ID, MATCHED_ROUTES_KEY } from '@constants/index';
 import { matchingRoutes } from '@routes/matching-routes';
 import RE from './registerEntry';
 import { ContainerComponent } from '@render/_container';
 import { ClientManager, ManagerContext } from './client-manager';
 import { promisify } from '@utils/index';
+import { getMatchedRoutes } from '@utils/getMatchedRoutes';
 import getHeadProvider from '@head/head-provider';
 
 const routes = RE.findRegister('routes');
@@ -19,7 +20,8 @@ const App = RE.findRegister('app');
 
 export const init = async () => {
   try {
-    const data = await ClientManager.getInitialProps({ routes });
+    const matched = await getMatchedRoutes(routes, location.pathname);
+    const data = await ClientManager.getInitialProps({ routes, [MATCHED_ROUTES_KEY]: matched });
 
     const appProps = {
       ...data.app,
@@ -111,9 +113,14 @@ export const ensureReady = async (pathname, ctx): Promise<InitialProps['data']> 
 
 export const matchAndLoadInitialProps = async (pathname: string, ctx?) => {
   const matchedRoutes = await matchingRoutes(routes, pathname);
-  const { data } = await loadInitialProps(matchedRoutes, ctx);
+  const matched = await getMatchedRoutes(routes, location.pathname, matchedRoutes);
+  const context = {
+    ...ctx,
+    [MATCHED_ROUTES_KEY]: matched,
+  };
 
-  const { wrap, app } = await hydrateWrapAppProps(ctx);
+  const { data } = await loadInitialProps(matchedRoutes, context);
+  const { wrap, app } = await hydrateWrapAppProps(context);
 
   return {
     ...data,
