@@ -49,6 +49,7 @@ export const preset = (context, opts = {}) => {
       },
     ],
     // for production
+    !isDevelopment && require('babel-plugin-transform-react-remove-prop-types'),
     // require('@babel/runtime'),
   ].filter(Boolean);
 
