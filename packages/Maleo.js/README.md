@@ -166,6 +166,7 @@ export default Component;
 - `...wrapProps` - Spreaded properties from custom Wrap
 - `...appProps` - Spreaded properties from custom App
 - `matched` - Matched routes contains list of object, which is consists of `match` object and `route` object
+- `route` - Component's route attributes on `routes.json` file
 
 ## Routing
 

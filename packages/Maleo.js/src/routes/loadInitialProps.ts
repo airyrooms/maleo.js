@@ -17,7 +17,7 @@ export const loadInitialProps = async (matchedRoutes: Branch[], ctx): Promise<In
     const { component, key } = route;
 
     if (checkHasGetInitialProps(component)) {
-      const keyData = await loadComponentProps(component, { match, ...ctx });
+      const keyData = await loadComponentProps(component, { match, ...ctx, route });
 
       data = {
         ...data,
