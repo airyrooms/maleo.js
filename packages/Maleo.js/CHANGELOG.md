@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.29](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.28...v0.3.1-canary.29) (2019-07-31)
+
+
+### Features
+
+* **maleo-core/build:** remove proptypes on production ([#223](https://github.com/airyrooms/maleo.js/issues/223)) ([766fcd1](https://github.com/airyrooms/maleo.js/commit/766fcd1))
+
+
+
+
+
 ## [0.3.1-canary.28](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.27...v0.3.1-canary.28) (2019-07-31)
 
 
