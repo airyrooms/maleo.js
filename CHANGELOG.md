@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.28](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.27...v0.3.1-canary.28) (2019-07-31)
+
+
+### Features
+
+* **maleo-core/server:** add route to get initial props ([#222](https://github.com/airyrooms/maleo.js/issues/222)) ([c103f56](https://github.com/airyrooms/maleo.js/commit/c103f56))
+
+
+
+
+
 ## [0.3.1-canary.27](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.26...v0.3.1-canary.27) (2019-07-30)
 
 
