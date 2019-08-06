@@ -1,10 +1,5 @@
 [
   {
-    "path": "/",
-    "page": "./src/Root",
-    "exact": true
-  },
-  {
     "path": "/search",
     "page": "./src/Search",
     "routes": [
@@ -19,5 +14,10 @@
     "path": "/detail",
     "page": "./src/Detail",
     "exact": true
+  },
+
+  {
+    "path": "/",
+    "page": "./src/Root",
   }
 ]

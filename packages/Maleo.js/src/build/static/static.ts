@@ -19,7 +19,7 @@ export const buildStatic = async (staticPages: StaticPages, dir: string) => {
 
   Object.keys(staticPages).map(async (p) => {
     // @ts-ignore
-    const html = await render({ req: { originalUrl: p }, res: {}, renderStatic: true });
+    const html = await render({ req: { url: p }, res: {}, renderStatic: true });
     const pageName: string = p.replace(/\/?(\/*)(.+)/, '$2');
     const pathStaticDir = path.resolve(cwd, STATIC_BUILD_DIR, `${pageName}.html`);
 
