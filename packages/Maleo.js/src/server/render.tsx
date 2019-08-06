@@ -47,8 +47,13 @@ export const render = async ({
 }: RenderParam) => {
   const { document: Document, routes, wrap: Wrap, app: App } = await getServerAssets();
 
+  // req.path removes query string
+  // we need this in order for react router match to work properly
+  // query string may causes react router to not find any matched routes
+  // more: https://github.com/wellyshen/react-cool-starter/issues/118
+  const url = req.path;
   // matching routes
-  const matchedRoutes = await matchingRoutes(routes, req.url);
+  const matchedRoutes = await matchingRoutes(routes, url);
 
   if (!matchedRoutes.length) {
     res.status(404);
@@ -56,14 +61,11 @@ export const render = async ({
   }
 
   // get Wrap props & App props
-  const matched = await getMatchedRoutes(routes, req.url, matchedRoutes);
+  const matched = await getMatchedRoutes(routes, url, matchedRoutes);
   const ctx = { req, res, routes, [MATCHED_ROUTES_KEY]: matched };
   const wrapProps = await loadComponentProps(Wrap, ctx);
   const { _global_ = {} } = wrapProps || {};
-  const ctxGlobal = {
-    ...ctx,
-    _global_,
-  };
+  const ctxGlobal = { ...ctx, _global_ };
   const appProps = await loadComponentProps(App, ctxGlobal);
 
   // execute getInitialProps on every matched component
@@ -80,7 +82,7 @@ export const render = async ({
     if (match.path === '**') {
       res.status(404);
     } else if (branch && route.redirectTo && match.path) {
-      res.redirect(301, req.url.replace(match.path, route.redirectTo));
+      res.redirect(301, url.replace(match.path, route.redirectTo));
       return;
     }
 
@@ -106,11 +108,7 @@ export const render = async ({
     const docContext: DocumentContext = {
       req,
       res,
-      initialProps: {
-        ...data,
-        wrap: wrapProps,
-        app: appProps,
-      },
+      initialProps: { ...data, wrap: wrapProps, app: appProps },
       branch,
       preloadScripts: scripts,
       html,
@@ -198,7 +196,7 @@ export const defaultRenderPage = ({
 
     // in SSR, we need to manually define location object
     // to be passed in App because withRouter doesn't work on server side
-    const location = req.url;
+    const location = req.path;
 
     // Head provider
     const { HeadProvider, getHeads } = getHeadProvider();
