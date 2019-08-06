@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.30](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.29...v0.3.1-canary.30) (2019-08-06)
+
+
+### Bug Fixes
+
+* **maleo-core/server:** change originalurl to url ([#225](https://github.com/airyrooms/maleo.js/issues/225)) ([41e8ee1](https://github.com/airyrooms/maleo.js/commit/41e8ee1))
+
+
+
+
+
 ## [0.3.1-canary.29](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.28...v0.3.1-canary.29) (2019-07-31)
 
 
