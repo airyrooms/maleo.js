@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.32](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.31...v0.3.1-canary.32) (2019-09-13)
+
+
+### Bug Fixes
+
+* **maleo-core/build:** use contenthash instead of hash ([#227](https://github.com/airyrooms/maleo.js/issues/227)) ([96ffdfe](https://github.com/airyrooms/maleo.js/commit/96ffdfe))
+
+
+
+
+
 ## [0.3.1-canary.31](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.30...v0.3.1-canary.31) (2019-08-06)
 
 
