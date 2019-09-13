@@ -580,8 +580,8 @@ export const getDefaultOutput = (
     path: path.resolve(projectDir, buildDirectory, CLIENT_BUILD_DIR),
     publicPath,
 
-    chunkFilename: isDev ? '[name].js' : '[name]-[hash].js',
-    filename: isDev ? '[name].js' : '[name]-[hash].js',
+    chunkFilename: isDev ? '[name].js' : '[name]-[contenthash].js',
+    filename: isDev ? '[name].js' : '[name]-[contenthash].js',
     library: '[name]',
     ...hmr,
   };
