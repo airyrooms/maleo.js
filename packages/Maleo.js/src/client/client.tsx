@@ -77,7 +77,8 @@ export const init = async () => {
 
 export const hydrate = (Application: () => React.ReactElement<any>): void => {
   Loadable.preloadReady().then(() => {
-    ReactDOM.hydrate(<Application />, document.querySelector(`#${DIV_MALEO_ID}`));
+    const render = !!module.hot ? ReactDOM.render : ReactDOM.hydrate;
+    render(<Application />, document.querySelector(`#${DIV_MALEO_ID}`));
   });
 };
 
