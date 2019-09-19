@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "export NODE_ENV=production && maleo build",
+    "build": "rm -rf node_modules/.cache && export NODE_ENV=production && maleo build",
     "start": "export NODE_ENV=production && maleo run",
     "build:stg": "export NODE_ENV=staging && maleo build",
     "start:stg": "export NODE_ENV=staging && maleo run",

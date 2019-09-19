@@ -4,31 +4,55 @@ import babelLoader from 'babel-loader';
 import { preset } from '../babel/preset';
 
 export default babelLoader.custom((babel) => {
-  const presetConfig = babel.createConfigItem(preset, { type: 'preset' });
-
-  const configs = new Set();
-
+  let once = 0;
   return {
-    customOptions(opts) {
+    customOptions({ isServer, esModules, ...opts }) {
+      const custom = {
+        isServer,
+        esModules,
+      };
+
       const loader = {
         cacheCompression: false,
         cacheDirectory: true,
         ...opts,
       };
 
-      return { loader };
+      return { loader, custom };
     },
-    config(config) {
+    config(config, { customOptions: { isServer, esModules } }) {
+      const pluginOptions = {
+        isServer,
+        esModules,
+      };
+
       const options = { ...config.options };
+
       if (config.hasFilesystemConfig()) {
         for (const file of [config.babelrc, config.config]) {
-          if (file && !configs.has(file)) {
-            configs.add(file);
-            console.log('[Maleo-Babel-Loader] Using external babel configuration');
-            console.log('[Maleo-Babel-Loader] File: ', file);
+          if (file) {
+            if (!++once) {
+              console.log('[Maleo-Babel-Loader] Using external babel configuration');
+              console.log('[Maleo-Babel-Loader] File: ', file);
+            }
+
+            const { value: userPresets, options: userOptions } = options.presets[0];
+
+            const presetConfig = babel.createConfigItem(
+              [userPresets, { ...pluginOptions, ...userOptions }],
+              {
+                type: 'preset',
+              },
+            );
+
+            options.presets = [presetConfig];
           }
         }
       } else {
+        const presetConfig = babel.createConfigItem([preset, pluginOptions], {
+          type: 'preset',
+        });
+
         options.presets = [...options.presets, presetConfig];
       }
 

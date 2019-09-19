@@ -64,7 +64,7 @@ const defaultUserConfig: CustomConfig = {
 };
 
 export const createWebpackConfig = (context: Context, customConfig: CustomConfig) => {
-  const { env, isServer, minimalBuild, projectDir } = context;
+  const { env, isServer, minimalBuild, projectDir, esModules } = context;
   const {
     cache,
     buildDir,
@@ -102,6 +102,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
     minimalBuild,
     favicon,
     csp,
+    esModules,
   };
 
   const [entry, optimization, rules, plugins, output] = [
@@ -342,7 +343,7 @@ export const getDefaultOptimizations = (
       minimize: true,
       minimizer: [
         new TerserPlugin({
-          test: /\.js$/,
+          test: /\.m?js$/,
           cache: true,
           parallel: true,
           terserOptions: {
@@ -375,13 +376,19 @@ export const getDefaultRules = (
   context: BuildContext,
   customConfig: CustomConfig,
 ): RuleSetRule[] => {
-  const { isServer, projectDir = '' } = context;
+  const { isServer, projectDir = '', esModules } = context;
 
   return [
     {
       test: /\.jsx?$/,
       exclude: /node_modules/,
-      use: ['maleo-babel-loader'],
+      use: {
+        loader: 'maleo-babel-loader',
+        options: {
+          isServer,
+          esModules,
+        },
+      },
     },
     // to disable webpack's default json-loader
     // so we need to define our own rules for routes.json
@@ -413,6 +420,7 @@ export const getDefaultPlugins = (
     minimalBuild,
     favicon,
     csp,
+    esModules,
   } = context;
 
   const commonPlugins: Configuration['plugins'] =
@@ -429,6 +437,7 @@ export const getDefaultPlugins = (
       new DefinePlugin({
         WEBPACK_PUBLIC_PATH: JSON.stringify(publicPath),
         __IS_SERVER__: isServer,
+        __ESM__: esModules,
       }),
 
       // Commented due to issue with WDM and WHM
@@ -556,7 +565,7 @@ export const getDefaultOutput = (
   context: BuildContext,
   customConfig: CustomConfig,
 ): Configuration['output'] => {
-  const { isServer, projectDir = '', buildDirectory, publicPath, isDev } = context;
+  const { isServer, projectDir = '', buildDirectory, publicPath, isDev, esModules } = context;
 
   const hmr = {
     hotUpdateChunkFilename: 'hot/hot-update.js',
@@ -572,6 +581,18 @@ export const getDefaultOutput = (
 
       library: '[name]',
       libraryTarget: 'commonjs2',
+      ...hmr,
+    };
+  }
+
+  if (esModules) {
+    return {
+      path: path.resolve(projectDir, buildDirectory, CLIENT_BUILD_DIR, 'esmodules'),
+      publicPath,
+
+      chunkFilename: isDev ? '[name].mjs' : '[name]-[contenthash].mjs',
+      filename: isDev ? '[name].mjs' : '[name]-[contenthash].mjs',
+      library: '[name]',
       ...hmr,
     };
   }
