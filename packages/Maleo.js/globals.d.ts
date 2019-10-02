@@ -6,3 +6,4 @@ declare const __IS_SERVER__: boolean;
 declare const __ESM__: boolean;
 declare const __FAVICON__: string;
 declare const __CSP__: boolean | IHelmetContentSecurityPolicyConfiguration;
+declare const __ENABLE_GZIP__: boolean;

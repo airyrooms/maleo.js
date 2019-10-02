@@ -5,6 +5,7 @@ export interface IOptions {
   assetDir?: string;
   runHandler?: () => any;
   csp?: IHelmetContentSecurityPolicyConfiguration;
+  gzip?: boolean;
 }
 
 // Stats

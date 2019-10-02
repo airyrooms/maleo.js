@@ -50,6 +50,7 @@ export interface CustomConfig {
   csp?: boolean | IHelmetContentSecurityPolicyConfiguration;
 
   esModules?: boolean;
+  gzip?: boolean;
 }
 
 export interface StaticPages {

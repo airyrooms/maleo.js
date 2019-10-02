@@ -61,6 +61,7 @@ const defaultUserConfig: CustomConfig = {
   buildDir: BUILD_DIR,
   assetDir: path.resolve('.', BUILD_DIR, CLIENT_BUILD_DIR),
   distDir: path.resolve('.', 'dist'),
+  gzip: true,
 };
 
 export const createWebpackConfig = (context: Context, customConfig: CustomConfig) => {
@@ -77,6 +78,7 @@ export const createWebpackConfig = (context: Context, customConfig: CustomConfig
     whitelist: customWhitelist = [],
     favicon: _favicon,
     csp = false,
+    gzip,
   } = customConfig;
 
   const buildDirectory = buildDir || BUILD_DIR;
@@ -422,6 +424,7 @@ export const getDefaultPlugins = (
     csp,
     esModules,
   } = context;
+  const { gzip } = customConfig;
 
   const commonPlugins: Configuration['plugins'] =
     ([
@@ -497,6 +500,7 @@ export const getDefaultPlugins = (
         new DefinePlugin({
           __FAVICON__: JSON.stringify(favicon),
           __CSP__: JSON.stringify(csp),
+          __ENABLE_GZIP__: gzip,
         }),
 
         isDev &&
