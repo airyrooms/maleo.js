@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.33](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.32...v0.3.1-canary.33) (2019-10-03)
+
+
+### Features
+
+* **maleo-core/build:** differentiate server babel config and client ([#231](https://github.com/airyrooms/maleo.js/issues/231)) ([0123d29](https://github.com/airyrooms/maleo.js/commit/0123d29))
+
+
+
+
+
 ## [0.3.1-canary.32](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.31...v0.3.1-canary.32) (2019-09-13)
 
 
