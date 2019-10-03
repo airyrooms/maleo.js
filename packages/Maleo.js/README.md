@@ -500,6 +500,11 @@ Here are the API's for the configuration:
     }</code>
     </td>
   </tr>
+  <tr>
+    <td><code>gzip</code></td>
+    <td><code>boolean?</code> [<code>true</code>]</td>
+    <td>Enable GZIP Compression</td>
+  </tr>
 </table>
 
 #### Customize Server

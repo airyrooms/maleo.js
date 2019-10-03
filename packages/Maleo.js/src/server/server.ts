@@ -44,6 +44,7 @@ export class Server {
       port: options.port || 3000,
       runHandler: options.runHandler || this.defaultHandler,
       csp: options.csp || typeof __CSP__ === 'boolean' ? defaultCSP : __CSP__,
+      gzip: options.gzip || __ENABLE_GZIP__,
     } as IOptions;
 
     this.options = defaultOptions;
@@ -74,7 +75,7 @@ export class Server {
 
   private setupExpress = async () => {
     // Set Compression
-    process.env.NODE_ENV !== 'development' && this.setupCompression(this.app);
+    this.setupCompression(this.app);
 
     // Set secure server
     this.setupSecureServer(this.app);
@@ -134,7 +135,7 @@ export class Server {
       level: zlib.Z_DEFAULT_COMPRESSION,
     };
 
-    app.use(compression(option));
+    this.options.gzip && app.use(compression(option));
   };
 
   protected defaultHandler = () => {
