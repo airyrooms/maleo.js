@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.35](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.34...v0.3.1-canary.35) (2019-10-03)
+
+
+### Features
+
+* **maleo-core/server:** options to disable or enable gzip ([#232](https://github.com/airyrooms/maleo.js/issues/232)) ([468a427](https://github.com/airyrooms/maleo.js/commit/468a427))
+
+
+
+
+
 ## [0.3.1-canary.34](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.33...v0.3.1-canary.34) (2019-10-03)
 
 
