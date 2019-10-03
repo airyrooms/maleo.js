@@ -97,13 +97,16 @@ export class Server {
   };
 
   private setAssetsStaticRoute = (app: Express) => {
-    // asset serving and caching for 30 days
+    // asset serving and caching for 1 year as recommended by Google Lighthouse
+    // details: https://developers.google.com/web/tools/lighthouse/audits/cache-policy?utm_source=lighthouse&utm_medium=devtools
     // since we use ETAG we don't have to worry user won't get the newest assets
     // by the time we have new build that changes the ETAG, browser will automatically
     // request the file again
     app.use(
       WEBPACK_PUBLIC_PATH,
-      express.static(this.options.assetDir as string, { maxAge: '30 days' }),
+      express.static(this.options.assetDir as string, {
+        maxAge: '1y',
+      }),
     );
   };
 
