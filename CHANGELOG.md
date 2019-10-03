@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.34](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.33...v0.3.1-canary.34) (2019-10-03)
+
+
+### Performance Improvements
+
+* **maleo-core/server:** cache control to 1 year ([#233](https://github.com/airyrooms/maleo.js/issues/233)) ([8f0c343](https://github.com/airyrooms/maleo.js/commit/8f0c343))
+
+
+
+
+
 ## [0.3.1-canary.33](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.32...v0.3.1-canary.33) (2019-10-03)
 
 
