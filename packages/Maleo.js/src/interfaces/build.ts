@@ -8,6 +8,7 @@ export interface Context {
   projectDir: string;
   minimalBuild?: boolean;
   experimentalLazyBuild?: boolean;
+  esModules?: boolean;
 }
 
 export interface IBuildOptions extends Context {
@@ -47,6 +48,8 @@ export interface CustomConfig {
   staticPages?: StaticPages;
 
   csp?: boolean | IHelmetContentSecurityPolicyConfiguration;
+
+  esModules?: boolean;
 }
 
 export interface StaticPages {

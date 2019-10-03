@@ -23,15 +23,20 @@ export const getConfigs = (options: IBuildOptions): Configuration[] => {
     userConfig,
   );
 
+  let esmConfig;
+  if (userConfig.esModules) {
+    esmConfig = createWebpackConfig({ isServer: false, esModules: true, ...context }, userConfig);
+  }
+
   if (buildType === 'server') {
     return [serverConfig];
   }
 
   if (buildType === 'client') {
-    return [clientConfig];
+    return [clientConfig, esmConfig].filter(Boolean);
   }
 
-  return [clientConfig, serverConfig];
+  return [clientConfig, serverConfig, esmConfig].filter(Boolean);
 };
 
 export const build = (options: IBuildOptions) => {
