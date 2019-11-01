@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.3.1-canary.36](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.35...v0.3.1-canary.36) (2019-11-01)
+
+
+### Bug Fixes
+
+* **maleo-core/client:** fix reactdom error ssr not matched with csr ([#230](https://github.com/airyrooms/maleo.js/issues/230)) ([7ae69a5](https://github.com/airyrooms/maleo.js/commit/7ae69a5))
+
+
+
+
+
 ## [0.3.1-canary.35](https://github.com/airyrooms/maleo.js/compare/v0.3.1-canary.34...v0.3.1-canary.35) (2019-10-03)
 
 
