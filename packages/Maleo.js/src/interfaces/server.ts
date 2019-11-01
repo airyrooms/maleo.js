@@ -6,6 +6,7 @@ export interface IOptions {
   runHandler?: () => any;
   csp?: IHelmetContentSecurityPolicyConfiguration;
   gzip?: boolean;
+  apiPrefix?: string;
 }
 
 // Stats

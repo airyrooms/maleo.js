@@ -9,7 +9,7 @@ import 'isomorphic-fetch';
  * Polyfill
  */
 
-import express, { Express, Request, Response } from 'express';
+import express, { Express, Request, Response, RequestHandler } from 'express';
 import { ApplicationRequestHandler } from 'express-serve-static-core';
 import compression from 'compression';
 import zlib from 'zlib';
@@ -45,6 +45,7 @@ export class Server {
       runHandler: options.runHandler || this.defaultHandler,
       csp: options.csp || typeof __CSP__ === 'boolean' ? defaultCSP : __CSP__,
       gzip: options.gzip || __ENABLE_GZIP__,
+      apiPrefix: options.apiPrefix || '/api',
     } as IOptions;
 
     this.options = defaultOptions;
@@ -71,6 +72,19 @@ export class Server {
     });
 
     res.send(html);
+  };
+
+  post = (url: string, handler: RequestHandler) => {
+    const { apiPrefix } = this.options;
+
+    const apiUrl = path.join(apiPrefix!, url);
+
+    this.app.post(apiUrl, [
+      express.json({
+        type: 'application/json',
+      }),
+      handler,
+    ]);
   };
 
   private setupExpress = async () => {
