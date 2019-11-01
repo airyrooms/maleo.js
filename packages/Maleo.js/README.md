@@ -545,9 +545,41 @@ Here are the API's for the configuration:
     <td>Directory for all client related assets</td>
   </tr>
   <tr>
+    <td><code>gzip</code></td>
+    <td><code>Boolean?</code> [<code>true</code>]</td>
+    <td>Enable GZIP compression for assets on <b>non-development</b> environment</td>
+  </tr>
+  <tr>
     <td><code>runHandler</code></td>
     <td><code>Function?</code></td>
     <td>Function called when maleo server starter</td>
+  </tr>
+</table>
+
+`Server.init(...)` will return `MaleoServer` object containing some attribute that might be useful for customizing the application's Server.
+
+Here are the `MaleoServer`'s attribute:
+
+<table>
+  <tr>
+    <td>Attribute</td>
+    <td>Type</td>
+    <td>Description</td>
+  </tr>
+  <tr>
+    <td><code>applyExpressMiddleware</code></td>
+    <td><code>function < ExpressMiddleware ></code></td>
+    <td>This function act as <code>express.use</code> and expect to receive middleware handler function</td>
+  </tr>
+  <tr>
+    <td><code>app</code></td>
+    <td><code>Express Object</code></td>
+    <td>An Express Server Object configured for Maleo Server</td>
+  </tr>
+  <tr>
+    <td><code>run</code></td>
+    <td><code>Function</code></td>
+    <td>This function is required to be called on customized server to run the server</td>
   </tr>
 </table>
 
