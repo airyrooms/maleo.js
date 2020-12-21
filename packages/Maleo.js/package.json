@@ -55,7 +55,7 @@
         "hoist-non-react-statics": "^3.3.0",
         "isomorphic-fetch": "2.2.1",
         "loader-utils": "1.1.0",
-        "node-notifier": "5.2.1",
+        "node-notifier": "8.0.1",
         "nodemon": "1.18.4",
         "react-dom": "16.8.4",
         "react-helmet": "5.2.0",
